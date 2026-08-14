@@ -191,25 +191,55 @@
     margin:0 0 10px;
   }
 
-  .product-grid{
-    display:grid; grid-template-columns:repeat(4, 1fr); gap:8px;
-    max-height:420px; overflow-y:auto; padding-right:4px;
+  .product-accordion{
+    max-height:460px; overflow-y:auto; padding-right:4px;
     scrollbar-width:thin; scrollbar-color:var(--line-bright) transparent;
+    border:1px solid var(--line); border-radius:2px;
   }
-  .product-grid::-webkit-scrollbar{ width:6px; }
-  .product-grid::-webkit-scrollbar-thumb{ background:var(--line-bright); border-radius:3px; }
-  @media (max-width:420px){ .product-grid{ grid-template-columns:repeat(3,1fr); } }
-  .product-swatch{
-    position:relative; aspect-ratio:1; border-radius:2px; overflow:hidden; cursor:pointer;
-    border:2px solid transparent; background:var(--bg-panel-raised);
+  .product-accordion::-webkit-scrollbar{ width:6px; }
+  .product-accordion::-webkit-scrollbar-thumb{ background:var(--line-bright); border-radius:3px; }
+
+  .product-group + .product-group{ border-top:1px solid var(--line); }
+  .product-group-header{
+    width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:12px 14px; background:var(--bg-panel); border:none; cursor:pointer; text-align:left;
   }
-  .product-swatch img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .product-swatch.selected{ border-color:var(--brick-bright); }
-  .product-swatch.selected::after{
-    content:"✓"; position:absolute; top:3px; right:3px; width:16px; height:16px;
-    background:var(--brick-dark); color:#ffffff; font-size:10px; font-weight:700;
-    display:flex; align-items:center; justify-content:center; border-radius:50%;
+  .product-group-header:hover{ background:var(--bg-panel-raised); }
+  .pg-name{ font-family:var(--display); font-weight:600; font-size:13.5px; color:var(--cream); }
+  .pg-count{ font-family:var(--mono); font-size:11px; color:var(--muted); margin-left:6px; }
+  .pg-right{ display:flex; align-items:center; gap:8px; }
+  .pg-selected-dot{
+    width:7px; height:7px; border-radius:50%; background:var(--brick); display:none;
   }
+  .pg-selected-dot.show{ display:block; }
+  .pg-chevron{
+    font-size:12px; color:var(--muted); transition:transform .15s; display:inline-block;
+  }
+  .product-group.open .pg-chevron{ transform:rotate(90deg); }
+
+  .product-group-list{
+    display:none; flex-direction:column; background:var(--bg);
+  }
+  .product-group.open .product-group-list{ display:flex; }
+
+  .product-row{
+    display:flex; align-items:center; gap:10px; padding:8px 14px 8px 22px;
+    cursor:pointer; border:none; background:transparent; width:100%; text-align:left;
+    border-top:1px solid var(--line);
+  }
+  .product-row:hover{ background:var(--bg-panel); }
+  .product-row.selected{ background:rgba(244,158,26,0.08); }
+  .product-row-thumb{
+    width:34px; height:34px; border-radius:2px; overflow:hidden; flex-shrink:0; background:var(--bg-panel-raised);
+  }
+  .product-row-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .product-row-label{ font-size:12.5px; color:var(--cream); flex:1; }
+  .product-row-check{
+    width:16px; height:16px; border-radius:50%; background:var(--brick-dark); color:#ffffff;
+    font-size:10px; font-weight:700; display:none; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .product-row.selected .product-row-check{ display:flex; }
+
   .product-name{
     font-size:12.5px; color:var(--cream); margin:9px 0 0; font-weight:500;
   }
@@ -381,7 +411,7 @@
 
       <div>
         <p class="field-label">Produkt</p>
-        <div class="product-grid" id="productGrid"></div>
+        <div class="product-accordion" id="productAccordion"></div>
         <p class="product-name" id="productName">— <span>wybierz płytkę powyżej</span></p>
       </div>
 
@@ -479,35 +509,35 @@
     {
       id: "cut-brick-classic",
       name: "Cut Brick CLASSIC",
-      sub: "lico klasyczne",
+      sub: "historic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4854_300_300/Ceglane-plytki-Stara-cegla-Cegla-na-sciane---Plytki-z-cegly---Lico-klasyczne---Cut-Brick-classic-plytki-ciete-z-cegly-rozbiorkowej-dekoracyjne-i-na-elewacje.-Wersja-limitowana-cegly..webp?overlay=1",
       desc: "ciepła, czerwono-ceglasta płytka cięta z lica starej cegły rozbiórkowej, z wyraźną fakturą i naturalnymi przebarwieniami"
     },
     {
       id: "cut-brick-yellow",
       name: "Cut Brick YELLOW",
-      sub: "lico klasyczne",
+      sub: "historic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_6083_300_300/Cegla-na-sciane-plytki-dekoracyjne-z-cegly-rozbiorkowej-lico-klasyczne-cut-brick-yellow-plytki-dekoracyjne-na-elewacje.webp?overlay=1",
       desc: "jasna, żółtawo-piaskowa płytka z lica starej cegły rozbiórkowej, o delikatniejszym, ciepłym odcieniu"
     },
     {
       id: "old-style-classic",
       name: "Old Style CLASSIC",
-      sub: "lico klasyczne",
+      sub: "historic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4865_300_300/Old-Style-Classic.jpgCeglane-plytki-Stara-cegla-Cegla-na-sciane-lico--klasyczne-Old-Style-classic-glowne.webp?overlay=1",
       desc: "stylizowana na starą cegłę płytka o klasycznym, ceglastoczerwonym kolorze z widoczną historią i patyną"
     },
     {
       id: "lico-klasyczne-wulkaniczne",
       name: "Lico Klasyczne WULKANICZNE",
-      sub: "lico klasyczne",
+      sub: "historic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_5049_300_300/Ceglane-plytki-Stara-cegla-Cegla-na-sciane-lico--klasyczne-Wulkaniczna.webp?overlay=1",
       desc: "ciemna, grafitowo-antracytowa płytka z lica starej cegły o wulkanicznym, głębokim kolorze"
     },
     {
       id: "lico-klasyczne-mix",
       name: "Lico Klasyczne MIX",
-      sub: "lico klasyczne",
+      sub: "historic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_6704_300_300/Plytki-z-cegly-rozbiorkowej---Klasyczny-MIX---zdjecie-glowne.webp?overlay=1",
       desc: "mieszanka kilku naturalnych odcieni czerwieni i beżu z lica starej cegły, efekt zróżnicowanej, żywej ściany"
     },
@@ -535,7 +565,7 @@
     {
       id: "lico-gdanskie-retro",
       name: "Lico Gdańskie Retro",
-      sub: "retro line",
+      sub: "historic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4815_300_300/Ceglane-plytki-Stara-cegla-Cegla-na-sciane---Plytki-z-cegly---lico-gdanskie-retro-glowne.webp?overlay=1",
       desc: "ceglasta płytka retro w odcieniach czerwieni i brązu, z widoczną, ręcznie formowaną fakturą"
     },
@@ -549,7 +579,7 @@
     {
       id: "lico-torunskie-retro",
       name: "Lico Toruńskie Retro",
-      sub: "retro line",
+      sub: "historic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_6050_300_300/Plytki-ceglane-dekoracyjne-z-cegly-rozbiorkowej-na-sciane-lico-torunskie-retro-zdjecie-glowne.webp?overlay=1",
       desc: "retro wersja lica toruńskiego, cieplejsze przebarwienia i bardziej wyrazista, postarzona faktura"
     },
@@ -563,7 +593,7 @@
     {
       id: "lico-klasyczne-retro",
       name: "Lico Klasyczne RETRO",
-      sub: "retro line",
+      sub: "historic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_5560_300_300/Ceglane-plytki-Stara-cegla-Cegla-na-sciane-Plytki-z-cegly-lico-klasyczne-zdjecie-glowne.webp?overlay=1",
       desc: "retro wariant lica klasycznego, głębsze przebarwienia i wyraźniejsza patyna starej cegły"
     },
@@ -619,7 +649,7 @@
     {
       id: "lico-prowansalskie-retro",
       name: "Lico Prowansalskie Retro",
-      sub: "retro line",
+      sub: "historic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_5322_300_300/Plytki-z-cegly-na-sciane-Lico-prowansalskie-Retro-zdjecie-glowne.webp?overlay=1",
       desc: "retro wariant lica prowansalskiego, jasna, delikatna faktura z ciepłym odcieniem"
     },
@@ -675,7 +705,7 @@
     {
       id: "fat-brick",
       name: "Fat Brick – podłogi i ściany",
-      sub: "podłoga / ściana",
+      sub: "historic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_5508_300_300/plytki-z-cegly-fat-brick-grube-cegla-rozbiorkowa-na-podloge-sciane-elewacje-glowne.webp?overlay=1",
       desc: "gruba, masywna płytka z cegły rozbiórkowej, wyrazista faktura, uniwersalna do ścian i podłóg"
     },
@@ -699,6 +729,152 @@
       sub: "rustic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_6127_300_300/Plytka-ceglana-lico-kujawskie-Toskanskie-1x1C_MIN.webp?overlay=1",
       desc: "jasna, toskańska odmiana lica kujawskiego, ciepłe odcienie beżu i piasku"
+    },
+
+    // ---- Modern Line (betonowe, ponad 20 kolorów, precyzyjna krawędź) ----
+    {
+      id: "modern-zamkowa-01",
+      name: "Zamkowa 01",
+      sub: "modern line",
+      img: "https://starecegly.com/environment/cache/images/productGfx_4101_300_300/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-plytki-z-cegly-ceglane-na-sciane-stylizowane-Zamkowa-011x1-ekspozycja.webp?overlay=1",
+      desc: "betonowa płytka o precyzyjnej krawędzi, ciepły ceglastoczerwony kolor, równomierna faktura"
+    },
+    {
+      id: "modern-zamkowa-04",
+      name: "Zamkowa 04",
+      sub: "modern line",
+      img: "https://starecegly.com/environment/cache/images/productGfx_4097_300_300/Plytki-z-cegly-stara-cegla-plytki-ceglane-biala-szara-zamkowa041x1.webp?overlay=1",
+      desc: "betonowa płytka w jasnoszarej, nowoczesnej tonacji, gładka i precyzyjna faktura"
+    },
+    {
+      id: "modern-zamkowa-mix",
+      name: "Zamkowa MIX",
+      sub: "modern line",
+      img: "https://starecegly.com/environment/cache/images/productGfx_4098_300_300/Mix-cegiel-plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-Zamkowa-mix1x1.webp?overlay=1",
+      desc: "betonowa płytka z mieszanką kilku odcieni w jednej kolekcji, zróżnicowana, żywa ściana"
+    },
+    {
+      id: "modern-biale",
+      name: "Modern Line – Białe",
+      sub: "modern line",
+      img: "https://starecegly.com/environment/cache/images/productGfx_4122_300_300/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-biala-1x1-ekspozytor.webp?overlay=1",
+      desc: "czysto biała, betonowa płytka o gładkiej, precyzyjnej fakturze, skandynawski minimalizm"
+    },
+    {
+      id: "modern-hiszpanskie",
+      name: "Modern Line – Hiszpańskie",
+      sub: "modern line",
+      img: "https://starecegly.com/environment/cache/images/productGfx_4117_300_300/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-Hiszpanskie-1x1-ekspozytor.webp?overlay=1",
+      desc: "betonowa płytka w ciepłych, słonecznych odcieniach terakoty, śródziemnomorski charakter"
+    },
+    {
+      id: "modern-skalne",
+      name: "Modern Line – Skalne",
+      sub: "modern line",
+      img: "https://starecegly.com/environment/cache/images/productGfx_4114_300_300/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-Skalne-1x1-ekspozytor.webp?overlay=1",
+      desc: "betonowa płytka o kamiennej, szarej tonacji, rustykalny, skandynawski charakter"
+    },
+    {
+      id: "modern-zeglarska",
+      name: "Modern Line – Żeglarska",
+      sub: "modern line",
+      img: "https://starecegly.com/environment/cache/images/productGfx_4108_300_300/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-Zeglarska-1x1-ekspozytor.webp?overlay=1",
+      desc: "betonowa płytka w niebiesko-szarej, morskiej tonacji, chłodny nowoczesny akcent"
+    },
+    {
+      id: "modern-historyczne",
+      name: "Modern Line – Historyczne",
+      sub: "modern line",
+      img: "https://starecegly.com/environment/cache/images/productGfx_4113_300_300/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-Historyczne-1x1_MIN-ekspozycja.webp?overlay=1",
+      desc: "betonowa płytka w klasycznym, ceglastoczerwonym odcieniu z historycznym charakterem"
+    },
+
+    // ---- Retro Line ceramiczna (ręcznie formowana cegła wypalana w piecu) ----
+    {
+      id: "retro-mix",
+      name: "Retro MIX",
+      sub: "retro line ceramiczna",
+      img: "https://starecegly.com/environment/cache/images/productGfx_4172_300_300/Ceglane-plytki-Stara-cegla-Cegla-na-sciane-Plytki-z-cegly-Retro-MIX-1x1_MIN.webp?overlay=1",
+      desc: "ceramiczna płytka ręcznie formowana z naturalnej gliny, mieszanka ciepłych, ceglastych odcieni"
+    },
+    {
+      id: "retro-beis",
+      name: "Retro BEIS",
+      sub: "retro line ceramiczna",
+      img: "https://starecegly.com/environment/cache/images/productGfx_4167_300_300/Ceglane-plytki-Stara-cegla-Cegla-na-sciane-Plytki-z-cegly-Retro-Beis1x1_MIN.webp?overlay=1",
+      desc: "ceramiczna płytka ręcznie formowana, jasny, piaskowo-beżowy odcień naturalnej gliny"
+    },
+    {
+      id: "retro-verde",
+      name: "Retro VERDE",
+      sub: "retro line ceramiczna",
+      img: "https://starecegly.com/environment/cache/images/productGfx_4170_300_300/Ceglane-plytki-Stara-cegla-Cegla-na-sciane-Plytki-z-cegly-Retro-Verde-1x1_MIN.webp?overlay=1",
+      desc: "ceramiczna płytka ręcznie formowana o oliwkowo-zielonkawym, ziemistym odcieniu"
+    },
+    {
+      id: "klinkier-tiffany",
+      name: "Klinkier Tiffany",
+      sub: "klinkier",
+      img: "https://starecegly.com/environment/cache/images/productGfx_b3acc6fd67f1aff963720ddcdac0ffae_300_300.webp?overlay=1",
+      desc: "klinkierowa płytka o niskiej nasiąkliwości, ceglasty odcień, czyste, równe krawędzie"
+    },
+    {
+      id: "klinkier-obsidiaan",
+      name: "Klinkier Obsidiaan",
+      sub: "klinkier",
+      img: "https://starecegly.com/environment/cache/images/productGfx_721aa4cbd43252ace3d543ac11c4ffa8_300_300.webp?overlay=1",
+      desc: "klinkierowa płytka w ciemnym, niemal czarnym odcieniu, głęboki, nasycony kolor"
+    },
+
+    // ---- Seria LONG (betonowe, wydłużony format, elewacje) ----
+    {
+      id: "long-klasyczne",
+      name: "Long Klasyczne 44 cm",
+      sub: "seria long",
+      img: "https://starecegly.com/environment/cache/images/productGfx_5053_300_300/Plytki-ceglane-na-elewacje-dekoracja-long-klasyczne-na-sciane.webp?overlay=1",
+      desc: "długa, betonowa płytka elewacyjna w klasycznym, ceglastoczerwonym kolorze, format wydłużony"
+    },
+    {
+      id: "long-biale",
+      name: "Long Białe 44 cm",
+      sub: "seria long",
+      img: "https://starecegly.com/environment/cache/images/productGfx_4900_300_300/plytki-ceglane-rustic-long-biale-dlugie-cegly-na-sciane-i-elewacje.webp?overlay=1",
+      desc: "długa, betonowa płytka elewacyjna w czystej bieli, nowoczesny, wydłużony format"
+    },
+    {
+      id: "long-szare",
+      name: "Long Szare 44 cm",
+      sub: "seria long",
+      img: "https://starecegly.com/environment/cache/images/productGfx_4901_300_300/plytki-ceglane-rustic-long-szare-dlugie-cegly-na-sciane-i-elewacje.webp?overlay=1",
+      desc: "długa, betonowa płytka elewacyjna w nowoczesnym, szarym odcieniu betonu"
+    },
+    {
+      id: "long-slim-graphite",
+      name: "Slim Long Graphite 52 cm",
+      sub: "seria long",
+      img: "https://starecegly.com/environment/cache/images/productGfx_5198_300_300/plytki-ceglane-long-slim-graphite-elewacja-nowoczesna.webp?overlay=1",
+      desc: "bardzo długa, płaska płytka betonowa w kolorze grafitu, surowa faktura betonu architektonicznego"
+    },
+    {
+      id: "long-slim-white",
+      name: "Slim Long White 52 cm",
+      sub: "seria long",
+      img: "https://starecegly.com/environment/cache/images/productGfx_5188_300_300/plytki-ceglane-long-slim-white-elewacja-nowoczesna1_MIN.webp?overlay=1",
+      desc: "bardzo długa, płaska płytka betonowa w bieli, minimalistyczna faktura płaskiego betonu"
+    },
+    {
+      id: "long-sandstone-beige",
+      name: "Long Sandstone Beige 44 cm",
+      sub: "seria long",
+      img: "https://starecegly.com/environment/cache/images/productGfx_6780_300_300/Plytki-ceglane-Long---Sandstone-Beige-glowne.webp?overlay=1",
+      desc: "długa, betonowa płytka w piaskowym odcieniu, naturalna estetyka piaskowca"
+    },
+    {
+      id: "long-lawa",
+      name: "Long Lawa 44 cm",
+      sub: "seria long",
+      img: "https://starecegly.com/environment/cache/images/productGfx_5062_300_300/Plytki-ceglane-RUSTIC-LONG-LAWA-44-cm--plytki-elewacyjne-inspirowane-lawa-wulkaniczna-na-sciane-ekspozytor.webp?overlay=1",
+      desc: "długa, betonowa płytka inspirowana lawą wulkaniczną, ciemny, głęboki odcień"
     }
   ];
 
@@ -713,21 +889,67 @@
     imageNaturalH: 0
   };
 
-  // ---- render product grid ----
-  const productGrid = document.getElementById("productGrid");
+  // ---- render product accordion (grouped, collapsible list) ----
+  const GROUP_ORDER = [
+    { key: "historic line", label: "Historic Line — cegła rozbiórkowa" },
+    { key: "modern line", label: "Modern Line — beton barwiony w masie" },
+    { key: "rustic line", label: "Rustic Line — Lico Kujawskie" },
+    { key: "retro line ceramiczna", label: "Retro Line — ręcznie formowana cegła" },
+    { key: "klinkier", label: "Klinkier" },
+    { key: "seria long", label: "Seria Long — elewacje" },
+    { key: "podłoga / taras", label: "Płytki podłogowe i tarasowe" }
+  ];
+
+  const productAccordion = document.getElementById("productAccordion");
   const productNameEl = document.getElementById("productName");
-  PRODUCTS.forEach((p, i) => {
-    const el = document.createElement("div");
-    el.className = "product-swatch";
-    el.dataset.id = p.id;
-    el.innerHTML = `<img src="${p.img}" alt="${p.name}" loading="lazy">`;
-    el.addEventListener("click", () => selectProduct(p.id));
-    productGrid.appendChild(el);
+
+  GROUP_ORDER.forEach((group, groupIndex) => {
+    const items = PRODUCTS.filter(p => p.sub === group.key);
+    if(items.length === 0) return;
+
+    const groupEl = document.createElement("div");
+    groupEl.className = "product-group";
+    groupEl.dataset.group = group.key;
+
+    const header = document.createElement("button");
+    header.type = "button";
+    header.className = "product-group-header";
+    header.innerHTML = `
+      <span><span class="pg-name">${group.label}</span><span class="pg-count">(${items.length})</span></span>
+      <span class="pg-right"><span class="pg-selected-dot" data-dot></span><span class="pg-chevron">›</span></span>
+    `;
+    header.addEventListener("click", () => {
+      groupEl.classList.toggle("open");
+    });
+    groupEl.appendChild(header);
+
+    const list = document.createElement("div");
+    list.className = "product-group-list";
+    items.forEach(p => {
+      const row = document.createElement("button");
+      row.type = "button";
+      row.className = "product-row";
+      row.dataset.id = p.id;
+      row.innerHTML = `
+        <span class="product-row-thumb"><img src="${p.img}" alt="${p.name}" loading="lazy"></span>
+        <span class="product-row-label">${p.name}</span>
+        <span class="product-row-check">✓</span>
+      `;
+      row.addEventListener("click", () => selectProduct(p.id));
+      list.appendChild(row);
+    });
+    groupEl.appendChild(list);
+    productAccordion.appendChild(groupEl);
   });
+
   function selectProduct(id){
     state.productId = id;
-    document.querySelectorAll(".product-swatch").forEach(el => {
+    document.querySelectorAll(".product-row").forEach(el => {
       el.classList.toggle("selected", el.dataset.id === id);
+    });
+    document.querySelectorAll(".product-group").forEach(el => {
+      const hasSelected = el.querySelector(".product-row.selected") !== null;
+      el.querySelector("[data-dot]").classList.toggle("show", hasSelected);
     });
     const p = PRODUCTS.find(p => p.id === id);
     productNameEl.innerHTML = `${p.name} <span>— ${p.sub}</span>`;
