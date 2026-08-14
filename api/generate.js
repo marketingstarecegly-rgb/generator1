@@ -59,6 +59,7 @@ module.exports = async (req, res) => {
       highlightedImage,
       productName,
       productDescription,
+      productDims,
       productImage,
       surface,
       layout,
@@ -97,6 +98,10 @@ module.exports = async (req, res) => {
       ? ""
       : `\n- KOLOR FUGI (bardzo ważne, zastosuj dokładnie): fuga musi mieć kolor ${mortarColorLabel}. To kluczowy parametr — nie zastępuj go domyślnym ani innym odcieniem.`;
 
+    const dimsLine = productDims
+      ? `\n- WYMIARY I PROPORCJE POJEDYNCZEJ PŁYTKI (krytycznie ważne, zastosuj dokładnie): ${productDims}. NIE renderuj standardowych proporcji cegły (ok. 2:1) — moduł MUSI być wyraźnie bardziej wydłużony i płaski, zgodnie z podanymi proporcjami. To najczęstszy błąd do uniknięcia: zbyt "kwadratowe" lub zbyt wysokie płytki są NIEPOPRAWNE dla tego produktu.`
+      : "";
+
     const promptParts = [];
 
     promptParts.push({
@@ -114,7 +119,7 @@ ${productInline ? "Dołączam też osobne zdjęcie referencyjne samego materiał
 Zastosuj dokładnie następujące parametry:
 - Powierzchnia: ${surfaceLabel}.
 - Układ cegły: ${layoutLabel}.
-- ${mountLine}${mortarColorLine}
+- ${mountLine}${mortarColorLine}${dimsLine}
 
 Zasady krytyczne:
 - Usuń całkowicie pomarańczową nakładkę z wyniku — finalny obraz ma wyglądać jak naturalna, niezmodyfikowana fotografia, BEZ śladu podświetlenia.
@@ -128,7 +133,7 @@ PODSUMOWANIE — sprawdź przed wygenerowaniem, że wynik spełnia WSZYSTKIE pon
 1. Produkt: ${productName} (${productDescription || "naturalna faktura cegły"}).
 2. Układ: ${layoutLabel}.
 3. ${mount === "bez-fugi" ? "Brak fugi między płytkami." : `Fuga WIDOCZNA, w kolorze: ${mortarColorLabel}.`}
-4. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian.`
+${productDims ? `4. Proporcje pojedynczej płytki: ${productDims}.\n5. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian.` : "4. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian."}`
     });
 
     promptParts.push({ text: "Zdjęcie oryginalne:" });
