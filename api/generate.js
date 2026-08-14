@@ -20,11 +20,11 @@ const LAYOUT_LABELS = {
 };
 
 const MORTAR_COLOR_LABELS = {
-  "jasnoszara": "jasnoszara (kolor jasnego betonu / naturalnego cementu, jasny neutralny szary, zdecydowanie jaśniejszy niż płytki)",
-  "szara": "szara (średni, stonowany szary, wyraźnie ciemniejszy niż jasnoszara fuga betonowa)",
+  "biala": "biała (czysta, jasna, jasnoszaro-biała fuga betonowa, wyraźnie jaśniejsza niż otaczające płytki)",
+  "stara-biel": "stara biel (przygaszona, lekko szarawa biel z delikatnym beżowym odcieniem, jak stary, naturalnie zabrudzony beton)",
   "piaskowa": "piaskowa (ciepły, beżowo-piaskowy odcień, zbliżony do koloru piasku lub jasnego beżu)",
-  "grafitowa": "grafitowa (bardzo ciemny, prawie czarny odcień antracytu/grafitu — wyraźnie ciemniejsza niż płytki)",
-  "biala": "biała (czysta, jasna biel, wyraźnie jaśniejsza niż otaczające płytki)"
+  "szara": "szara (średni, stonowany szary, wyraźnie ciemniejszy niż biała czy piaskowa fuga)",
+  "antracytowa": "antracytowa (bardzo ciemny, prawie czarny odcień antracytu — wyraźnie ciemniejsza niż płytki)"
 };
 
 function dataUrlToInlineData(dataUrl){
@@ -87,7 +87,7 @@ module.exports = async (req, res) => {
 
     const surfaceLabel = SURFACE_LABELS[surface] || "wskazaną powierzchnię";
     const layoutLabel = LAYOUT_LABELS[layout] || "naturalny układ";
-    const mortarColorLabel = MORTAR_COLOR_LABELS[mortarColor] || MORTAR_COLOR_LABELS["jasnoszara"];
+    const mortarColorLabel = MORTAR_COLOR_LABELS[mortarColor] || MORTAR_COLOR_LABELS["biala"];
 
     const mountLine = mount === "bez-fugi"
       ? "Montaż BEZ FUGI: płytki ułożone ściśle przy sobie, bez żadnych widocznych spoin ani przerw między płytkami."
