@@ -254,16 +254,16 @@
   .chip:hover{ border-color:var(--sand); color:var(--cream); }
   .chip.active{ background:var(--brick); border-color:var(--brick); color:var(--cream); }
 
-  .mortar-colors{ display:flex; gap:9px; }
+  .mortar-colors{ display:flex; gap:11px; align-items:center; }
   .mortar-dot{
     width:26px; height:26px; border-radius:50%; cursor:pointer; border:2px solid transparent;
-    position:relative;
+    position:relative; box-shadow:0 0 0 1px var(--line-bright); flex-shrink:0;
   }
   .mortar-dot.active{ border-color:var(--cream); }
-  .mortar-dot[data-label]::after{
-    content:attr(data-label); position:absolute; bottom:-19px; left:50%; transform:translateX(-50%);
-    font-size:9.5px; color:var(--muted); white-space:nowrap; font-family:var(--mono);
+  .mortar-color-label{
+    font-size:12.5px; color:var(--muted); margin:8px 0 0;
   }
+  .mortar-color-label b{ color:var(--cream); font-weight:600; }
 
   .generate-btn{
     width:100%; padding:16px; border:none; border-radius:2px;
@@ -446,12 +446,13 @@
       <div id="mortarColorField">
         <p class="field-label">Kolor fugi</p>
         <div class="mortar-colors">
-          <div class="mortar-dot active" data-value="jasnoszara" data-label="Jasnoszara" style="background:#b9b2a6;"></div>
-          <div class="mortar-dot" data-value="szara" data-label="Szara" style="background:#7d766c;"></div>
-          <div class="mortar-dot" data-value="piaskowa" data-label="Piaskowa" style="background:#c9a877;"></div>
-          <div class="mortar-dot" data-value="grafitowa" data-label="Grafitowa" style="background:#37342f;"></div>
-          <div class="mortar-dot" data-value="biala" data-label="Biała" style="background:#efe8db;"></div>
+          <div class="mortar-dot active" data-value="jasnoszara" title="Jasnoszara" style="background:#b9b2a6;"></div>
+          <div class="mortar-dot" data-value="szara" title="Szara" style="background:#7d766c;"></div>
+          <div class="mortar-dot" data-value="piaskowa" title="Piaskowa" style="background:#c9a877;"></div>
+          <div class="mortar-dot" data-value="grafitowa" title="Grafitowa" style="background:#37342f;"></div>
+          <div class="mortar-dot" data-value="biala" title="Biała" style="background:#efe8db;"></div>
         </div>
+        <p class="mortar-color-label">Wybrano: <b id="mortarColorLabel">Jasnoszara</b></p>
       </div>
 
       <div>
@@ -971,11 +972,13 @@
     });
   });
 
+  const mortarColorLabelEl = document.getElementById("mortarColorLabel");
   document.querySelectorAll(".mortar-dot").forEach(dot => {
     dot.addEventListener("click", () => {
       document.querySelectorAll(".mortar-dot").forEach(d => d.classList.remove("active"));
       dot.classList.add("active");
       state.mortarColor = dot.dataset.value;
+      mortarColorLabelEl.textContent = dot.getAttribute("title");
     });
   });
 
