@@ -105,7 +105,8 @@ module.exports = async (req, res) => {
 
     const shapeAlert = productShapeHint
       ? `UWAGA — NIETYPOWY FORMAT PŁYTKI, PRZECZYTAJ PRZED WYKONANIEM ZADANIA:
-Ten produkt NIE ma proporcji zwykłej cegły, mimo że nazywa się "cegła" lub "płytka ceglana". ${productShapeHint} Wymiary: ${productDims}. Jeśli narysujesz moduły o standardowych proporcjach cegły (ok. 2:1), wynik będzie BŁĘDNY. Zanim zaczniesz, wyobraź sobie ten materiał jako długie, poziome listwy/deski — nie jako cegłę — i renderuj dokładnie taki kształt. Jeśli załączone zdjęcie referencyjne produktu nie pokazuje tego jednoznacznie (np. kadr jest zbyt przybliżony), kieruj się przede wszystkim podanymi tu wymiarami tekstowymi, a nie domysłem na podstawie samego kadru.
+Ten produkt NIE ma proporcji zwykłej cegły. ${productShapeHint} Jeśli narysujesz moduły o standardowych proporcjach cegły (ok. 2:1), wynik będzie BŁĘDNY — musi być wyraźnie więcej wąskich, poziomych rzędów niż w typowym murze z cegły. Jeśli załączone zdjęcie referencyjne produktu nie pokazuje tego jednoznacznie (np. kadr jest zbyt przybliżony), kieruj się przede wszystkim tym opisem proporcji, a nie domysłem na podstawie samego kadru.
+WAŻNE: mimo wydłużonego formatu, cała zaznaczona powierzchnia MA WYGLĄDAĆ JAK JEDNOLITA OKŁADZINA Z PŁYTEK — tak jak każda inna cegła na tej ścianie. NIE dodawaj żadnych ramek, obwódek, listew wykończeniowych, podziałów na panele/sekcje ani żadnych elementów, o które nie proszono. To ma być zwykła, ciągła okładzina ceglana, tylko z płytkami o innych proporcjach.
 
 `
       : "";
@@ -134,6 +135,7 @@ Zasady krytyczne:
 - Zachowaj dokładnie oryginalną perspektywę, kąt kamery, proporcje budynku oraz wszystkie elementy poza zaznaczonym obszarem (okna, drzwi, rynny, otoczenie, niebo, oświetlenie) bez zmian.
 - Dopasuj cień, kierunek światła i odbicia na nowej okładzinie tak, by pasowały do oświetlenia sceny na oryginalnym zdjęciu.
 - Zachowaj naturalne, realistyczne przejścia na krawędziach zaznaczonego obszaru — bez twardych, sztucznych linii cięcia.
+- Cała zaznaczona powierzchnia ma być pokryta JEDNOLITĄ okładziną — bez ramek, obwódek, listew, podziału na panele lub sekcje, chyba że wynika to wyłącznie z naturalnego układu płytek opisanego wyżej.
 - Nie dodawaj znaków wodnych, tekstu ani elementów graficznych spoza sceny.
 - Wygeneruj wyłącznie finalny, fotorealistyczny obraz wynikowy.
 
@@ -141,7 +143,7 @@ PODSUMOWANIE — sprawdź przed wygenerowaniem, że wynik spełnia WSZYSTKIE pon
 1. Produkt: ${productName} (${productDescription || "naturalna faktura cegły"}).
 2. Układ: ${layoutLabel}.
 3. ${mount === "bez-fugi" ? "Brak fugi między płytkami." : `Fuga WIDOCZNA, w kolorze: ${mortarColorLabel}.`}
-${productDims ? `4. Proporcje pojedynczej płytki: ${productDims}${productShapeHint ? ` — ${productShapeHint}` : ""}.\n5. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian.` : "4. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian."}`
+${productDims ? `4. Proporcje pojedynczej płytki: ${productDims}${productShapeHint ? ` — ${productShapeHint}` : ""}.\n5. Jednolita okładzina bez dodatkowych ramek/podziałów.\n6. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian.` : "4. Jednolita okładzina bez dodatkowych ramek/podziałów.\n5. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian."}`
     });
 
     promptParts.push({ text: "Zdjęcie oryginalne:" });
