@@ -60,6 +60,7 @@ module.exports = async (req, res) => {
       productName,
       productDescription,
       productDims,
+      productShapeHint,
       productImage,
       surface,
       layout,
@@ -102,11 +103,18 @@ module.exports = async (req, res) => {
       ? `\n- WYMIARY I PROPORCJE POJEDYNCZEJ PŁYTKI (krytycznie ważne, zastosuj dokładnie): ${productDims}. NIE renderuj standardowych proporcji cegły (ok. 2:1) — moduł MUSI być wyraźnie bardziej wydłużony i płaski, zgodnie z podanymi proporcjami. To najczęstszy błąd do uniknięcia: zbyt "kwadratowe" lub zbyt wysokie płytki są NIEPOPRAWNE dla tego produktu.`
       : "";
 
+    const shapeAlert = productShapeHint
+      ? `UWAGA — NIETYPOWY FORMAT PŁYTKI, PRZECZYTAJ PRZED WYKONANIEM ZADANIA:
+Ten produkt NIE ma proporcji zwykłej cegły, mimo że nazywa się "cegła" lub "płytka ceglana". ${productShapeHint} Wymiary: ${productDims}. Jeśli narysujesz moduły o standardowych proporcjach cegły (ok. 2:1), wynik będzie BŁĘDNY. Zanim zaczniesz, wyobraź sobie ten materiał jako długie, poziome listwy/deski — nie jako cegłę — i renderuj dokładnie taki kształt. Jeśli załączone zdjęcie referencyjne produktu nie pokazuje tego jednoznacznie (np. kadr jest zbyt przybliżony), kieruj się przede wszystkim podanymi tu wymiarami tekstowymi, a nie domysłem na podstawie samego kadru.
+
+`
+      : "";
+
     const promptParts = [];
 
     promptParts.push({
       text:
-`Jesteś precyzyjnym narzędziem do fotorealistycznej wizualizacji materiałów budowlanych na zdjęciach architektonicznych.
+`${shapeAlert}Jesteś precyzyjnym narzędziem do fotorealistycznej wizualizacji materiałów budowlanych na zdjęciach architektonicznych.
 
 Otrzymujesz dwa zdjęcia:
 1. Oryginalne zdjęcie ściany/elewacji.
@@ -133,7 +141,7 @@ PODSUMOWANIE — sprawdź przed wygenerowaniem, że wynik spełnia WSZYSTKIE pon
 1. Produkt: ${productName} (${productDescription || "naturalna faktura cegły"}).
 2. Układ: ${layoutLabel}.
 3. ${mount === "bez-fugi" ? "Brak fugi między płytkami." : `Fuga WIDOCZNA, w kolorze: ${mortarColorLabel}.`}
-${productDims ? `4. Proporcje pojedynczej płytki: ${productDims}.\n5. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian.` : "4. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian."}`
+${productDims ? `4. Proporcje pojedynczej płytki: ${productDims}${productShapeHint ? ` — ${productShapeHint}` : ""}.\n5. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian.` : "4. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian."}`
     });
 
     promptParts.push({ text: "Zdjęcie oryginalne:" });
