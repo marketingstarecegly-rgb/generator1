@@ -833,49 +833,56 @@
       name: "Long Klasyczne 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_5053_300_300/Plytki-ceglane-na-elewacje-dekoracja-long-klasyczne-na-sciane.webp?overlay=1",
-      desc: "długa, betonowa płytka elewacyjna w klasycznym, ceglastoczerwonym kolorze, format wydłużony"
+      desc: "długa, betonowa płytka elewacyjna w klasycznym, ceglastoczerwonym kolorze, format wydłużony",
+      dims: "44 cm długości x ok. 6.5 cm wysokości — pojedyncza płytka jest znacznie dłuższa i niższa niż standardowa cegła (proporcje ok. 7:1)"
     },
     {
       id: "long-biale",
       name: "Long Białe 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_4900_300_300/plytki-ceglane-rustic-long-biale-dlugie-cegly-na-sciane-i-elewacje.webp?overlay=1",
-      desc: "długa, betonowa płytka elewacyjna w czystej bieli, nowoczesny, wydłużony format"
+      desc: "długa, betonowa płytka elewacyjna w czystej bieli, nowoczesny, wydłużony format",
+      dims: "44 cm długości x ok. 6.5 cm wysokości — pojedyncza płytka jest znacznie dłuższa i niższa niż standardowa cegła (proporcje ok. 7:1)"
     },
     {
       id: "long-szare",
       name: "Long Szare 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_4901_300_300/plytki-ceglane-rustic-long-szare-dlugie-cegly-na-sciane-i-elewacje.webp?overlay=1",
-      desc: "długa, betonowa płytka elewacyjna w nowoczesnym, szarym odcieniu betonu"
+      desc: "długa, betonowa płytka elewacyjna w nowoczesnym, szarym odcieniu betonu",
+      dims: "44 cm długości x ok. 6.5 cm wysokości — pojedyncza płytka jest znacznie dłuższa i niższa niż standardowa cegła (proporcje ok. 7:1)"
     },
     {
       id: "long-slim-graphite",
       name: "Slim Long Graphite 52 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_5198_300_300/plytki-ceglane-long-slim-graphite-elewacja-nowoczesna.webp?overlay=1",
-      desc: "bardzo długa, płaska płytka betonowa w kolorze grafitu, surowa faktura betonu architektonicznego"
+      desc: "bardzo długa, płaska płytka betonowa w kolorze grafitu, surowa faktura betonu architektonicznego",
+      dims: "52 cm długości x zaledwie ok. 4 cm wysokości — ekstremalnie wydłużona, płaska płytka (proporcje ok. 13:1), dużo niższa i dłuższa niż standardowa cegła"
     },
     {
       id: "long-slim-white",
       name: "Slim Long White 52 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_5188_300_300/plytki-ceglane-long-slim-white-elewacja-nowoczesna1_MIN.webp?overlay=1",
-      desc: "bardzo długa, płaska płytka betonowa w bieli, minimalistyczna faktura płaskiego betonu"
+      desc: "bardzo długa, płaska płytka betonowa w bieli, minimalistyczna faktura płaskiego betonu",
+      dims: "52 cm długości x zaledwie ok. 4 cm wysokości — ekstremalnie wydłużona, płaska płytka (proporcje ok. 13:1), dużo niższa i dłuższa niż standardowa cegła"
     },
     {
       id: "long-sandstone-beige",
       name: "Long Sandstone Beige 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_6780_300_300/Plytki-ceglane-Long---Sandstone-Beige-glowne.webp?overlay=1",
-      desc: "długa, betonowa płytka w piaskowym odcieniu, naturalna estetyka piaskowca"
+      desc: "długa, betonowa płytka w piaskowym odcieniu, naturalna estetyka piaskowca",
+      dims: "44 cm długości x ok. 6.5 cm wysokości — pojedyncza płytka jest znacznie dłuższa i niższa niż standardowa cegła (proporcje ok. 7:1)"
     },
     {
       id: "long-lawa",
       name: "Long Lawa 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_5062_300_300/Plytki-ceglane-RUSTIC-LONG-LAWA-44-cm--plytki-elewacyjne-inspirowane-lawa-wulkaniczna-na-sciane-ekspozytor.webp?overlay=1",
-      desc: "długa, betonowa płytka inspirowana lawą wulkaniczną, ciemny, głęboki odcień"
+      desc: "długa, betonowa płytka inspirowana lawą wulkaniczną, ciemny, głęboki odcień",
+      dims: "44 cm długości x ok. 6.5 cm wysokości — pojedyncza płytka jest znacznie dłuższa i niższa niż standardowa cegła (proporcje ok. 7:1)"
     }
   ];
 
@@ -1177,6 +1184,7 @@
         highlightedImage: highlightedDataUrl,
         productName: product.name,
         productDescription: product.desc,
+        productDims: product.dims || null,
         productImage: product.img,
         surface: state.surface,
         layout: state.layout,
