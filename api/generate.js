@@ -19,6 +19,14 @@ const LAYOUT_LABELS = {
   "jodelka": "układ w jodełkę"
 };
 
+const MORTAR_COLOR_LABELS = {
+  "jasnoszara": "jasnoszara (kolor jasnego betonu / naturalnego cementu, jasny neutralny szary, zdecydowanie jaśniejszy niż płytki)",
+  "szara": "szara (średni, stonowany szary, wyraźnie ciemniejszy niż jasnoszara fuga betonowa)",
+  "piaskowa": "piaskowa (ciepły, beżowo-piaskowy odcień, zbliżony do koloru piasku lub jasnego beżu)",
+  "grafitowa": "grafitowa (bardzo ciemny, prawie czarny odcień antracytu/grafitu — wyraźnie ciemniejsza niż płytki)",
+  "biala": "biała (czysta, jasna biel, wyraźnie jaśniejsza niż otaczające płytki)"
+};
+
 function dataUrlToInlineData(dataUrl){
   const match = /^data:(image\/[a-zA-Z]+);base64,(.+)$/.exec(dataUrl || "");
   if(!match) return null;
@@ -79,10 +87,15 @@ module.exports = async (req, res) => {
 
     const surfaceLabel = SURFACE_LABELS[surface] || "wskazaną powierzchnię";
     const layoutLabel = LAYOUT_LABELS[layout] || "naturalny układ";
+    const mortarColorLabel = MORTAR_COLOR_LABELS[mortarColor] || MORTAR_COLOR_LABELS["jasnoszara"];
 
-    const mountSentence = mount === "bez-fugi"
-      ? "Płytki mają być ułożone bez fugi, ściśle przy sobie, bez widocznych spoin."
-      : `Płytki mają być montowane z widoczną fugą w kolorze ${mortarColor || "jasnoszarym"}, o szerokości typowej dla płytek z cegły (ok. 1–1.5 cm).`;
+    const mountLine = mount === "bez-fugi"
+      ? "Montaż BEZ FUGI: płytki ułożone ściśle przy sobie, bez żadnych widocznych spoin ani przerw między płytkami."
+      : "Montaż Z FUGĄ: między płytkami musi być wyraźnie widoczna spoina o szerokości ok. 1–1.5 cm.";
+
+    const mortarColorLine = mount === "bez-fugi"
+      ? ""
+      : `\n- KOLOR FUGI (bardzo ważne, zastosuj dokładnie): fuga musi mieć kolor ${mortarColorLabel}. To kluczowy parametr — nie zastępuj go domyślnym ani innym odcieniem.`;
 
     const promptParts = [];
 
@@ -98,10 +111,10 @@ Twoje zadanie:
 Zastąp WYŁĄCZNIE podświetlony obszar realistyczną okładziną z płytek z cegły "${productName}". Opis materiału: ${productDescription || "płytka z cegły o naturalnej, nieregularnej fakturze"}.
 ${productInline ? "Dołączam też osobne zdjęcie referencyjne samego materiału/tekstury — dopasuj kolor, fakturę i charakter cegły dokładnie do tego wzorca." : ""}
 
-Zastosuj:
+Zastosuj dokładnie następujące parametry:
 - Powierzchnia: ${surfaceLabel}.
 - Układ cegły: ${layoutLabel}.
-- ${mountSentence}
+- ${mountLine}${mortarColorLine}
 
 Zasady krytyczne:
 - Usuń całkowicie pomarańczową nakładkę z wyniku — finalny obraz ma wyglądać jak naturalna, niezmodyfikowana fotografia, BEZ śladu podświetlenia.
@@ -109,7 +122,13 @@ Zasady krytyczne:
 - Dopasuj cień, kierunek światła i odbicia na nowej okładzinie tak, by pasowały do oświetlenia sceny na oryginalnym zdjęciu.
 - Zachowaj naturalne, realistyczne przejścia na krawędziach zaznaczonego obszaru — bez twardych, sztucznych linii cięcia.
 - Nie dodawaj znaków wodnych, tekstu ani elementów graficznych spoza sceny.
-- Wygeneruj wyłącznie finalny, fotorealistyczny obraz wynikowy.`
+- Wygeneruj wyłącznie finalny, fotorealistyczny obraz wynikowy.
+
+PODSUMOWANIE — sprawdź przed wygenerowaniem, że wynik spełnia WSZYSTKIE poniższe punkty:
+1. Produkt: ${productName} (${productDescription || "naturalna faktura cegły"}).
+2. Układ: ${layoutLabel}.
+3. ${mount === "bez-fugi" ? "Brak fugi między płytkami." : `Fuga WIDOCZNA, w kolorze: ${mortarColorLabel}.`}
+4. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian.`
     });
 
     promptParts.push({ text: "Zdjęcie oryginalne:" });
