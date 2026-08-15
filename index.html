@@ -100,25 +100,6 @@
   }
   .hero p strong{ color:var(--sand); font-weight:600; }
 
-  /* ---------- mode switch ---------- */
-  .mode-switch-wrap{ max-width:900px; margin:0 auto; padding:0 28px; }
-  .mode-switch{
-    display:grid; grid-template-columns:1fr 1fr; gap:10px;
-    border:1px solid var(--line); border-radius:4px; padding:6px;
-    background:var(--bg-panel);
-  }
-  @media (max-width:600px){ .mode-switch{ grid-template-columns:1fr; } }
-  .mode-btn{
-    display:flex; flex-direction:column; align-items:flex-start; gap:3px;
-    padding:12px 14px; border-radius:2px; border:1px solid transparent; cursor:pointer;
-    background:transparent; text-align:left; transition:all .15s;
-  }
-  .mode-btn:hover{ border-color:var(--line-bright); }
-  .mode-btn.active{ background:#ffffff; border-color:var(--brick); box-shadow:0 1px 4px rgba(0,0,0,0.06); }
-  .mode-btn-title{ font-family:var(--display); font-weight:600; font-size:14px; color:var(--cream); }
-  .mode-btn.active .mode-btn-title{ color:var(--brick-dark); }
-  .mode-btn-sub{ font-size:11.5px; color:var(--muted); }
-
   /* ---------- layout ---------- */
   .studio{
     max-width:1180px; margin:0 auto; padding:40px 28px 100px;
@@ -385,21 +366,8 @@
 <section class="hero">
   <p class="hero-eyebrow">Narzędzie / bezpłatna wizualizacja</p>
   <h1>Zobacz tę cegłę na swojej ścianie, zanim ją zamówisz</h1>
-  <p>Dodaj zdjęcie ściany albo elewacji, wybierz jeden z produktów Stare Cegły i sprawdź, jak będzie wyglądać w Twoim wnętrzu.</p>
+  <p>Dodaj zdjęcie ściany albo elewacji, zaznacz palcem lub myszką powierzchnię do przemiany i wybierz jeden z produktów Stare Cegły. Wynik wygenerujemy w kilkanaście sekund — <strong>bez zakładania konta</strong>.</p>
 </section>
-
-<div class="mode-switch-wrap">
-  <div class="mode-switch" id="modeSwitch">
-    <button type="button" class="mode-btn active" data-mode="precise">
-      <span class="mode-btn-title">Precyzyjne dopasowanie</span>
-      <span class="mode-btn-sub">prawdziwa tekstura, dokładny kolor, natychmiastowy wynik</span>
-    </button>
-    <button type="button" class="mode-btn" data-mode="ai">
-      <span class="mode-btn-title">Swobodna wizualizacja AI</span>
-      <span class="mode-btn-sub">wspiera mieszankę i jodełkę, generowanie ok. 15 s</span>
-    </button>
-  </div>
-</div>
 
 <div class="studio">
 
@@ -429,16 +397,7 @@
       <button class="tool-btn danger" id="clearMaskBtn" type="button">Wyczyść zaznaczenie</button>
       <button class="tool-btn" id="changePhotoBtn" type="button">Zmień zdjęcie</button>
     </div>
-    <div class="stage-toolbar" id="cornerToolbar" style="display:none;">
-      <span class="brush-label">Rzędy</span>
-      <input type="range" id="rowsSlider" min="4" max="40" value="14">
-      <span class="brush-label">Kolumny</span>
-      <input type="range" id="colsSlider" min="4" max="60" value="22">
-      <button class="tool-btn danger" id="clearCornersBtn" type="button">Wyczyść punkty</button>
-      <button class="tool-btn" id="changePhotoBtn2" type="button">Zmień zdjęcie</button>
-    </div>
     <p class="stage-hint" id="stageHint" style="display:none;">Zamaluj palcem lub myszką <b>tylko fragment ściany</b>, który ma zostać wyłożony cegłą — pomiń okna, drzwi i rynny.</p>
-    <p class="stage-hint" id="cornerHint" style="display:none;">Zaznacz <b>4 rogi</b> fragmentu ściany w kolejności: lewy górny → prawy górny → prawy dolny → lewy dolny. Suwakami dopasuj gęstość, żeby cegły miały realistyczną wielkość.</p>
   </div>
 
   <div class="panel">
@@ -471,10 +430,9 @@
         <div class="chip-row" data-group="layout">
           <button class="chip active" data-value="klasyczne-przesuniecie">Klasyczne przesunięcie</button>
           <button class="chip" data-value="prosty">Prosty układ</button>
-          <button class="chip" data-value="mieszanka" data-ai-only="1">Naturalna mieszanka</button>
-          <button class="chip" data-value="jodelka" data-ai-only="1">Jodełka</button>
+          <button class="chip" data-value="mieszanka">Naturalna mieszanka</button>
+          <button class="chip" data-value="jodelka">Jodełka</button>
         </div>
-        <p class="generate-note" id="layoutModeNote" style="display:none;">Mieszanka i jodełka są dostępne tylko w trybie „Swobodna wizualizacja AI”.</p>
       </div>
 
       <div>
@@ -1154,7 +1112,6 @@
   ];
 
   const state = {
-    mode: "precise", // "precise" | "ai"
     productId: null,
     surface: "elewacja",
     layout: "klasyczne-przesuniecie",
@@ -1164,48 +1121,6 @@
     imageNaturalW: 0,
     imageNaturalH: 0
   };
-
-  // ---- mode switch ----
-  const modeSwitch = document.getElementById("modeSwitch");
-  const layoutModeNote = document.getElementById("layoutModeNote");
-
-  function applyModeUI(){
-    document.querySelectorAll(".mode-btn").forEach(b => {
-      b.classList.toggle("active", b.dataset.mode === state.mode);
-    });
-    const isPrecise = state.mode === "precise";
-
-    // AI-only layout chips
-    document.querySelectorAll('.chip[data-ai-only="1"]').forEach(chip => {
-      chip.disabled = isPrecise;
-      chip.style.opacity = isPrecise ? "0.4" : "1";
-      chip.style.cursor = isPrecise ? "not-allowed" : "pointer";
-    });
-    layoutModeNote.style.display = isPrecise ? "block" : "none";
-    if(isPrecise && (state.layout === "mieszanka" || state.layout === "jodelka")){
-      state.layout = "klasyczne-przesuniecie";
-      document.querySelectorAll('.chip-row[data-group="layout"] .chip').forEach(c => {
-        c.classList.toggle("active", c.dataset.value === "klasyczne-przesuniecie");
-      });
-    }
-
-    // toolbars / hints / canvas overlay reset
-    if(state.imageDataUrl){
-      toolbar.style.display = isPrecise ? "none" : "flex";
-      cornerToolbar.style.display = isPrecise ? "flex" : "none";
-      stageHint.style.display = isPrecise ? "none" : "block";
-      cornerHint.style.display = isPrecise ? "block" : "none";
-      redrawOverlay();
-    }
-    updateGenerateState();
-  }
-
-  modeSwitch.addEventListener("click", (e) => {
-    const btn = e.target.closest(".mode-btn");
-    if(!btn) return;
-    state.mode = btn.dataset.mode;
-    applyModeUI();
-  });
 
   // ---- render product accordion (grouped, collapsible list) ----
   const GROUP_ORDER = [
@@ -1302,15 +1217,11 @@
   const fileInput = document.getElementById("fileInput");
   const stage = document.getElementById("stage");
   const toolbar = document.getElementById("toolbar");
-  const cornerToolbar = document.getElementById("cornerToolbar");
   const stageHint = document.getElementById("stageHint");
-  const cornerHint = document.getElementById("cornerHint");
   const baseCanvas = document.getElementById("baseCanvas");
   const maskCanvas = document.getElementById("maskCanvas");
   const baseCtx = baseCanvas.getContext("2d");
   const maskCtx = maskCanvas.getContext("2d");
-  const rowsSlider = document.getElementById("rowsSlider");
-  const colsSlider = document.getElementById("colsSlider");
 
   dropzone.addEventListener("click", () => fileInput.click());
   ["dragenter","dragover"].forEach(ev => dropzone.addEventListener(ev, e => {
@@ -1349,31 +1260,27 @@
 
         dropzone.style.display = "none";
         stage.classList.add("active");
+        toolbar.style.display = "flex";
+        stageHint.style.display = "block";
         maskHistory = [];
-        corners = [];
-        applyModeUI();
+        updateGenerateState();
       };
       img.src = e.target.result;
     };
     reader.readAsDataURL(file);
   }
 
-  function resetPhoto(){
+  document.getElementById("changePhotoBtn").addEventListener("click", () => {
     dropzone.style.display = "flex";
     stage.classList.remove("active");
     toolbar.style.display = "none";
-    cornerToolbar.style.display = "none";
     stageHint.style.display = "none";
-    cornerHint.style.display = "none";
     fileInput.value = "";
     state.imageDataUrl = null;
-    corners = [];
     updateGenerateState();
-  }
-  document.getElementById("changePhotoBtn").addEventListener("click", resetPhoto);
-  document.getElementById("changePhotoBtn2").addEventListener("click", resetPhoto);
+  });
 
-  // ---- mask drawing (tryb AI: pędzel) ----
+  // ---- mask drawing ----
   let drawing = false;
   let maskHistory = [];
   let hasMaskContent = false;
@@ -1396,7 +1303,6 @@
   }
 
   function startDraw(e){
-    if(state.mode !== "ai") return;
     e.preventDefault();
     pushHistory();
     drawing = true;
@@ -1416,7 +1322,7 @@
   }
   let lastPos = null;
   function moveDraw(e){
-    if(state.mode !== "ai" || !drawing) return;
+    if(!drawing) return;
     e.preventDefault();
     const p = getPos(e);
     maskCtx.beginPath();
@@ -1426,7 +1332,6 @@
     lastPos = p;
   }
   function endDraw(){
-    if(state.mode !== "ai") return;
     drawing = false;
     updateGenerateState();
   }
@@ -1439,97 +1344,15 @@
   maskCanvas.addEventListener("touchend", endDraw);
 
   document.getElementById("undoBtn").addEventListener("click", () => {
-    if(state.mode !== "ai" || maskHistory.length === 0) return;
+    if(maskHistory.length === 0) return;
     const prev = maskHistory.pop();
     maskCtx.putImageData(prev, 0, 0);
     updateGenerateState();
   });
   document.getElementById("clearMaskBtn").addEventListener("click", () => {
-    if(state.mode !== "ai") return;
     pushHistory();
     maskCtx.clearRect(0,0,maskCanvas.width, maskCanvas.height);
     hasMaskContent = false;
-    updateGenerateState();
-  });
-
-  // ---- corner picking (tryb precyzyjny: 4 rogi ściany) ----
-  let corners = [];
-  let draggingCornerIndex = -1;
-
-  function drawCorners(){
-    maskCtx.clearRect(0,0,maskCanvas.width, maskCanvas.height);
-    if(corners.length === 0) return;
-    maskCtx.lineWidth = 2;
-    maskCtx.strokeStyle = "rgba(244,158,26,0.95)";
-    maskCtx.fillStyle = "rgba(244,158,26,0.16)";
-    if(corners.length >= 2){
-      maskCtx.beginPath();
-      maskCtx.moveTo(corners[0].x, corners[0].y);
-      for(let i=1;i<corners.length;i++) maskCtx.lineTo(corners[i].x, corners[i].y);
-      if(corners.length === 4){
-        maskCtx.closePath();
-        maskCtx.fill();
-      }
-      maskCtx.stroke();
-    }
-    corners.forEach((p, i) => {
-      maskCtx.beginPath();
-      maskCtx.arc(p.x, p.y, 10, 0, Math.PI*2);
-      maskCtx.fillStyle = "#ffffff";
-      maskCtx.fill();
-      maskCtx.lineWidth = 2;
-      maskCtx.strokeStyle = "#f49e1a";
-      maskCtx.stroke();
-      maskCtx.fillStyle = "#1c1815";
-      maskCtx.font = "bold 12px Montserrat, sans-serif";
-      maskCtx.textAlign = "center";
-      maskCtx.textBaseline = "middle";
-      maskCtx.fillText(String(i + 1), p.x, p.y);
-    });
-  }
-
-  function redrawOverlay(){
-    if(state.mode === "precise") drawCorners();
-    else maskCtx.clearRect(0,0,maskCanvas.width, maskCanvas.height);
-  }
-
-  function cornerPointerDown(e){
-    if(state.mode !== "precise") return;
-    const pos = getPos(e);
-    const hitRadius = 18;
-    let hitIndex = -1;
-    corners.forEach((p, i) => {
-      if(Math.hypot(p.x - pos.x, p.y - pos.y) < hitRadius) hitIndex = i;
-    });
-    if(hitIndex >= 0){
-      draggingCornerIndex = hitIndex;
-      e.preventDefault();
-      return;
-    }
-    if(corners.length < 4){
-      corners.push(pos);
-      drawCorners();
-      updateGenerateState();
-    }
-    e.preventDefault();
-  }
-  function cornerPointerMove(e){
-    if(state.mode !== "precise" || draggingCornerIndex < 0) return;
-    corners[draggingCornerIndex] = getPos(e);
-    drawCorners();
-    e.preventDefault();
-  }
-  function cornerPointerUp(){
-    draggingCornerIndex = -1;
-  }
-
-  maskCanvas.addEventListener("pointerdown", cornerPointerDown);
-  maskCanvas.addEventListener("pointermove", cornerPointerMove);
-  window.addEventListener("pointerup", cornerPointerUp);
-
-  document.getElementById("clearCornersBtn").addEventListener("click", () => {
-    corners = [];
-    drawCorners();
     updateGenerateState();
   });
 
@@ -1544,25 +1367,14 @@
   function updateGenerateState(){
     const hasImage = !!state.imageDataUrl;
     const hasProduct = !!state.productId;
-
-    if(state.mode === "precise"){
-      const hasCorners = corners.length === 4;
-      generateBtn.disabled = !(hasImage && hasProduct && hasCorners);
-      if(!hasImage) generateNote.textContent = "Dodaj zdjęcie, żeby zacząć.";
-      else if(!hasCorners) generateNote.textContent = `Zaznacz 4 rogi ściany (masz ${corners.length}/4).`;
-      else if(!hasProduct) generateNote.textContent = "Wybierz produkt z listy powyżej.";
-      else generateNote.textContent = "Gotowe do wygenerowania — wynik pojawi się natychmiast.";
-    } else {
-      const hasMask = hasImage && maskHasPixels();
-      generateBtn.disabled = !(hasImage && hasProduct && hasMask);
-      if(!hasImage) generateNote.textContent = "Dodaj zdjęcie, żeby zacząć.";
-      else if(!hasMask) generateNote.textContent = "Zamaluj fragment ściany, który ma zostać wyłożony cegłą.";
-      else if(!hasProduct) generateNote.textContent = "Wybierz produkt z listy powyżej.";
-      else generateNote.textContent = "Gotowe do wygenerowania.";
-    }
+    const hasMask = hasImage && maskHasPixels();
+    generateBtn.disabled = !(hasImage && hasProduct && hasMask);
+    if(!hasImage) generateNote.textContent = "Dodaj zdjęcie, żeby zacząć.";
+    else if(!hasMask) generateNote.textContent = "Zamaluj fragment ściany, który ma zostać wyłożony cegłą.";
+    else if(!hasProduct) generateNote.textContent = "Wybierz produkt z listy powyżej.";
+    else generateNote.textContent = "Gotowe do wygenerowania.";
   }
   updateGenerateState();
-  applyModeUI();
 
   // ---- generate ----
   const errorBox = document.getElementById("errorBox");
@@ -1572,211 +1384,6 @@
   const resultMeta = document.getElementById("resultMeta");
   const downloadBtn = document.getElementById("downloadBtn");
 
-  const MORTAR_RGB = {
-    "biala": [220, 220, 216],
-    "stara-biel": [183, 182, 172],
-    "piaskowa": [199, 188, 152],
-    "szara": [154, 156, 155],
-    "antracytowa": [47, 49, 51]
-  };
-
-  async function generateWithAI(product, originalDataUrl){
-    // flatten original + highlighted mask overlay for the model to "see" the target region
-    const overlayCanvas = document.createElement("canvas");
-    overlayCanvas.width = baseCanvas.width;
-    overlayCanvas.height = baseCanvas.height;
-    const octx = overlayCanvas.getContext("2d");
-    octx.drawImage(baseCanvas, 0, 0);
-    octx.drawImage(maskCanvas, 0, 0);
-    const highlightedDataUrl = overlayCanvas.toDataURL("image/jpeg", 0.92);
-
-    const payload = {
-      originalImage: originalDataUrl,
-      highlightedImage: highlightedDataUrl,
-      productName: product.name,
-      productDescription: product.desc,
-      productDims: product.dims || null,
-      productShapeHint: product.shapeHint || null,
-      productImage: product.img,
-      surface: state.surface,
-      layout: state.layout,
-      mount: state.mount,
-      mortarColor: state.mount === "bez-fugi" ? null : state.mortarColor
-    };
-
-    const res = await fetch("/api/generate", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(payload)
-    });
-
-    if(!res.ok){
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || `Błąd serwera (${res.status})`);
-    }
-    const data = await res.json();
-    if(!data.image){
-      throw new Error("Serwer nie zwrócił obrazu wynikowego.");
-    }
-    return data.image;
-  }
-
-  // ---- homography helpers (mapowanie kwadratu jednostkowego na 4 zaznaczone rogi) ----
-  function computeHomography(quad){
-    const x0=quad[0].x, y0=quad[0].y, x1=quad[1].x, y1=quad[1].y;
-    const x2=quad[2].x, y2=quad[2].y, x3=quad[3].x, y3=quad[3].y;
-    const dx1=x1-x2, dx2=x3-x2, dx3=x0-x1+x2-x3;
-    const dy1=y1-y2, dy2=y3-y2, dy3=y0-y1+y2-y3;
-    let a13=0, a23=0;
-    const den = dx1*dy2 - dx2*dy1;
-    if(Math.abs(dx3) > 1e-9 || Math.abs(dy3) > 1e-9){
-      a13 = (dx3*dy2 - dx2*dy3) / den;
-      a23 = (dx1*dy3 - dx3*dy1) / den;
-    }
-    const a11 = x1 - x0 + a13*x1;
-    const a21 = x3 - x0 + a23*x3;
-    const a31 = x0;
-    const a12 = y1 - y0 + a13*y1;
-    const a22 = y3 - y0 + a23*y3;
-    const a32 = y0;
-    return [[a11,a21,a31],[a12,a22,a32],[a13,a23,1]];
-  }
-  function invert3x3(m){
-    const a=m[0][0], b=m[0][1], c=m[0][2];
-    const d=m[1][0], e=m[1][1], f=m[1][2];
-    const g=m[2][0], h=m[2][1], i=m[2][2];
-    const A=e*i-f*h, B=-(d*i-f*g), C=d*h-e*g;
-    const D=-(b*i-c*h), E=a*i-c*g, F=-(a*h-b*g);
-    const G=b*f-c*e, H=-(a*f-c*d), I=a*e-b*d;
-    const det = a*A + b*B + c*C;
-    if(Math.abs(det) < 1e-12) return null;
-    const inv = 1/det;
-    return [[A*inv,D*inv,G*inv],[B*inv,E*inv,H*inv],[C*inv,F*inv,I*inv]];
-  }
-  function applyH(m, x, y){
-    const w = m[2][0]*x + m[2][1]*y + m[2][2];
-    return [(m[0][0]*x + m[0][1]*y + m[0][2]) / w, (m[1][0]*x + m[1][1]*y + m[1][2]) / w];
-  }
-  function pointInQuad(pt, poly){
-    let inside = false;
-    for(let i=0, j=poly.length-1; i<poly.length; j=i++){
-      const xi=poly[i].x, yi=poly[i].y, xj=poly[j].x, yj=poly[j].y;
-      const intersect = ((yi>pt.y) !== (yj>pt.y)) && (pt.x < (xj-xi)*(pt.y-yi)/(yj-yi)+xi);
-      if(intersect) inside = !inside;
-    }
-    return inside;
-  }
-  function clampByte(v){ return v < 0 ? 0 : (v > 255 ? 255 : (v + 0.5) | 0); }
-  function hashRC(r, c){
-    const x = Math.sin(r*127.1 + c*311.7) * 43758.5453;
-    return x - Math.floor(x);
-  }
-
-  function loadTextureImage(url){
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.onload = () => resolve(img);
-      img.onerror = () => reject(new Error("nie udało się wczytać tekstury produktu"));
-      img.src = "/api/proxy-image?url=" + encodeURIComponent(url);
-    });
-  }
-
-  async function renderPreciseTexture(product){
-    if(corners.length !== 4) throw new Error("zaznacz 4 rogi ściany");
-    const texImg = await loadTextureImage(product.img);
-
-    const w = baseCanvas.width, h = baseCanvas.height;
-    const outCanvas = document.createElement("canvas");
-    outCanvas.width = w; outCanvas.height = h;
-    const outCtx = outCanvas.getContext("2d");
-    outCtx.drawImage(baseCanvas, 0, 0);
-
-    const baseData = baseCtx.getImageData(0,0,w,h).data;
-    const outImageData = outCtx.getImageData(0,0,w,h);
-    const outData = outImageData.data;
-
-    const texCanvas = document.createElement("canvas");
-    texCanvas.width = texImg.naturalWidth;
-    texCanvas.height = texImg.naturalHeight;
-    const texCtx = texCanvas.getContext("2d");
-    texCtx.drawImage(texImg, 0, 0);
-    let texPixels;
-    try{
-      texPixels = texCtx.getImageData(0,0,texCanvas.width, texCanvas.height).data;
-    }catch(err){
-      throw new Error("nie udało się odczytać tekstury produktu (ograniczenie przeglądarki)");
-    }
-    const texW = texCanvas.width, texH = texCanvas.height;
-
-    const H = computeHomography(corners);
-    const Hinv = invert3x3(H);
-    if(!Hinv) throw new Error("nieprawidłowe zaznaczenie rogów — spróbuj ponownie");
-
-    const rows = parseInt(rowsSlider.value, 10);
-    const cols = parseInt(colsSlider.value, 10);
-    const runningBond = state.layout === "klasyczne-przesuniecie";
-    const hasGrout = state.mount !== "bez-fugi";
-    const jointFrac = hasGrout ? 0.045 : 0;
-    const mortarRGB = MORTAR_RGB[state.mortarColor] || MORTAR_RGB["biala"];
-
-    let minX=Infinity, minY=Infinity, maxX=-Infinity, maxY=-Infinity;
-    corners.forEach(p => {
-      minX = Math.min(minX, p.x); minY = Math.min(minY, p.y);
-      maxX = Math.max(maxX, p.x); maxY = Math.max(maxY, p.y);
-    });
-    minX = Math.max(0, Math.floor(minX)); minY = Math.max(0, Math.floor(minY));
-    maxX = Math.min(w, Math.ceil(maxX)); maxY = Math.min(h, Math.ceil(maxY));
-
-    for(let y=minY; y<maxY; y++){
-      for(let x=minX; x<maxX; x++){
-        if(!pointInQuad({x:x+0.5, y:y+0.5}, corners)) continue;
-        const [u, v] = applyH(Hinv, x+0.5, y+0.5);
-        if(u<0 || u>1 || v<0 || v>1) continue;
-
-        const rowF = v*rows;
-        const r = Math.floor(rowF);
-        const vFrac = rowF - r;
-
-        const shift = (runningBond && (r % 2 === 1)) ? 0.5/cols : 0;
-        let uShifted = u + shift;
-        uShifted -= Math.floor(uShifted);
-        const colF = uShifted*cols;
-        const c = Math.floor(colF);
-        const uFrac = colF - c;
-
-        const idx = (y*w + x) * 4;
-        const lum = baseData[idx]*0.299 + baseData[idx+1]*0.587 + baseData[idx+2]*0.114;
-        const lightFactor = Math.max(0.55, Math.min(1.55, lum / 150));
-
-        let rr, gg, bb;
-        const isJoint = hasGrout && (uFrac < jointFrac/2 || uFrac > 1-jointFrac/2 || vFrac < jointFrac/2 || vFrac > 1-jointFrac/2);
-
-        if(isJoint){
-          rr = mortarRGB[0]; gg = mortarRGB[1]; bb = mortarRGB[2];
-        } else {
-          let txU = jointFrac>0 ? (uFrac - jointFrac/2)/(1-jointFrac) : uFrac;
-          let txV = jointFrac>0 ? (vFrac - jointFrac/2)/(1-jointFrac) : vFrac;
-          txU = Math.max(0, Math.min(0.999, txU));
-          txV = Math.max(0, Math.min(0.999, txV));
-          const tIdx = ((Math.floor(txV*texH) * texW) + Math.floor(txU*texW)) * 4;
-          const jitter = (hashRC(r, c) - 0.5) * 22;
-          rr = texPixels[tIdx] + jitter;
-          gg = texPixels[tIdx+1] + jitter;
-          bb = texPixels[tIdx+2] + jitter;
-        }
-
-        outData[idx]   = clampByte(rr * lightFactor);
-        outData[idx+1] = clampByte(gg * lightFactor);
-        outData[idx+2] = clampByte(bb * lightFactor);
-        outData[idx+3] = 255;
-      }
-    }
-
-    outCtx.putImageData(outImageData, 0, 0);
-    return outCanvas.toDataURL("image/jpeg", 0.94);
-  }
-
   generateBtn.addEventListener("click", async () => {
     errorBox.classList.remove("show");
     generateBtn.classList.add("loading");
@@ -1784,16 +1391,50 @@
 
     try{
       const product = PRODUCTS.find(p => p.id === state.productId);
+
+      // flatten original + highlighted mask overlay for the model to "see" the target region
+      const overlayCanvas = document.createElement("canvas");
+      overlayCanvas.width = baseCanvas.width;
+      overlayCanvas.height = baseCanvas.height;
+      const octx = overlayCanvas.getContext("2d");
+      octx.drawImage(baseCanvas, 0, 0);
+      octx.drawImage(maskCanvas, 0, 0);
+      const highlightedDataUrl = overlayCanvas.toDataURL("image/jpeg", 0.92);
       const originalDataUrl = baseCanvas.toDataURL("image/jpeg", 0.92);
 
-      const resultImage = state.mode === "precise"
-        ? await renderPreciseTexture(product)
-        : await generateWithAI(product, originalDataUrl);
+      const payload = {
+        originalImage: originalDataUrl,
+        highlightedImage: highlightedDataUrl,
+        productName: product.name,
+        productDescription: product.desc,
+        productDims: product.dims || null,
+        productShapeHint: product.shapeHint || null,
+        productImage: product.img,
+        surface: state.surface,
+        layout: state.layout,
+        mount: state.mount,
+        mortarColor: state.mount === "bez-fugi" ? null : state.mortarColor
+      };
+
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(payload)
+      });
+
+      if(!res.ok){
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `Błąd serwera (${res.status})`);
+      }
+      const data = await res.json();
+      if(!data.image){
+        throw new Error("Serwer nie zwrócił obrazu wynikowego.");
+      }
 
       beforeImg.src = originalDataUrl;
-      afterImg.src = resultImage;
-      resultMeta.textContent = `${product.name} · ${labelFor(state.surface)} · ${labelFor(state.mount)} · ${state.mode === "precise" ? "tryb precyzyjny" : "tryb AI"}`;
-      downloadBtn.href = resultImage;
+      afterImg.src = data.image;
+      resultMeta.textContent = `${product.name} · ${labelFor(state.surface)} · ${labelFor(state.mount)}`;
+      downloadBtn.href = data.image;
       resultWrap.classList.add("show");
       resultWrap.scrollIntoView({behavior:"smooth", block:"start"});
     }catch(err){
