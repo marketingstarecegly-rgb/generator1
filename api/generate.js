@@ -1,9 +1,60 @@
 // /api/generate.js
 // Vercel Serverless Function — proxy do Gemini 2.5 Flash Image ("Nano Banana")
 // Wymaga zmiennej środowiskowej GEMINI_API_KEY ustawionej w Vercel (Project Settings → Environment Variables).
+//
+// Limity dziennego generowania (niezalogowani: 1/dzień po IP, zalogowani: 5/dzień po ID klienta)
+// wymagają dodatkowo zmiennych UPSTASH_REDIS_REST_URL i UPSTASH_REDIS_REST_TOKEN
+// (darmowe konto na https://upstash.com — Redis REST, bez potrzeby żadnej biblioteki npm).
+// Jeśli te zmienne nie są ustawione, limity są wyłączone (tryb "fail-open") — narzędzie
+// działa normalnie, ale bez ograniczeń liczby generowań.
 
 const GEMINI_MODEL = "gemini-2.5-flash-image";
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+
+const LIMIT_ANONYMOUS = 1;
+const LIMIT_LOGGED_IN = 5;
+const LIMIT_TTL_SECONDS = 26 * 3600; // ok. 26h — margines na strefy czasowe, licznik i tak resetuje się raz na dobę
+
+const UPSTASH_URL = process.env.UPSTASH_REDIS_REST_URL;
+const UPSTASH_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+function getClientIp(req){
+  const fwd = req.headers["x-forwarded-for"];
+  if(fwd) return String(fwd).split(",")[0].trim();
+  return (req.socket && req.socket.remoteAddress) || "unknown";
+}
+
+async function upstashCommand(pathSegments){
+  const url = `${UPSTASH_URL}/${pathSegments.map(encodeURIComponent).join("/")}`;
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${UPSTASH_TOKEN}` } });
+  if(!res.ok) throw new Error(`Upstash error ${res.status}`);
+  return res.json();
+}
+
+// Sprawdza i zwiększa licznik generowań dla danego klucza. Zwraca informację,
+// czy żądanie mieści się w dziennym limicie.
+async function checkAndIncrementLimit(key, limit){
+  if(!UPSTASH_URL || !UPSTASH_TOKEN){
+    // Brak konfiguracji Redis — limity wyłączone (fail-open), narzędzie działa bez ograniczeń.
+    return { allowed: true, remaining: null, configured: false };
+  }
+  try{
+    const incrData = await upstashCommand(["incr", key]);
+    const count = incrData.result;
+    if(count === 1){
+      // pierwsze użycie w tym okresie rozliczeniowym — ustaw wygaśnięcie klucza
+      await upstashCommand(["expire", key, String(LIMIT_TTL_SECONDS)]);
+    }
+    if(count > limit){
+      return { allowed: false, remaining: 0, count, configured: true };
+    }
+    return { allowed: true, remaining: limit - count, count, configured: true };
+  }catch(err){
+    console.error("Błąd limitowania (Upstash):", err);
+    // W razie awarii usługi limitów nie blokujemy generowania (fail-open).
+    return { allowed: true, remaining: null, configured: true, error: true };
+  }
+}
 
 const SURFACE_LABELS = {
   "elewacja": "elewację budynku (zewnętrzną ścianę)",
@@ -13,10 +64,10 @@ const SURFACE_LABELS = {
 };
 
 const LAYOUT_LABELS = {
-  "klasyczne-przesuniecie": "klasyczny układ z przesunięciem (jak w tradycyjnym murowaniu, cegła na cegłę z przesunięciem o pół długości)",
-  "prosty": "prosty, równoległy układ bez przesunięcia",
-  "mieszanka": "naturalną, nieregularną mieszankę formatów i odcieni",
-  "jodelka": "układ w jodełkę"
+  "klasyczne-przesuniecie": "klasyczny układ z przesunięciem (running bond) — poziome rzędy cegieł, każdy kolejny rząd przesunięty względem poprzedniego o pół długości cegły, jak w tradycyjnym murowaniu",
+  "prosty": "prosty układ siatkowy (stack bond) — cegły ułożone dokładnie jedna nad drugą w idealnie pionowych i poziomych liniach, BEZ żadnego przesunięcia między rzędami",
+  "mieszanka": "naturalną, nieregularną mieszankę formatów i odcieni — cegły o lekko różnych długościach i szerokościach, ułożone z nieregularnym, przypadkowym przesunięciem (nie idealnie powtarzalnym jak running bond), z widocznym zróżnicowaniem koloru między poszczególnymi sztukami",
+  "jodelka": "UKŁAD W JODEŁKĘ (herringbone) — cegły ułożone POD KĄTEM (zwykle 45° lub 90° względem siebie) w powtarzający się wzór przypominający litery V/zygzak lub szkielet ryby (jak parkiet w jodełkę). To NIE są poziome rzędy — każda cegła stoi ukośnie względem sąsiednich, tworząc charakterystyczny, geometryczny, ukośny wzór na całej powierzchni. Jeśli wynik pokazuje zwykłe poziome rzędy cegieł, to jest BŁĄD."
 };
 
 const MORTAR_COLOR_LABELS = {
@@ -65,8 +116,27 @@ module.exports = async (req, res) => {
       surface,
       layout,
       mount,
-      mortarColor
+      mortarColor,
+      customerId
     } = req.body || {};
+
+    // ---- limit dziennych generowań ----
+    const isLoggedIn = !!(customerId && String(customerId).trim());
+    const identity = isLoggedIn ? `cust:${String(customerId).trim()}` : `ip:${getClientIp(req)}`;
+    const limit = isLoggedIn ? LIMIT_LOGGED_IN : LIMIT_ANONYMOUS;
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD (UTC)
+    const rlKey = `wizualizator:${identity}:${today}`;
+
+    const rl = await checkAndIncrementLimit(rlKey, limit);
+    if(!rl.allowed){
+      return res.status(429).json({
+        error: isLoggedIn
+          ? `Wykorzystałeś dzienny limit ${LIMIT_LOGGED_IN} generowań na dziś. Wróć jutro, żeby stworzyć kolejne wizualizacje.`
+          : `Wykorzystałeś swoją bezpłatną, jednorazową wizualizację na dziś. Zaloguj się na swoje konto na starecegly.com, żeby mieć dostęp do ${LIMIT_LOGGED_IN} generowań dziennie.`,
+        limitReached: true,
+        loggedIn: isLoggedIn
+      });
+    }
 
     if(!originalImage || !highlightedImage || !productName){
       return res.status(400).json({ error: "Brak wymaganych danych wejściowych (zdjęcie, zaznaczenie lub produkt)." });
@@ -111,11 +181,19 @@ WAŻNE: mimo wydłużonego formatu, cała zaznaczona powierzchnia MA WYGLĄDAĆ 
 `
       : "";
 
+    const layoutAlert = (layout === "jodelka" || layout === "mieszanka")
+      ? `UWAGA — NIESTANDARDOWY UKŁAD UŁOŻENIA CEGŁY, PRZECZYTAJ PRZED WYKONANIEM ZADANIA:
+Użytkownik wybrał układ: ${layoutLabel}
+Załączone zdjęcie referencyjne produktu prawdopodobnie pokazuje cegłę ułożoną w zwykły, poziomy sposób (running bond) — to zdjęcie ma służyć WYŁĄCZNIE jako wzorzec KOLORU, FAKTURY i CHARAKTERU materiału. CAŁKOWICIE ZIGNORUJ sposób ułożenia/wzór widoczny na tym zdjęciu referencyjnym. Układ ułożenia na finalnym obrazie musi być zgodny wyłącznie z opisem: ${layoutLabel}. Jeśli wynik będzie pokazywał zwykłe poziome rzędy zamiast opisanego układu, to jest BŁĄD — sprawdź to przed zakończeniem generowania.
+
+`
+      : "";
+
     const promptParts = [];
 
     promptParts.push({
       text:
-`${shapeAlert}Jesteś precyzyjnym narzędziem do fotorealistycznej wizualizacji materiałów budowlanych na zdjęciach architektonicznych.
+`${shapeAlert}${layoutAlert}Jesteś precyzyjnym narzędziem do fotorealistycznej wizualizacji materiałów budowlanych na zdjęciach architektonicznych.
 
 Otrzymujesz dwa zdjęcia:
 1. Oryginalne zdjęcie ściany/elewacji.
@@ -136,14 +214,16 @@ Zasady krytyczne:
 - Dopasuj cień, kierunek światła i odbicia na nowej okładzinie tak, by pasowały do oświetlenia sceny na oryginalnym zdjęciu.
 - Zachowaj naturalne, realistyczne przejścia na krawędziach zaznaczonego obszaru — bez twardych, sztucznych linii cięcia.
 - Cała zaznaczona powierzchnia ma być pokryta JEDNOLITĄ okładziną — bez ramek, obwódek, listew, podziału na panele lub sekcje, chyba że wynika to wyłącznie z naturalnego układu płytek opisanego wyżej.
+- KRYTYCZNE — BRAK BIAŁYCH/JASNYCH OBWÓDEK WOKÓŁ OTWORÓW: jeśli w zaznaczonym obszarze znajdują się okna, drzwi lub inne otwory, okładzina z cegły MUSI sięgać dokładnie do ich krawędzi (do ramy okna/drzwi), bez żadnego niepomalowanego, jasnego, białego lub pustego paska/obwódki pozostawionego między cegłą a otworem. To bardzo częsty błąd do uniknięcia — sprawdź dokładnie każdą krawędź otworu w zaznaczonym obszarze przed zakończeniem generowania. Jedyna dozwolona "ramka" to prawdziwa, fizyczna framuga/ościeżnica okna lub drzwi, jeśli była widoczna na oryginalnym zdjęciu — nic ponad to.
 - Nie dodawaj znaków wodnych, tekstu ani elementów graficznych spoza sceny.
 - Wygeneruj wyłącznie finalny, fotorealistyczny obraz wynikowy.
 
 PODSUMOWANIE — sprawdź przed wygenerowaniem, że wynik spełnia WSZYSTKIE poniższe punkty:
 1. Produkt: ${productName} (${productDescription || "naturalna faktura cegły"}).
-2. Układ: ${layoutLabel}.
+2. Układ: ${layoutLabel}.${(layout === "jodelka" || layout === "mieszanka") ? " Sprawdź jeszcze raz: to NIE ma być zwykły poziomy układ z przesunięciem, nawet jeśli zdjęcie referencyjne produktu tak sugeruje." : ""}
 3. ${mount === "bez-fugi" ? "Brak fugi między płytkami." : `Fuga WIDOCZNA, w kolorze: ${mortarColorLabel}.`}
-${productDims ? `4. Proporcje pojedynczej płytki: ${productDims}${productShapeHint ? ` — ${productShapeHint}` : ""}.\n5. Jednolita okładzina bez dodatkowych ramek/podziałów.\n6. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian.` : "4. Jednolita okładzina bez dodatkowych ramek/podziałów.\n5. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian."}`
+4. Brak białych/jasnych, niepomalowanych obwódek wokół okien, drzwi lub innych otworów w zaznaczonym obszarze — cegła sięga dokładnie do ich krawędzi.
+${productDims ? `5. Proporcje pojedynczej płytki: ${productDims}${productShapeHint ? ` — ${productShapeHint}` : ""}.\n6. Jednolita okładzina bez dodatkowych ramek/podziałów.\n7. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian.` : "5. Jednolita okładzina bez dodatkowych ramek/podziałów.\n6. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian."}`
     });
 
     promptParts.push({ text: "Zdjęcie oryginalne:" });
@@ -184,7 +264,12 @@ ${productDims ? `4. Proporcje pojedynczej płytki: ${productDims}${productShapeH
     const mime = imagePart.inlineData.mimeType || "image/png";
     const b64 = imagePart.inlineData.data;
 
-    return res.status(200).json({ image: `data:${mime};base64,${b64}` });
+    return res.status(200).json({
+      image: `data:${mime};base64,${b64}`,
+      remaining: rl.remaining,
+      limit: limit,
+      loggedIn: isLoggedIn
+    });
 
   }catch(err){
     console.error("Błąd /api/generate:", err);
