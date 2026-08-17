@@ -112,6 +112,7 @@ module.exports = async (req, res) => {
       productDescription,
       productDims,
       productShapeHint,
+      productAspectRatio,
       productImage,
       surface,
       layout,
