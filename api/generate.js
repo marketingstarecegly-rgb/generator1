@@ -8,8 +8,13 @@
 // Jeśli te zmienne nie są ustawione, limity są wyłączone (tryb "fail-open") — narzędzie
 // działa normalnie, ale bez ograniczeń liczby generowań.
 
-const GEMINI_MODEL = "gemini-2.5-flash-image";
-const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+// Kolejność prób: najpierw nowszy model (lepsze trzymanie się instrukcji wg
+// dokumentacji Google), a w razie jego niedostępności (błędny identyfikator,
+// model jeszcze nie wdrożony na danym koncie, błąd 400/404) automatyczny
+// powrót do sprawdzonego, starszego modelu — żeby awaria nowego modelu nigdy
+// nie wyłączyła całego narzędzia.
+const GEMINI_MODEL_CANDIDATES = ["gemini-3.1-flash-image", "gemini-2.5-flash-image"];
+const GEMINI_ENDPOINT_BASE = "https://generativelanguage.googleapis.com/v1beta/models";
 
 const LIMIT_ANONYMOUS = 1;
 const LIMIT_LOGGED_IN = 5;
@@ -238,19 +243,37 @@ ${productDims ? `5. Proporcje pojedynczej płytki: ${productDims}${productShapeH
 
     const geminiRequest = {
       contents: [{ role: "user", parts: promptParts }],
-      generationConfig: { responseModalities: ["IMAGE"] }
+      generationConfig: { responseModalities: ["TEXT", "IMAGE"] }
     };
 
-    const geminiRes = await fetch(`${GEMINI_ENDPOINT}?key=${apiKey}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(geminiRequest)
-    });
+    let geminiRes = null;
+    let usedModel = null;
+    let lastErrorText = "";
 
-    if(!geminiRes.ok){
-      const errText = await geminiRes.text().catch(() => "");
-      console.error("Gemini API error:", geminiRes.status, errText);
-      return res.status(502).json({ error: `Błąd generatora obrazu (${geminiRes.status}). Spróbuj ponownie.` });
+    for(const modelId of GEMINI_MODEL_CANDIDATES){
+      const attemptRes = await fetch(`${GEMINI_ENDPOINT_BASE}/${modelId}:generateContent?key=${apiKey}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(geminiRequest)
+      });
+
+      if(attemptRes.ok){
+        geminiRes = attemptRes;
+        usedModel = modelId;
+        break;
+      }
+
+      lastErrorText = await attemptRes.text().catch(() => "");
+      console.error(`Gemini API error dla modelu ${modelId}:`, attemptRes.status, lastErrorText);
+
+      // Jeśli błąd NIE wygląda na "model nieznaleziony/niedostępny" (np. limit,
+      // zła treść promptu), nie ma sensu próbować kolejnego modelu — przerwij.
+      const looksLikeModelIssue = attemptRes.status === 404 || attemptRes.status === 400;
+      if(!looksLikeModelIssue) break;
+    }
+
+    if(!geminiRes){
+      return res.status(502).json({ error: `Błąd generatora obrazu. Spróbuj ponownie.` });
     }
 
     const geminiData = await geminiRes.json();
@@ -269,7 +292,8 @@ ${productDims ? `5. Proporcje pojedynczej płytki: ${productDims}${productShapeH
       image: `data:${mime};base64,${b64}`,
       remaining: rl.remaining,
       limit: limit,
-      loggedIn: isLoggedIn
+      loggedIn: isLoggedIn,
+      modelUsed: usedModel
     });
 
   }catch(err){
