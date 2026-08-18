@@ -221,6 +221,7 @@ Zasady krytyczne:
 - Zachowaj naturalne, realistyczne przejścia na krawędziach zaznaczonego obszaru — bez twardych, sztucznych linii cięcia.
 - Cała zaznaczona powierzchnia ma być pokryta JEDNOLITĄ okładziną — bez ramek, obwódek, listew, podziału na panele lub sekcje, chyba że wynika to wyłącznie z naturalnego układu płytek opisanego wyżej.
 - KRYTYCZNE — BRAK BIAŁYCH/JASNYCH OBWÓDEK WOKÓŁ OTWORÓW: jeśli w zaznaczonym obszarze znajdują się okna, drzwi lub inne otwory, okładzina z cegły MUSI sięgać dokładnie do ich krawędzi (do ramy okna/drzwi), bez żadnego niepomalowanego, jasnego, białego lub pustego paska/obwódki pozostawionego między cegłą a otworem. To bardzo częsty błąd do uniknięcia — sprawdź dokładnie każdą krawędź otworu w zaznaczonym obszarze przed zakończeniem generowania. Jedyna dozwolona "ramka" to prawdziwa, fizyczna framuga/ościeżnica okna lub drzwi, jeśli była widoczna na oryginalnym zdjęciu — nic ponad to.
+- SPÓJNOŚĆ TEKSTURY NA CAŁEJ POWIERZCHNI: każda pojedyncza cegła i każda spoina w zaznaczonym obszarze musi być wyraźna, ostra i spójna z resztą okładziny — bez lokalnych rozmyć, zniekształceń, "poszarpanych" fragmentów, zlewających się ze sobą cegieł ani innych lokalnych artefaktów. Jeśli jakikolwiek pojedynczy fragment (nawet mały) odbiega jakością lub wyrazistością od reszty wygenerowanej okładziny, popraw go tak, żeby pasował do reszty przed zwróceniem wyniku.
 - Nie dodawaj znaków wodnych, tekstu ani elementów graficznych spoza sceny.
 - Wygeneruj wyłącznie finalny, fotorealistyczny obraz wynikowy.
 
