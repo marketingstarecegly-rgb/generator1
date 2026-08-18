@@ -1162,10 +1162,13 @@
       const urlId = new URLSearchParams(window.location.search).get("customerId");
       if(urlId && urlId.trim()) state.customerId = urlId.trim();
     }catch(err){ /* ignoruj */ }
+    console.log("[wizualizator] customerId z URL przy starcie:", state.customerId || "(brak)");
   })();
   window.addEventListener("message", (e) => {
+    console.log("[wizualizator] odebrano wiadomość postMessage z:", e.origin, "dane:", e.data);
     if(e.data && e.data.type === "stare-cegly-auth" && e.data.customerId){
       state.customerId = String(e.data.customerId).trim();
+      console.log("[wizualizator] ustawiono customerId z postMessage:", state.customerId);
     }
   });
 
@@ -1464,6 +1467,8 @@
         mortarColor: state.mount === "bez-fugi" ? null : state.mortarColor,
         customerId: state.customerId || null
       };
+
+      console.log("[wizualizator] wysyłam żądanie z customerId:", payload.customerId || "(brak — traktowany jako gość)");
 
       const res = await fetch("/api/generate", {
         method: "POST",
