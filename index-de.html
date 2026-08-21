@@ -208,535 +208,996 @@
   .pg-name{ font-family:var(--display); font-weight:600; font-size:13.5px; color:var(--cream); }
   .pg-count{ font-family:var(--mono); font-size:11px; color:var(--muted); margin-left:6px; }
   .pg-right{ display:flex; align-items:center; gap:8px; }
+  .pg-selected-dot{
+    width:7px; height:7px; border-radius:50%; background:var(--brick); display:none;
+  }
+  .pg-selected-dot.show{ display:block; }
   .pg-chevron{
-    display:inline-block; width:12px; height:12px;
-    border-top:1.5px solid var(--muted); border-right:1.5px solid var(--muted);
-    transform:rotate(45deg); margin-top:-2px;
-    transition:transform .15s;
+    font-size:12px; color:var(--muted); transition:transform .15s; display:inline-block;
   }
-  .product-group.open .pg-chevron{ transform:rotate(135deg) translateY(-2px); }
+  .product-group.open .pg-chevron{ transform:rotate(90deg); }
 
-  .product-list{
-    max-height:0; overflow:hidden; transition:max-height .2s ease-out;
+  .product-group-list{
+    display:none; flex-direction:column; background:var(--bg);
   }
-  .product-list.open{
-    max-height:700px; overflow-y:auto; transition:max-height .3s ease-in;
-  }
+  .product-group.open .product-group-list{ display:flex; }
 
-  .product-item{
-    display:flex; gap:12px; padding:10px 14px; border-bottom:1px solid var(--line);
-    cursor:pointer; transition:background .15s;
+  .product-row{
+    display:flex; align-items:center; gap:10px; padding:8px 14px 8px 22px;
+    cursor:pointer; border:none; background:transparent; width:100%; text-align:left;
+    border-top:1px solid var(--line);
   }
-  .product-item:last-child{ border-bottom:none; }
-  .product-item:hover{ background:var(--bg-panel-raised); }
-  .product-item.selected{ background:rgba(212,158,64,0.15); }
-  .product-thumb{
-    width:44px; height:44px; flex-shrink:0;
-    border-radius:var(--radius); overflow:hidden; background:var(--line);
+  .product-row:hover{ background:var(--bg-panel); }
+  .product-row.selected{ background:rgba(244,158,26,0.08); }
+  .product-row-thumb{
+    width:34px; height:34px; border-radius:2px; overflow:hidden; flex-shrink:0; background:var(--bg-panel-raised);
   }
-  .product-thumb img{ width:100%; height:100%; object-fit:cover; }
-  .product-info{
-    flex:1; min-width:0;
+  .product-row-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .product-row-label{ font-size:12.5px; color:var(--cream); flex:1; }
+  .product-row-check{
+    width:16px; height:16px; border-radius:50%; background:var(--brick-dark); color:#ffffff;
+    font-size:10px; font-weight:700; display:none; align-items:center; justify-content:center; flex-shrink:0;
   }
-  .product-info-name{
-    font-family:var(--display); font-size:13px; font-weight:600; color:var(--cream);
-    margin:0 0 2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  }
-  .product-info-desc{
-    font-family:var(--mono); font-size:11px; color:var(--muted);
-    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  }
+  .product-row.selected .product-row-check{ display:flex; }
 
-  .radio-grid{
-    display:grid; grid-template-columns:1fr 1fr; gap:8px;
+  .product-name{
+    font-size:12.5px; color:var(--cream); margin:9px 0 0; font-weight:500;
   }
-  .radio-item{
-    position:relative;
-  }
-  .radio-item input{
-    position:absolute; opacity:0;
-  }
-  .radio-item label{
-    display:block; padding:10px 12px; border:1px solid var(--line);
-    border-radius:var(--radius); background:var(--bg); cursor:pointer;
-    font-size:12px; text-align:center; transition:all .15s;
-  }
-  .radio-item input:checked + label{
-    border-color:var(--sand); background:rgba(212,158,64,0.12); color:var(--sand); font-weight:600;
-  }
-  .radio-item label:hover{
-    border-color:var(--sand); background:rgba(212,158,64,0.06);
-  }
+  .product-name span{ color:var(--muted); font-weight:400; }
 
-  /* ---------- results zone ---------- */
-  .results-zone{
-    max-width:1180px; margin:0 auto; padding:0 28px 100px;
+  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    font-family:var(--body); font-size:12.5px; padding:7px 13px; border-radius:20px;
+    border:1px solid var(--line-bright); color:var(--muted); background:transparent; cursor:pointer;
+    transition:all .15s;
   }
-  #resultWrap{
-    display:none;
-  }
-  #resultWrap.show{
-    display:block;
-  }
+  .chip:hover{ border-color:var(--sand); color:var(--cream); }
+  .chip.active{ background:var(--brick); border-color:var(--brick); color:var(--cream); }
 
-  .result-header{
-    font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
-    color:var(--brick-dark); margin:0 0 18px;
+  .mortar-colors{ display:flex; gap:11px; align-items:center; }
+  .mortar-dot{
+    width:26px; height:26px; border-radius:50%; cursor:pointer; border:2px solid transparent;
+    position:relative; box-shadow:0 0 0 1px var(--line-bright); flex-shrink:0;
   }
+  .mortar-dot.active{ border-color:var(--cream); }
+  .mortar-color-label{
+    font-size:12.5px; color:var(--muted); margin:8px 0 0;
+  }
+  .mortar-color-label b{ color:var(--cream); font-weight:600; }
 
-  #compare{
-    position:relative; width:100%; max-width:900px; margin:0 0 28px;
-    border-radius:var(--radius); overflow:hidden; background:#000;
-    user-select:none;
+  .generate-btn{
+    width:100%; padding:16px; border:none; border-radius:2px;
+    background:var(--brick); color:var(--cream);
+    font-family:var(--display); font-weight:600; font-size:16px; letter-spacing:0.01em;
+    cursor:pointer; transition:background .15s, transform .1s;
+    display:flex; align-items:center; justify-content:center; gap:10px;
   }
-  #beforeImg, #afterImg{
-    display:block; width:100%; height:auto;
-  }
-  #afterWrap{
-    position:absolute; top:0; left:0; width:100%; height:100%;
-    clip-path:polygon(0 0, 55% 0, 47% 100%, 0 100%);
-  }
+  .generate-btn:hover:not(:disabled){ background:var(--brick-bright); }
+  .generate-btn:active:not(:disabled){ transform:scale(0.99); }
+  .generate-btn:disabled{ background:var(--bg-panel-raised); color:var(--muted); cursor:not-allowed; }
+  .generate-note{ font-size:11.5px; color:var(--muted); text-align:center; margin:10px 0 0; }
 
-  #compareHandle{
-    position:absolute; top:0; width:2px; height:100%;
-    background:var(--sand); left:55%; transform:translateX(-1px);
+  .spinner{
+    width:16px; height:16px; border-radius:50%;
+    border:2px solid rgba(28,24,21,0.2); border-top-color:var(--cream);
+    animation:spin .7s linear infinite; display:none;
   }
+  .generate-btn.loading .spinner{ display:inline-block; }
+  .generate-btn.loading .btn-text::after{ content: attr(data-loading); }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
 
-  #compareGrip{
-    position:absolute; top:50%; left:55%; transform:translate(-50%, -50%);
-    width:44px; height:44px; border-radius:50%;
-    background:var(--sand); border:3px solid #fff;
-    cursor:grab; display:flex; align-items:center; justify-content:center;
-    font-size:16px; user-select:none;
+  .error-box{
+    display:none; background:rgba(177,80,47,0.12); border:1px solid var(--brick-dark);
+    color:var(--sand); font-size:13px; padding:12px 14px; border-radius:2px; margin-top:12px;
   }
-  #compareGrip:active{ cursor:grabbing; }
+  .error-box.show{ display:block; }
 
-  #resultMeta{
-    font-family:var(--mono); font-size:12px; color:var(--muted); margin:0 0 20px;
-  }
+  /* ---------- result ---------- */
+  .result-wrap{ max-width:1180px; margin:0 auto; padding:0 28px 100px; display:none; }
+  .result-wrap.show{ display:block; }
+  .result-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:18px; flex-wrap:wrap; gap:10px;}
+  .result-head h2{ font-family:var(--display); font-size:24px; font-weight:600; margin:0; }
+  .result-head p{ font-family:var(--mono); font-size:11.5px; color:var(--muted); margin:0; }
 
-  .result-actions{
-    display:flex; gap:12px;
+  .compare{
+    position:relative; width:100%; overflow:hidden; border-radius:var(--radius);
+    border:1px solid var(--line); background:#100d0b; user-select:none;
+    cursor:ew-resize; touch-action:pan-y;
   }
-  #downloadBtn{
-    padding:10px 20px; background:var(--brick); color:#fff; border:none; border-radius:var(--radius);
-    font-family:var(--mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
-    cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:6px;
-    transition:background .15s;
+  .compare img{ display:block; width:100%; height:auto; pointer-events:none; }
+  .compare .after-wrap{
+    position:absolute; inset:0; overflow:hidden;
+    clip-path:polygon(0 0, 55% 0, 45% 100%, 0 100%);
   }
-  #downloadBtn:hover{ background:var(--brick-dark); }
-  #tryAgainBtn{
-    padding:10px 20px; background:transparent; color:var(--muted); border:1px solid var(--line);
-    border-radius:var(--radius); font-family:var(--mono); font-size:12px; letter-spacing:0.08em;
-    text-transform:uppercase; cursor:pointer; transition:all .15s;
+  .compare-handle{
+    position:absolute; top:0; bottom:0; left:50%; width:0; pointer-events:none;
   }
-  #tryAgainBtn:hover{ color:var(--sand); border-color:var(--sand); }
+  .compare-handle::before{
+    content:""; position:absolute; top:0; bottom:0; left:0; width:2px; background:var(--cream);
+    transform:skewX(-8deg); box-shadow:0 0 0 1px rgba(0,0,0,0.4);
+  }
+  .compare-grip{
+    position:absolute; top:50%; left:0; transform:translate(-50%,-50%);
+    width:38px; height:38px; border-radius:50%; background:var(--cream);
+    display:flex; align-items:center; justify-content:center; pointer-events:auto; cursor:ew-resize;
+    box-shadow:0 2px 10px rgba(0,0,0,0.4);
+  }
+  .compare-grip:focus-visible{ outline:2px solid var(--brick); outline-offset:3px; }
+  .compare-grip svg{ width:16px; height:16px; stroke:var(--bg); pointer-events:none; }
+  .tag{
+    position:absolute; top:14px; font-family:var(--mono); font-size:10.5px; letter-spacing:0.1em;
+    text-transform:uppercase; padding:5px 10px; border-radius:2px; background:rgba(16,13,11,0.75);
+    color:#ffffff; backdrop-filter:blur(3px);
+  }
+  .tag.before{ left:14px; }
+  .tag.after{ right:14px; }
 
-  #errorBox{
-    display:none; padding:12px 16px; background:#fff5f3; border:1px solid #d98f3a;
-    border-radius:var(--radius); color:var(--cream); font-size:13px; margin-bottom:20px;
+  .result-actions{ display:flex; gap:12px; margin-top:20px; flex-wrap:wrap; }
+  .result-actions a, .result-actions button{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.05em; text-transform:uppercase;
+    padding:11px 18px; border-radius:2px; text-decoration:none; cursor:pointer;
+    border:1px solid var(--line-bright); color:var(--cream); background:transparent;
   }
-  #errorBox.show{ display:block; }
+  .result-actions .primary{ background:var(--brick); border-color:var(--brick); }
+  .result-actions .primary:hover{ background:var(--brick-bright); }
+  .result-actions a:hover, .result-actions button:hover{ border-color:var(--sand); }
 
-  #generateBtn{
-    width:100%; padding:12px 20px; background:var(--brick); color:#fff;
-    border:1px solid var(--brick-dark); border-radius:var(--radius);
-    font-family:var(--display); font-size:16px; font-weight:600;
-    cursor:pointer; transition:all .15s; margin-top:8px;
+  /* ---------- footer ---------- */
+  footer{
+    border-top:1px solid var(--line); padding:32px 28px; text-align:center;
   }
-  #generateBtn:hover:not(:disabled){
-    background:var(--brick-dark);
-  }
-  #generateBtn:disabled{
-    opacity:0.6; cursor:not-allowed;
-  }
-  #generateBtn.loading{
-    position:relative; color:transparent;
-  }
-  #generateBtn.loading::after{
-    content:""; position:absolute; width:16px; height:16px;
-    border:2px solid rgba(255,255,255,0.3); border-top-color:#fff;
-    border-radius:50%; left:50%; top:50%; transform:translate(-50%,-50%);
-    animation:spin .6s linear infinite;
-  }
-  @keyframes spin{ to{ transform:translate(-50%,-50%) rotate(360deg); } }
-
-  #generateNote{
-    font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:10px;
-  }
+  footer .footer-logo{ height:26px; width:auto; display:block; margin:0 auto 14px; opacity:0.85; }
+  footer a{ font-family:var(--mono); font-size:12px; color:var(--muted); text-decoration:none; }
+  footer a:hover{ color:var(--sand); }
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <div class="brand">
-    <svg class="brand-logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-      <rect x="2" y="2" width="12" height="12" fill="#d98f3a" opacity="0.8"/>
-      <rect x="18" y="2" width="12" height="12" fill="#b1502f" opacity="0.8"/>
-      <rect x="2" y="18" width="12" height="12" fill="#b1502f" opacity="0.8"/>
-      <rect x="18" y="18" width="12" height="12" fill="#d98f3a" opacity="0.8"/>
-    </svg>
-    <span class="brand-tool">Werkzeug</span>
-  </div>
-  <a class="topbar-link" href="https://www.alteziegel.com">← Zurück zu alteziegel.com</a>
+  <a href="https://alteziegel.com" class="brand">
+    <img src="logo-de.png" alt="Alte Ziegel" class="brand-logo">
+    <span class="brand-tool">Visualisierer</span>
+  </a>
+  <a href="https://alteziegel.com" class="topbar-link">← zurück zu alteziegel.com</a>
 </div>
 
 <div class="joint"></div>
 
-<div class="hero">
-  <p class="hero-eyebrow">Werkzeug / Kostenlose Visualisierung</p>
+<section class="hero">
+  <p class="hero-eyebrow">Werkzeug / kostenlose Visualisierung</p>
   <h1>Sehen Sie diesen Ziegel an Ihrer Wand, bevor Sie ihn bestellen</h1>
-  <p>Fügen Sie ein Foto Ihrer Wand oder Fassade hinzu, markieren Sie mit dem Finger oder der Maus die zu verändernde Fläche und wählen Sie eines der Alte Ziegel Produkte. Das Ergebnis erhalten Sie in wenigen Sekunden — ohne Konto anzulegen.</p>
-</div>
-
-<div class="joint alt"></div>
+  <p>Fügen Sie ein Foto Ihrer Wand oder Fassade hinzu, markieren Sie mit dem Finger oder der Maus die zu verändernde Fläche und wählen Sie eines der Alte Ziegel Produkte. Das Ergebnis erhalten Sie in wenigen Sekunden — <strong>ohne Konto anzulegen</strong>.</p>
+</section>
 
 <div class="studio">
+
   <div class="panel">
     <div class="panel-head">
       <div>
-        <div class="step">Schritt 1</div>
+        <p class="step">Schritt 1</p>
         <h2>Foto hinzufügen</h2>
       </div>
     </div>
+
     <div class="canvas-zone">
       <div class="dropzone" id="dropzone">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="17 8 12 3 7 8"></polyline>
-          <line x1="12" y1="3" x2="12" y2="15"></line>
-        </svg>
-        <div class="dz-title">Foto ziehen oder klicken</div>
-        <div class="dz-sub">JPG, PNG · max. 20 MB</div>
-        <input type="file" id="photoInput" accept="image/*">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M12 4l-4 4M12 4l4 4"/><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+        <p class="dz-title">Foto hierher ziehen</p>
+        <p class="dz-sub">Am besten eignet sich ein einfaches Foto einer Wand oder eines Fassadenabschnitts, ohne starken Filter — oder <span class="btn-inline">Datei auswählen</span></p>
+        <input type="file" id="fileInput" accept="image/*">
       </div>
-      <canvas id="baseCanvas" style="display:none;"></canvas>
+      <div class="stage" id="stage">
+        <canvas id="baseCanvas"></canvas>
+        <canvas id="maskCanvas" style="position:absolute; top:0; left:0;"></canvas>
+      </div>
     </div>
+    <div class="stage-toolbar" id="toolbar" style="display:none;">
+      <span class="brush-label">Pinsel</span>
+      <input type="range" id="brushSize" min="14" max="90" value="42">
+      <button class="tool-btn" id="undoBtn" type="button">Rückgängig</button>
+      <button class="tool-btn danger" id="clearMaskBtn" type="button">Auswahl löschen</button>
+      <button class="tool-btn" id="changePhotoBtn" type="button">Foto ändern</button>
+    </div>
+    <p class="stage-hint" id="stageHint" style="display:none;">Markieren Sie mit dem Finger oder der Maus <b>nur den Wandabschnitt</b>, der mit Ziegeln verkleidet werden soll — lassen Sie Fenster, Türen und Regenrinnen aus.</p>
   </div>
 
   <div class="panel">
     <div class="panel-head">
       <div>
-        <div class="step">Schritt 2–4</div>
+        <p class="step">Schritt 2</p>
         <h2>Produkt und Einstellungen wählen</h2>
       </div>
     </div>
     <div class="options">
+
       <div>
-        <label class="field-label">Alte Ziegel Produkte</label>
-        <div class="product-accordion" id="productAccordion">
-          <!-- populated by JS -->
-        </div>
+        <p class="field-label">Produkt</p>
+        <div class="product-accordion" id="productAccordion"></div>
+        <p class="product-name" id="productName">— <span>wählen Sie oben eine Fliese</span></p>
       </div>
 
       <div>
-        <label class="field-label">Oberflächentyp</label>
-        <div class="radio-grid">
-          <div class="radio-item">
-            <input type="radio" id="surf-elewacja" name="surface" value="elewacja" checked>
-            <label for="surf-elewacja">Fassade</label>
-          </div>
-          <div class="radio-item">
-            <input type="radio" id="surf-sciana" name="surface" value="sciana-wewnetrzna">
-            <label for="surf-sciana">Innenwand</label>
-          </div>
-          <div class="radio-item">
-            <input type="radio" id="surf-kominek" name="surface" value="kominek">
-            <label for="surf-kominek">Kamin</label>
-          </div>
-          <div class="radio-item">
-            <input type="radio" id="surf-inna" name="surface" value="inna">
-            <label for="surf-inna">Sonstige</label>
-          </div>
+        <p class="field-label">Fläche</p>
+        <div class="chip-row" data-group="surface">
+          <button class="chip active" data-value="elewacja">Fassade</button>
+          <button class="chip" data-value="sciana-wewnetrzna">Innenwand</button>
+          <button class="chip" data-value="kominek">Kamin / Verkleidung</button>
+          <button class="chip" data-value="inna">Andere Fläche</button>
         </div>
       </div>
 
       <div>
-        <label class="field-label">Anordnung der Ziegel</label>
-        <div class="radio-grid">
-          <div class="radio-item">
-            <input type="radio" id="lay-classic" name="layout" value="klasyczne-przesuniecie" checked>
-            <label for="lay-classic">Klassisch</label>
-          </div>
-          <div class="radio-item">
-            <input type="radio" id="lay-simple" name="layout" value="prosty">
-            <label for="lay-simple">Einfach</label>
-          </div>
-          <div class="radio-item">
-            <input type="radio" id="lay-mixed" name="layout" value="mieszanka">
-            <label for="lay-mixed">Gemischt</label>
-          </div>
-          <div class="radio-item">
-            <input type="radio" id="lay-herring" name="layout" value="jodelka">
-            <label for="lay-herring">Fischgrat</label>
-          </div>
+        <p class="field-label">Verband</p>
+        <div class="chip-row" data-group="layout">
+          <button class="chip active" data-value="klasyczne-przesuniecie">Klassischer Versatz</button>
+          <button class="chip" data-value="prosty">Gerader Verband</button>
+          <button class="chip" data-value="mieszanka">Natürlicher Mix</button>
+          <button class="chip" data-value="jodelka">Fischgrätmuster</button>
         </div>
       </div>
 
       <div>
-        <label class="field-label">Mörtel</label>
-        <div class="radio-grid">
-          <div class="radio-item">
-            <input type="radio" id="mnt-z-fuga" name="mount" value="z-fuga" checked>
-            <label for="mnt-z-fuga">Mit Fuge</label>
-          </div>
-          <div class="radio-item">
-            <input type="radio" id="mnt-bez" name="mount" value="bez-fugi">
-            <label for="mnt-bez">Ohne Fuge</label>
-          </div>
+        <p class="field-label">Verlegung</p>
+        <div class="chip-row" data-group="mount">
+          <button class="chip active" data-value="z-fuga">Mit Fuge</button>
+          <button class="chip" data-value="bez-fugi">Ohne Fuge</button>
         </div>
       </div>
 
-      <div id="mortarColorDiv" style="display:none;">
-        <label class="field-label">Fuggenfarbe</label>
-        <div class="radio-grid">
-          <div class="radio-item">
-            <input type="radio" id="mc-biala" name="mortarColor" value="biala" checked>
-            <label for="mc-biala">Weiß</label>
-          </div>
-          <div class="radio-item">
-            <input type="radio" id="mc-stara-biel" name="mortarColor" value="stara-biel">
-            <label for="mc-stara-biel">Alt-Weiß</label>
-          </div>
-          <div class="radio-item">
-            <input type="radio" id="mc-piaskowa" name="mortarColor" value="piaskowa">
-            <label for="mc-piaskowa">Sand</label>
-          </div>
-          <div class="radio-item">
-            <input type="radio" id="mc-szara" name="mortarColor" value="szara">
-            <label for="mc-szara">Grau</label>
-          </div>
-          <div class="radio-item">
-            <input type="radio" id="mc-antracytowa" name="mortarColor" value="antracytowa">
-            <label for="mc-antracytowa">Anthrazit</label>
-          </div>
+      <div id="mortarColorField">
+        <p class="field-label">Fugenfarbe</p>
+        <div class="mortar-colors">
+          <div class="mortar-dot active" data-value="biala" title="Weiß" style="background:#dcdcd8;"></div>
+          <div class="mortar-dot" data-value="stara-biel" title="Altweiß" style="background:#b7b6ac;"></div>
+          <div class="mortar-dot" data-value="piaskowa" title="Sandfarben" style="background:#c7bc98;"></div>
+          <div class="mortar-dot" data-value="szara" title="Grau" style="background:#9a9c9b;"></div>
+          <div class="mortar-dot" data-value="antracytowa" title="Anthrazit" style="background:#2f3133;"></div>
         </div>
+        <p class="mortar-color-label">Ausgewählt: <b id="mortarColorLabel">Weiß</b></p>
       </div>
 
-      <button id="generateBtn" disabled>Jetzt visualisieren</button>
-      <p id="generateNote"></p>
+      <div>
+        <button class="generate-btn" id="generateBtn" disabled>
+          <span class="spinner"></span>
+          <span class="btn-text" data-loading="Wird generiert…">Visualisierer starten</span>
+        </button>
+        <p class="generate-note" id="generateNote">Fügen Sie ein Foto hinzu und markieren Sie die Fläche, um den Visualisierer zu starten.</p>
+        <div class="error-box" id="errorBox"></div>
+      </div>
+
     </div>
+  </div>
+
+</div>
+
+<div class="joint alt"></div>
+
+<div class="result-wrap" id="resultWrap">
+  <div class="result-head">
+    <h2>Ihre Visualisierung</h2>
+    <p id="resultMeta">—</p>
+  </div>
+  <div class="compare" id="compare">
+    <img id="beforeImg" alt="Foto vorher">
+    <div class="after-wrap" id="afterWrap">
+      <img id="afterImg" alt="Visualisierung nach der Ziegelverkleidung">
+    </div>
+    <span class="tag before">Vorher</span>
+    <span class="tag after">Nachher</span>
+    <div class="compare-handle" id="compareHandle">
+      <div class="compare-grip" id="compareGrip" tabindex="0" role="slider" aria-label="Vergleichsregler vorher/nachher" aria-valuemin="0" aria-valuemax="100" aria-valuenow="55">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg>
+      </div>
+    </div>
+  </div>
+  <div class="result-actions">
+    <a class="primary" id="downloadBtn" download="alteziegel-visualisierung.jpg">Visualisierung herunterladen</a>
+    <button id="tryAgainBtn" type="button">Anderes Produkt ausprobieren</button>
+    <a href="https://alteziegel.com/de_DE/c/Muster/17" target="_blank" rel="noopener">Muster bestellen →</a>
   </div>
 </div>
 
-<div class="joint"></div>
-
-<div class="studio" style="grid-template-columns:1fr; display:none;" id="stageWrap">
-  <div class="panel">
-    <div class="panel-head">
-      <div>
-        <div class="step">Schritt 3</div>
-        <h2>Bereichen markieren</h2>
-      </div>
-    </div>
-    <div class="canvas-zone">
-      <div class="stage" id="stage">
-        <canvas id="baseCanvasDisplay"></canvas>
-        <canvas id="maskCanvas"></canvas>
-      </div>
-      <div class="stage-toolbar">
-        <label class="brush-label">Pinselgröße:</label>
-        <input type="range" id="brushSize" min="5" max="80" value="25">
-        <button class="tool-btn" id="undoBtn">↶ Rückgängig</button>
-        <button class="tool-btn danger" id="clearMaskBtn">✕ Löschen</button>
-      </div>
-      <p class="stage-hint">Markieren Sie den Wandbereich, der mit Ziegeln verkleidet werden soll. Verwenden Sie <b>einfache, großflächige Pinselstriche</b> — nicht zu detailliert.</p>
-    </div>
-  </div>
-</div>
-
-<div class="joint"></div>
-
-<div class="results-zone">
-  <div id="errorBox"></div>
-
-  <div id="resultWrap">
-    <p class="result-header">Ergebnis</p>
-
-    <div id="compare" style="position:relative;">
-      <img id="beforeImg" alt="vorher" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23f0f0f0' width='800' height='600'/%3E%3C/svg%3E">
-      <div id="afterWrap">
-        <img id="afterImg" alt="nachher" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23ccc' width='800' height='600'/%3E%3C/svg%3E">
-      </div>
-      <div id="compareHandle">
-        <div id="compareGrip" role="slider" aria-label="Vergleichsschieber" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" tabindex="0"></div>
-      </div>
-    </div>
-
-    <p id="resultMeta"></p>
-
-    <div class="result-actions">
-      <a id="downloadBtn" href="#" download>⬇ Bild herunterladen</a>
-      <button id="tryAgainBtn">← Versuchen Sie es erneut</button>
-    </div>
-  </div>
-</div>
-
-<div class="joint"></div>
+<footer>
+  <img src="logo-de.png" alt="Alte Ziegel" class="footer-logo">
+  <a href="https://alteziegel.com">alteziegel.com</a> · info@alteziegel.com
+</footer>
 
 <script>
+
+// ---- Pobierz customerId z URL (parametr ?customerId=XXX) ----
+function getUrlParam(name) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(name);
+}
+
+const customerId = getUrlParam('customerId');
+if(customerId) {
+  console.log("[wizualizator] Odbrano customerId z URL:", customerId);
+} else {
+  console.log("[wizualizator] Brak customerId — użytkownik niezalogowany");
+}
 (function(){
+  "use strict";
 
-  // ---- WICHTIG: Pobierz customerId z URL ----
-  function getUrlParam(name) {
-    const params = new URLSearchParams(window.location.search);
-    return params.get(name);
-  }
-
-  const customerId = getUrlParam('customerId');
-  if(customerId) {
-    console.log("[wizualizator] Odbrano customerId z URL:", customerId);
-  } else {
-    console.log("[wizualizator] Brak customerId — użytkownik niezalogowany");
-  }
-
-  // ---- PRODUKTY ----
+  // ---- product catalogue (echte Alte Ziegel Produkte von alteziegel.com) ----
   const PRODUCTS = [
-    { id: "klassische-alte-ziegel", name: "Klassische Ziegelfliesen", desc: "Authentische alte Ziegel mit natürlicher Patina", group: "Abbruchziegelfliesen", img: "https://alteziegel.com/environment/cache/images/productGfx_6079_500_500/Klassische-Ziegelfliesen-aus-altem-Ziegel.webp" },
-    { id: "gotische-alte-ziegel", name: "Gotische Ziegelfliesen", desc: "Elegante gotische Ziegelfliesen mit feinen Details", group: "Abbruchziegelfliesen", img: "https://alteziegel.com/environment/cache/images/productGfx_6082_500_500/Gotische-Ziegelfliesen-1.png" },
-    { id: "industrial-alte-ziegel", name: "Industrielle Ziegelfliesen", desc: "Robuste industrielle Ziegelfliesen mit Charakter", group: "Abbruchziegelfliesen", img: "https://alteziegel.com/environment/cache/images/productGfx_6230_500_500/Klassische-industrielle-Ziegelfliesen-1.webp" },
-    { id: "loft-style-ziegel", name: "LOFT Style Ziegelfliesen", desc: "Moderne LOFT-Stil Ziegelfliesen", group: "Abbruchziegelfliesen", img: "https://alteziegel.com/environment/cache/images/productGfx_6094_500_500/LOFT-Style-Ziegelfliesen-1.webp" },
-    { id: "modern-braun", name: "Modern Backsteinfliesen - braun", desc: "Moderne Backsteinfliesen in Braun", group: "Modern Line", img: "https://alteziegel.com/environment/cache/images/productGfx_6947_500_500/Modern-Backsteinfliesen---braun.webp" },
-    { id: "modern-graphit", name: "Modern Backsteinfliesen - Graphit", desc: "Moderne Backsteinfliesen in Graphit", group: "Modern Line", img: "https://alteziegel.com/environment/cache/images/productGfx_6951_500_500/Modern-Backsteinfliesen---Graphit..webp" },
+
+    // ---- Abbruchziegelfliesen (Historic Line) ----
+    {
+      id: "klassische-ziegelfliesen",
+      name: "Klassische Ziegelfliesen aus altem Ziegel",
+      sub: "historic line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6079_500_500/Klassische-Ziegelfliesen-aus-altem-Ziegel.webp",
+      desc: "warme, ziegelrote Fliese aus dem Gesicht alter Abbruchziegel, mit ausgeprägter Struktur und natürlichen Farbnuancen",
+      dims: "ca. 25,5–27,5 cm Länge x ca. 6,5–7,5 cm Höhe x ca. 2–2,5 cm Stärke (Verhältnis ca. 3,7:1) — typisches Format eines geschnittenen Ziegels"
+    },
+    {
+      id: "gotische-ziegelfliesen",
+      name: "Gotische Ziegelfliesen aus altem Ziegel",
+      sub: "historic line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6082_500_500/Gotische-Ziegelfliesen-1.png",
+      desc: "dunkle, tiefrote Ziegelfliese im gotischen Stil, mit kräftiger, rustikaler Struktur",
+      dims: "ca. 25,5–27,5 cm Länge x ca. 6,5–7,5 cm Höhe x ca. 2–2,5 cm Stärke (Verhältnis ca. 3,7:1)"
+    },
+    {
+      id: "alte-mauer-ziegelfliesen",
+      name: "Alte Mauer Ziegelfliesen aus altem Ziegel",
+      sub: "historic line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6087_500_500/Alte-Mauer-Ziegelfliesen.webp",
+      desc: "Fliese im Stil einer alten Mauer, unregelmäßige Struktur und Patina, ziegelrote bis bräunliche Töne",
+      dims: "ca. 25,5–27,5 cm Länge x ca. 6,5–7,5 cm Höhe x ca. 2–2,5 cm Stärke (Verhältnis ca. 3,7:1)"
+    },
+    {
+      id: "industrielle-ziegelfliesen",
+      name: "Industrielle Ziegelfliesen aus altem Ziegel",
+      sub: "historic line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6230_500_500/Klassische-industrielle-Ziegelfliesen-1.webp",
+      desc: "raue, industrielle Ziegelfliese mit kräftigem, dunkel-ziegelrotem Charakter",
+      dims: "ca. 25,5–27,5 cm Länge x ca. 6,5–7,5 cm Höhe x ca. 2–2,5 cm Stärke (Verhältnis ca. 3,7:1)"
+    },
+    {
+      id: "loft-style-ziegelfliesen",
+      name: "LOFT Style Ziegelfliesen aus altem Ziegel",
+      sub: "historic line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6094_500_500/LOFT-Style-Ziegelfliesen-1.webp",
+      desc: "Ziegelfliese im Loft-Stil, leicht gealterte Oberfläche, industrieller ziegelroter Charakter",
+      dims: "ca. 25,5–27,5 cm Länge x ca. 6,5–7,5 cm Höhe x ca. 2–2,5 cm Stärke (Verhältnis ca. 3,7:1)"
+    },
+    {
+      id: "premium-ziegelfliesen",
+      name: "PREMIUM Ziegelfliesen aus altem Ziegel",
+      sub: "historic line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6100_500_500/premium1.webp",
+      desc: "Premium-Ziegelfliese mit ausgeprägter Struktur und tiefem, satten Ziegelrot",
+      dims: "ca. 25,5–27,5 cm Länge x ca. 6,5–7,5 cm Höhe x ca. 2–2,5 cm Stärke (Verhältnis ca. 3,7:1)"
+    },
+    {
+      id: "metropolis-ziegelfliesen",
+      name: "Metropolis Ziegelfliesen aus altem Ziegel",
+      sub: "historic line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6883_500_500/Ziegelfliesen--Metropolis-0.webp",
+      desc: "moderne, urbane Ziegelfliese mit gedeckten, großstädtischen Farbnuancen",
+      dims: "ca. 25,5–27,5 cm Länge x ca. 6,5–7,5 cm Höhe x ca. 2–2,5 cm Stärke (Verhältnis ca. 3,7:1)"
+    },
+    {
+      id: "rustikale-antikes-weiss",
+      name: "Rustikale Ziegelfliesen - antikes Weiß",
+      sub: "historic line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6680_500_500/Rustikale-Ziegelfliesen---antikes-WeiB.webp",
+      desc: "gealtertes, leicht schmutziges Weiß mit rustikalem, antikem Charakter",
+      dims: "ca. 25,5–27,5 cm Länge x ca. 6,5–7,5 cm Höhe x ca. 2–2,5 cm Stärke (Verhältnis ca. 3,7:1)"
+    },
+    {
+      id: "rustikale-onyx",
+      name: "Rustikale Ziegelfliesen 05 – Onyx",
+      sub: "historic line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6975_500_500/Rustikale-Ziegelfliesen-05--Onyx--Markante-Ziegeloptik-in-Anthrazit.webp",
+      desc: "sehr dunkle, anthrazitfarbene Ziegeloptik, markant und tiefschwarz",
+      dims: "ca. 25,5–27,5 cm Länge x ca. 6,5–7,5 cm Höhe x ca. 2–2,5 cm Stärke (Verhältnis ca. 3,7:1)"
+    },
+    {
+      id: "rustikale-desert",
+      name: "Rustikale Ziegelfliesen 06 – Desert",
+      sub: "historic line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6964_500_500/Rustikale-Ziegelfliesen-06--Desert--Warme-Sandtone-mit-authentischer-Ziegeloptik.webp",
+      desc: "warme Sandtöne mit authentischer Ziegeloptik, sandig-beige Farbgebung",
+      dims: "ca. 25,5–27,5 cm Länge x ca. 6,5–7,5 cm Höhe x ca. 2–2,5 cm Stärke (Verhältnis ca. 3,7:1)"
+    },
+    {
+      id: "florentiner-ziegelfliesen",
+      name: "Florentiner Ziegelfliesen aus altem Ziegel",
+      sub: "historic line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6096_500_500/Pomme-Ziegelfliesen-1.webp",
+      desc: "Ziegelfliese im florentinischen Stil, warme, italienisch anmutende Farbnuancen",
+      dims: "ca. 25,5–27,5 cm Länge x ca. 6,5–7,5 cm Höhe x ca. 2–2,5 cm Stärke (Verhältnis ca. 3,7:1)"
+    },
+    {
+      id: "toskanische-ziegelfliesen",
+      name: "Toskanische Ziegelfliesen aus altem Ziegel",
+      sub: "historic line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6101_500_500/Klassische-toskanische-Ziegelfliesen-1.webp",
+      desc: "Ziegelfliese im toskanischen Stil, sonnige, warme Terrakotta- und Beigetöne",
+      dims: "ca. 25,5–27,5 cm Länge x ca. 6,5–7,5 cm Höhe x ca. 2–2,5 cm Stärke (Verhältnis ca. 3,7:1)"
+    },
+    {
+      id: "ziegelriemchen-fischgraet",
+      name: "Ziegelriemchen im Fischgrätmuster",
+      sub: "historic line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6174_500_500/16.webp",
+      desc: "Ziegelriemchen speziell für das Fischgrätmuster geschnitten, klassischer, ziegelroter Farbton"
+    },
+
+    // ---- Modern Line (Betonfliesen im Ziegeloptik, über 20 Farben) ----
+    {
+      id: "modern-braun",
+      name: "Modern Backsteinfliesen - braun",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6947_500_500/Modern-Backsteinfliesen---braun.webp",
+      desc: "Betonfliese mit präziser Kante, warmer, erdiger Braunton"
+    },
+    {
+      id: "modern-schwarz",
+      name: "Modern Backsteinfliesen - schwarz",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6946_500_500/Modern-Backsteinfliesen---schwarz.webp",
+      desc: "Betonfliese in mattem, tiefem Schwarz, moderner und kräftiger Akzent"
+    },
+    {
+      id: "modern-weiss",
+      name: "Modern Backsteinfliesen - weiß",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6953_500_500/Modern-Backsteinfliesen---weiB.webp",
+      desc: "reines, helles Weiß mit glatter, präziser Betonstruktur, skandinavischer Minimalismus"
+    },
+    {
+      id: "modern-graphit",
+      name: "Modern Backsteinfliesen - Graphit",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6951_500_500/Modern-Backsteinfliesen---Graphit..webp",
+      desc: "Betonfliese im Graphitton, dunkel und elegant, moderne Ausstrahlung"
+    },
+    {
+      id: "modern-grau",
+      name: "Modern Backsteinfliesen - grau",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6952_500_500/Modern-Backsteinfliesen---grau.webp",
+      desc: "neutraler, moderner Grauton mit präziser Betonstruktur"
+    },
+    {
+      id: "modern-01",
+      name: "Modern Backsteinfliesen 01",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6944_500_500/Modern-Backsteinfliesen-01.webp",
+      desc: "klassischer, ziegelroter Betonfliesen-Farbton mit präziser Kante"
+    },
+    {
+      id: "modern-02",
+      name: "Modern Backsteinfliesen 02",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6940_500_500/Modern-Backsteinfliesen-02.webp",
+      desc: "gedeckter, warmer Betonfliesen-Farbton mit gleichmäßiger Struktur"
+    },
+    {
+      id: "modern-03",
+      name: "Modern Backsteinfliesen 03",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6941_500_500/Modern-Backsteinfliesen-03.webp",
+      desc: "warmer, ziegelfarbener Betonfliesen-Ton mit natürlichen Nuancen"
+    },
+    {
+      id: "modern-04",
+      name: "Modern Backsteinfliesen 04",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6943_500_500/Modern-Backsteinfliesen-04.webp",
+      desc: "dezenter, gedämpfter Betonfliesen-Farbton"
+    },
+    {
+      id: "modern-05",
+      name: "Modern Backsteinfliesen 05",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6942_500_500/Modern-Backsteinfliesen-05.webp",
+      desc: "tiefer, satter Betonfliesen-Farbton mit ausgeprägter Struktur"
+    },
+    {
+      id: "modern-06",
+      name: "Modern Backsteinfliesen - 06",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6939_500_500/Modern-Backsteinfliesen---06.webp",
+      desc: "warmer, ziegelroter Betonfliesen-Farbton, klassische Note"
+    },
+    {
+      id: "modern-historisch",
+      name: "Modern Backsteinfliesen - historisch",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6950_500_500/Modern-Backsteinfliesen---historisch.webp",
+      desc: "Betonfliese im historischen, ziegelroten Farbton mit klassischem Charakter"
+    },
+    {
+      id: "modern-spanisch",
+      name: "Modern Backsteinfliesen - Spanisch",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6948_500_500/Modern-Backsteinfliesen---Spanisch.webp",
+      desc: "warme, sonnige Terrakotta-Töne im spanischen, mediterranen Stil"
+    },
+    {
+      id: "modern-braun-beige",
+      name: "Modern Backsteinfliesen - braun beige",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6945_500_500/Modern-Backsteinfliesen---braun-beige.webp",
+      desc: "gedämpfter, warmer Braun-Beige-Ton mit präziser Betonstruktur"
+    },
+    {
+      id: "modern-felsen",
+      name: "Modern Backsteinfliesen - Felsen",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6949_500_500/Modern-Backsteinfliesen---Felsen.webp",
+      desc: "Betonfliese mit steiniger, felsiger Struktur, natürlicher Grauton"
+    },
+    {
+      id: "burgfliesen-01",
+      name: "Burgfliesen 01",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6962_500_500/Burgfliesen-01.webp",
+      desc: "Betonfliese im Burg-Stil, warme, historische Ziegeltöne"
+    },
+    {
+      id: "burgfliesen-02",
+      name: "Burgfliesen 02",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6961_500_500/Burgfliesen-02.webp",
+      desc: "Betonfliese im Burg-Stil, kräftige, historische Ziegeltöne"
+    },
+    {
+      id: "burgfliesen-03",
+      name: "Burgfliesen 03",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6960_500_500/Burgfliesen-03.webp",
+      desc: "Betonfliese im Burg-Stil, dunklere, gedeckte Ziegeltöne"
+    },
+    {
+      id: "burgfliesen-04",
+      name: "Burgfliesen 04",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6591_500_500/Burgfliesen-04.webp",
+      desc: "Betonfliese im Burg-Stil, warme, erdige Ziegeltöne"
+    },
+    {
+      id: "burgfliesen-05",
+      name: "Burgfliesen 05",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6602_500_500/Burgfliesen-05.webp",
+      desc: "Betonfliese im Burg-Stil, helle, sandige Ziegeltöne"
+    },
+    {
+      id: "burgfliesen-mix",
+      name: "Burgfliesen MIX",
+      sub: "modern line",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6959_500_500/Burgfliesen-MIX.webp",
+      desc: "Betonfliese mit gemischten Burg-Farbtönen, lebendige, unregelmäßige Optik"
+    },
+
+    // ---- Rustic Lang (verlängertes Format, Fassaden) ----
+    {
+      id: "rustic-lang-classic-52",
+      name: "Rustic Lang Ziegelfliesen Classic 52 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6351_500_500/Rustic-Lang-52-cm-Classic-Ziegelfliesen.webp",
+      desc: "sehr lange, flache Betonfliese im klassischen, ziegelroten Farbton",
+      dims: "52 cm Länge x nur ca. 4 cm Höhe — Verhältnis ca. 13:1",
+      shapeHint: "Jede Fliese ist EXTREM niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 5-6 Reihen dieser Fliese Platz finden (also deutlich mehr schmale, horizontale Reihen als bei normalem Mauerwerk), und jede einzelne Fliese in der Reihe ist etwa doppelt so lang wie ein Standardziegel."
+    },
+    {
+      id: "rustic-lang-weiss-52",
+      name: "Rustic Lang Ziegelfliesen Weiß 52 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6348_500_500/Rustic-Lang-52-cm-White-Ziegelfliesen.png",
+      desc: "sehr lange, flache Betonfliese in reinem Weiß, moderner Fassadenlook",
+      dims: "52 cm Länge x nur ca. 4 cm Höhe — Verhältnis ca. 13:1",
+      shapeHint: "Jede Fliese ist EXTREM niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 5-6 Reihen dieser Fliese Platz finden, und jede einzelne Fliese in der Reihe ist etwa doppelt so lang wie ein Standardziegel."
+    },
+    {
+      id: "rustic-lang-lunar-mist-52",
+      name: "Rustic Lang Ziegelfliesen Lunar Mist 52 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6343_500_500/Rustic-Lang-52-cm-Lunar-Mist-Ziegelfliesen.webp",
+      desc: "sehr lange, flache Betonfliese in nebligem, hellgrauem Farbton",
+      dims: "52 cm Länge x nur ca. 4 cm Höhe — Verhältnis ca. 13:1",
+      shapeHint: "Jede Fliese ist EXTREM niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 5-6 Reihen dieser Fliese Platz finden, und jede einzelne Fliese in der Reihe ist etwa doppelt so lang wie ein Standardziegel."
+    },
+    {
+      id: "rustic-lang-concrete-52",
+      name: "Rustic Lang Ziegelfliesen Concrete 52 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6339_500_500/Rustic-Lang-52-cm-Concrete-Ziegelfliesen.webp",
+      desc: "sehr lange, flache Betonfliese im rohen, natürlichen Betonton",
+      dims: "52 cm Länge x nur ca. 4 cm Höhe — Verhältnis ca. 13:1",
+      shapeHint: "Jede Fliese ist EXTREM niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 5-6 Reihen dieser Fliese Platz finden, und jede einzelne Fliese in der Reihe ist etwa doppelt so lang wie ein Standardziegel."
+    },
+    {
+      id: "rustic-lang-graphite-52",
+      name: "Rustic Lang Ziegelfliesen graphite 52 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6335_500_500/Graphite-Langformat-Slimline-52-cm-Ziegelfliesen.png",
+      desc: "sehr lange, flache Betonfliese im dunklen Graphitton",
+      dims: "52 cm Länge x nur ca. 4 cm Höhe — Verhältnis ca. 13:1",
+      shapeHint: "Jede Fliese ist EXTREM niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 5-6 Reihen dieser Fliese Platz finden, und jede einzelne Fliese in der Reihe ist etwa doppelt so lang wie ein Standardziegel."
+    },
+    {
+      id: "rustic-lang-moon-44",
+      name: "Rustic Lang Ziegelfliesen Moon 44 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6326_500_500/Plytki-ceglane-Retro-Long--Moonlight-44-cm.png",
+      desc: "lange, flache Betonfliese in mondhellem, gedämpftem Grauton",
+      dims: "44 cm Länge x ca. 6,5 cm Höhe — Verhältnis ca. 7:1",
+      shapeHint: "Jede Fliese ist sehr niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 3 Reihen dieser Fliese Platz finden, und jede einzelne Fliese ist etwa doppelt so lang wie ein Standardziegel."
+    },
+    {
+      id: "rustic-lang-bronze-bordeaux-44",
+      name: "Rustic Lang Ziegelfliesen Bronze-Bordeaux 44 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6854_500_500/Rustic-Lang-Ziegelfliesen-Bronze-Bordeaux-44-cm.webp",
+      desc: "lange, flache Betonfliese in tiefen Bronze- und Bordeauxtönen",
+      dims: "44 cm Länge x ca. 6,5 cm Höhe — Verhältnis ca. 7:1",
+      shapeHint: "Jede Fliese ist sehr niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 3 Reihen dieser Fliese Platz finden, und jede einzelne Fliese ist etwa doppelt so lang wie ein Standardziegel."
+    },
+    {
+      id: "rustic-lang-graphit-44",
+      name: "Rustic Lang Ziegelfliesen Graphit 44 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6290_500_500/Plytki-ceglane-Retro-Long--Graphite-44-cm.webp",
+      desc: "lange, flache Betonfliese im dunklen Graphitton",
+      dims: "44 cm Länge x ca. 6,5 cm Höhe — Verhältnis ca. 7:1",
+      shapeHint: "Jede Fliese ist sehr niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 3 Reihen dieser Fliese Platz finden, und jede einzelne Fliese ist etwa doppelt so lang wie ein Standardziegel."
+    },
+    {
+      id: "rustic-lang-grau-44",
+      name: "Rustic Lang Ziegelfliesen Grau 44 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6293_500_500/Plytki-ceglane-Retro-Long--Concrete-44-cm.webp",
+      desc: "lange, flache Betonfliese im natürlichen, grauen Betonton",
+      dims: "44 cm Länge x ca. 6,5 cm Höhe — Verhältnis ca. 7:1",
+      shapeHint: "Jede Fliese ist sehr niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 3 Reihen dieser Fliese Platz finden, und jede einzelne Fliese ist etwa doppelt so lang wie ein Standardziegel."
+    },
+    {
+      id: "rustic-lang-klassisch-44",
+      name: "Rustic Lang Ziegelfliesen Klassisch 44 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6309_500_500/Plytki-ceglane-Retro-Long--Classic-44-cm.png",
+      desc: "lange, flache Betonfliese im klassischen, ziegelroten Farbton",
+      dims: "44 cm Länge x ca. 6,5 cm Höhe — Verhältnis ca. 7:1",
+      shapeHint: "Jede Fliese ist sehr niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 3 Reihen dieser Fliese Platz finden, und jede einzelne Fliese ist etwa doppelt so lang wie ein Standardziegel."
+    },
+    {
+      id: "rustic-lang-lava-44",
+      name: "Rustic Lang Ziegelfliesen Lava 44 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6301_500_500/Plytki-ceglane--Retro-Long--Lava-44-cm.webp",
+      desc: "lange, flache Betonfliese in dunklem, vulkanischem Lava-Farbton",
+      dims: "44 cm Länge x ca. 6,5 cm Höhe — Verhältnis ca. 7:1",
+      shapeHint: "Jede Fliese ist sehr niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 3 Reihen dieser Fliese Platz finden, und jede einzelne Fliese ist etwa doppelt so lang wie ein Standardziegel."
+    },
+    {
+      id: "rustic-lang-marron-44",
+      name: "Rustic Lang Ziegelfliesen Marron 44 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6319_500_500/Plytki-ceglane-Retro-Long--Terra-44-cm.webp",
+      desc: "lange, flache Betonfliese in warmem, kastanienbraunem Farbton",
+      dims: "44 cm Länge x ca. 6,5 cm Höhe — Verhältnis ca. 7:1",
+      shapeHint: "Jede Fliese ist sehr niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 3 Reihen dieser Fliese Platz finden, und jede einzelne Fliese ist etwa doppelt so lang wie ein Standardziegel."
+    },
+    {
+      id: "rustic-lang-sandfarben-44",
+      name: "Rustic Lang Ziegelfliesen Sandfarben 44 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6303_500_500/Plytki-ceglane-Retro-Long--Sand-44-cm-piaskowe-.webp",
+      desc: "lange, flache Betonfliese im warmen, sandigen Farbton",
+      dims: "44 cm Länge x ca. 6,5 cm Höhe — Verhältnis ca. 7:1",
+      shapeHint: "Jede Fliese ist sehr niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 3 Reihen dieser Fliese Platz finden, und jede einzelne Fliese ist etwa doppelt so lang wie ein Standardziegel."
+    },
+    {
+      id: "rustic-lang-sandstone-beige-44",
+      name: "Rustic Lang Ziegelfliesen Sandstone Beige 44 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6849_500_500/ak-1.webp",
+      desc: "lange, flache Betonfliese im warmen, sandsteinfarbenen Beigeton",
+      dims: "44 cm Länge x ca. 6,5 cm Höhe — Verhältnis ca. 7:1",
+      shapeHint: "Jede Fliese ist sehr niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 3 Reihen dieser Fliese Platz finden, und jede einzelne Fliese ist etwa doppelt so lang wie ein Standardziegel."
+    },
+    {
+      id: "rustic-lang-toskanisch-44",
+      name: "Rustic Lang Ziegelfliesen Toskanisch 44 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6312_500_500/Plytki-ceglane-Retro-Long--Toscana-44-cm.webp",
+      desc: "lange, flache Betonfliese im toskanischen, warmen Terrakottaton",
+      dims: "44 cm Länge x ca. 6,5 cm Höhe — Verhältnis ca. 7:1",
+      shapeHint: "Jede Fliese ist sehr niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 3 Reihen dieser Fliese Platz finden, und jede einzelne Fliese ist etwa doppelt so lang wie ein Standardziegel."
+    },
+    {
+      id: "rustic-lang-weiss-44",
+      name: "Rustic Lang Ziegelfliesen Weiß 44 cm",
+      sub: "seria long",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6288_500_500/Plytki-ceglane--Retro-Long--White-44-cm.png",
+      desc: "lange, flache Betonfliese in reinem Weiß",
+      dims: "44 cm Länge x ca. 6,5 cm Höhe — Verhältnis ca. 7:1",
+      shapeHint: "Jede Fliese ist sehr niedrig und lang: auf der Höhe einer gewöhnlichen Ziegelreihe sollten ca. 3 Reihen dieser Fliese Platz finden, und jede einzelne Fliese ist etwa doppelt so lang wie ein Standardziegel."
+    },
+
+    // ---- Bodenfliesen und Terrassenplatten ----
+    {
+      id: "boden-historisch-hell",
+      name: "Ziegelfliesen für den Boden – Historisch Hell",
+      sub: "podłoga / taras",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6714_500_500/Ziegelfliesen-fur-den-Boden--Historisch-klar.webp",
+      desc: "helle Bodenfliese aus historischem Ziegel, sandig-beiger Farbton"
+    },
+    {
+      id: "boden-burgfliesen-02",
+      name: "Ziegelfliesen für den Boden – Burgfliesen 02",
+      sub: "podłoga / taras",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6734_500_500/Ziegelfliesen-fur-den-Boden--Burgfliesen-02.webp",
+      desc: "Bodenfliese im Burg-Stil, warme, historische Ziegeltöne"
+    },
+    {
+      id: "boden-burgfliesen-03",
+      name: "Ziegelfliesen für den Boden – Burgfliesen 03",
+      sub: "podłoga / taras",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6736_500_500/Ziegelfliesen-fur-den-Boden--Burgfliesen-03.webp",
+      desc: "Bodenfliese im Burg-Stil, kräftige, historische Ziegeltöne"
+    },
+    {
+      id: "boden-grau",
+      name: "Ziegelfliesen für den Boden – Grau",
+      sub: "podłoga / taras",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6831_500_500/Ziegelfliesen-fur-den-Boden--Grau.webp",
+      desc: "Bodenfliese im neutralen, modernen Grauton"
+    },
+    {
+      id: "boden-graphit",
+      name: "Ziegelfliesen für den Boden – Graphit",
+      sub: "podłoga / taras",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6708_500_500/Ziegelfliesen-fur-den-Boden--Graphit.webp",
+      desc: "Bodenfliese im dunklen Graphitton, elegant und modern"
+    },
+    {
+      id: "boden-felsig",
+      name: "Ziegelfliesen für den Boden - Felsig",
+      sub: "podłoga / taras",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6718_500_500/Ziegelfliesen-fur-den-Boden---Felsig.webp",
+      desc: "Bodenfliese mit steiniger, grauer Struktur"
+    },
+    {
+      id: "boden-braun",
+      name: "Ziegelfliesen für den Boden – Braun",
+      sub: "podłoga / taras",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6729_500_500/Ziegelfliesen-fur-den-Boden--Braun.webp",
+      desc: "Bodenfliese im warmen, erdigen Braunton"
+    },
+    {
+      id: "boden-spanisch",
+      name: "Ziegelfliesen für den Boden – Spanisch",
+      sub: "podłoga / taras",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6731_500_500/Ziegelfliesen-fur-den-Boden--Spanisch.webp",
+      desc: "Bodenfliese in warmen, sonnigen Terrakotta-Tönen"
+    },
+    {
+      id: "boden-sandfarben",
+      name: "Ziegelfliesen für den Boden – Sandfarben",
+      sub: "podłoga / taras",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6739_500_500/Ziegelfliesen-fur-den-Boden--Sandfarben.webp",
+      desc: "Bodenfliese im warmen, hellen Sandton"
+    },
+    {
+      id: "boden-historisch",
+      name: "Ziegelfliesen für den Boden – Historisch",
+      sub: "podłoga / taras",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6830_500_500/Ziegelfliesen-fur-den-Boden--Historisch.-Die-gezeigten-Visualisierungen-wurden-mithilfe-kunstlicher-Intelligenz-KI-erstellt..webp",
+      desc: "Bodenfliese im klassischen, ziegelroten historischen Farbton"
+    },
+    {
+      id: "boden-03",
+      name: "Ziegelfliesen für den Boden 03",
+      sub: "podłoga / taras",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6716_500_500/Ziegelfliesen-fur-den-Boden-03.webp",
+      desc: "Bodenfliese mit natürlicher, gemischter Ziegeloptik"
+    },
+    {
+      id: "boden-gotisch",
+      name: "Ziegelfliesen für den Boden – Gotisch",
+      sub: "podłoga / taras",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6860_500_500/Ziegelfliesen-fur-den-Boden--Gotisch.webp",
+      desc: "Bodenfliese im gotischen, dunkel-rötlichen Farbton"
+    },
+    {
+      id: "terrassenplatte",
+      name: "Terrassen-Ziegelplatte",
+      sub: "podłoga / taras",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6875_500_500/Terrassen-Ziegelplatte.-Eine-mit-kunstlicher-Intelligenz-KI-erstellte-illustrative-Visualisierung..png",
+      desc: "robuste Terrassenplatte im warmen, ziegelroten Farbton, frostbeständig"
+    },
+    {
+      id: "terrassenplatte-provence",
+      name: "Terrassen-Ziegelplatte Provence",
+      sub: "podłoga / taras",
+      img: "https://alteziegel.com/environment/cache/images/productGfx_6877_500_500/Dekorative-Terrassenplatte-%E2%80%9EProvence%E2%80%9C--Visualisierung%2C-erstellt-mit-kunstlicher-Intelligenz-KI..png",
+      desc: "dekorative Terrassenplatte im provenzalischen Stil, warme, mediterrane Töne"
+    }
   ];
 
+
   const state = {
-    imageDataUrl: null,
     productId: null,
     surface: "elewacja",
     layout: "klasyczne-przesuniecie",
     mount: "z-fuga",
-    mortarColor: "biala"
+    mortarColor: "biala",
+    imageDataUrl: null,
+    imageNaturalW: 0,
+    imageNaturalH: 0,
+    customerId: null
   };
 
-  // ---- BUILD PRODUCT ACCORDION ----
-  const accordion = document.getElementById("productAccordion");
-  const grouped = {};
-  PRODUCTS.forEach(p => {
-    if(!grouped[p.group]) grouped[p.group] = [];
-    grouped[p.group].push(p);
+  // ---- identyfikacja klienta Shoper (do limitu dziennych generowań) ----
+  // Sposób 1: parametr w adresie URL ramki, np. wizualizator.html?customerId=123
+  //           (Shoper renderuje to w szablonie .tpl, np. src="...?customerId={$user->user->getId()}")
+  // Sposób 2: postMessage z okna nadrzędnego (jeśli wizualizator jest w <iframe> na starecegly.com)
+  //           window.parent.postMessage({type: "stare-cegly-auth", customerId: "123"}, "https://twoja-domena.vercel.app")
+  (function initCustomerId(){
+    try{
+      const urlId = new URLSearchParams(window.location.search).get("customerId");
+      if(urlId && urlId.trim()) state.customerId = urlId.trim();
+    }catch(err){ /* ignoruj */ }
+    console.log("[wizualizator] customerId z URL przy starcie:", state.customerId || "(brak)");
+  })();
+  window.addEventListener("message", (e) => {
+    console.log("[wizualizator] odebrano wiadomość postMessage z:", e.origin, "dane:", e.data);
+    if(e.data && e.data.type === "stare-cegly-auth" && e.data.customerId){
+      state.customerId = String(e.data.customerId).trim();
+      console.log("[wizualizator] ustawiono customerId z postMessage:", state.customerId);
+    }
   });
 
-  Object.entries(grouped).forEach(([groupName, products]) => {
+  // ---- render product accordion (grouped, collapsible list) ----
+  const GROUP_ORDER = [
+    { key: "historic line", label: "Historic Line — Abbruchziegelfliesen" },
+    { key: "modern line", label: "Modern Line — Betonfliesen in Ziegeloptik" },
+    { key: "seria long", label: "Rustic Line — Rustic Lang im Langformat (44/52 cm)" },
+    { key: "podłoga / taras", label: "Bodenfliesen und Terrassenplatten" }
+  ];
+
+  const productAccordion = document.getElementById("productAccordion");
+  const productNameEl = document.getElementById("productName");
+
+  GROUP_ORDER.forEach((group, groupIndex) => {
+    const items = PRODUCTS.filter(p => p.sub === group.key);
+    if(items.length === 0) return;
+
     const groupEl = document.createElement("div");
-    groupEl.className = "product-group open";
+    groupEl.className = "product-group";
+    groupEl.dataset.group = group.key;
 
-    const headerEl = document.createElement("button");
-    headerEl.className = "product-group-header";
-    headerEl.innerHTML = `<span class="pg-name">${groupName}<span class="pg-count">${products.length}</span></span><span class="pg-right"><span class="pg-chevron"></span></span>`;
-
-    const listEl = document.createElement("div");
-    listEl.className = "product-list open";
-
-    products.forEach(product => {
-      const itemEl = document.createElement("div");
-      itemEl.className = "product-item";
-      itemEl.innerHTML = `
-        <div class="product-thumb"><img src="${product.img}" alt="${product.name}" loading="lazy"></div>
-        <div class="product-info">
-          <div class="product-info-name">${product.name}</div>
-          <div class="product-info-desc">${product.desc}</div>
-        </div>
-      `;
-
-      itemEl.addEventListener("click", () => {
-        document.querySelectorAll(".product-item").forEach(el => el.classList.remove("selected"));
-        itemEl.classList.add("selected");
-        state.productId = product.id;
-        updateGenerateState();
-      });
-
-      listEl.appendChild(itemEl);
-    });
-
-    headerEl.addEventListener("click", () => {
+    const header = document.createElement("button");
+    header.type = "button";
+    header.className = "product-group-header";
+    header.innerHTML = `
+      <span><span class="pg-name">${group.label}</span><span class="pg-count">(${items.length})</span></span>
+      <span class="pg-right"><span class="pg-selected-dot" data-dot></span><span class="pg-chevron">›</span></span>
+    `;
+    header.addEventListener("click", () => {
       groupEl.classList.toggle("open");
-      listEl.classList.toggle("open");
     });
+    groupEl.appendChild(header);
 
-    groupEl.appendChild(headerEl);
-    groupEl.appendChild(listEl);
-    accordion.appendChild(groupEl);
+    const list = document.createElement("div");
+    list.className = "product-group-list";
+    items.forEach(p => {
+      const row = document.createElement("button");
+      row.type = "button";
+      row.className = "product-row";
+      row.dataset.id = p.id;
+      row.innerHTML = `
+        <span class="product-row-thumb"><img src="${p.img}" alt="${p.name}" loading="lazy"></span>
+        <span class="product-row-label">${p.name}</span>
+        <span class="product-row-check">✓</span>
+      `;
+      row.addEventListener("click", () => selectProduct(p.id));
+      list.appendChild(row);
+    });
+    groupEl.appendChild(list);
+    productAccordion.appendChild(groupEl);
   });
 
-  // ---- FORM HANDLERS ----
-  ["surface", "layout", "mount", "mortarColor"].forEach(name => {
-    document.querySelectorAll(`input[name="${name}"]`).forEach(el => {
-      el.addEventListener("change", (e) => {
-        state[name] = e.target.value;
-        if(name === "mount"){
-          document.getElementById("mortarColorDiv").style.display = e.target.value === "z-fuga" ? "block" : "none";
-        }
-        updateGenerateState();
-      });
+  function selectProduct(id){
+    state.productId = id;
+    document.querySelectorAll(".product-row").forEach(el => {
+      el.classList.toggle("selected", el.dataset.id === id);
+    });
+    document.querySelectorAll(".product-group").forEach(el => {
+      const hasSelected = el.querySelector(".product-row.selected") !== null;
+      el.querySelector("[data-dot]").classList.toggle("show", hasSelected);
+    });
+    const p = PRODUCTS.find(p => p.id === id);
+    const groupInfo = GROUP_ORDER.find(g => g.key === p.sub);
+    const groupLabel = groupInfo ? groupInfo.label.split("—")[0].trim() : p.sub;
+    productNameEl.innerHTML = `${p.name} <span>— ${groupLabel}</span>`;
+    updateGenerateState();
+  }
+
+  // ---- chip groups ----
+  document.querySelectorAll(".chip-row").forEach(row => {
+    const group = row.dataset.group;
+    row.addEventListener("click", (e) => {
+      const btn = e.target.closest(".chip");
+      if(!btn) return;
+      row.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+      btn.classList.add("active");
+      state[group === "mount" ? "mount" : group] = btn.dataset.value;
+      if(group === "mount"){
+        document.getElementById("mortarColorField").style.display = (btn.dataset.value === "bez-fugi") ? "none" : "block";
+      }
     });
   });
 
-  // ---- IMAGE UPLOAD ----
+  const mortarColorLabelEl = document.getElementById("mortarColorLabel");
+  document.querySelectorAll(".mortar-dot").forEach(dot => {
+    dot.addEventListener("click", () => {
+      document.querySelectorAll(".mortar-dot").forEach(d => d.classList.remove("active"));
+      dot.classList.add("active");
+      state.mortarColor = dot.dataset.value;
+      mortarColorLabelEl.textContent = dot.getAttribute("title");
+    });
+  });
+
+  // ---- upload handling ----
   const dropzone = document.getElementById("dropzone");
-  const photoInput = document.getElementById("photoInput");
+  const fileInput = document.getElementById("fileInput");
+  const stage = document.getElementById("stage");
+  const toolbar = document.getElementById("toolbar");
+  const stageHint = document.getElementById("stageHint");
   const baseCanvas = document.getElementById("baseCanvas");
-  const baseCanvasDisplay = document.getElementById("baseCanvasDisplay");
-  const stageWrap = document.getElementById("stageWrap");
+  const maskCanvas = document.getElementById("maskCanvas");
+  const baseCtx = baseCanvas.getContext("2d");
+  const maskCtx = maskCanvas.getContext("2d");
 
-  dropzone.addEventListener("click", () => photoInput.click());
-  dropzone.addEventListener("dragover", (e) => { e.preventDefault(); dropzone.classList.add("drag"); });
-  dropzone.addEventListener("dragleave", () => dropzone.classList.remove("drag"));
-  dropzone.addEventListener("drop", (e) => {
-    e.preventDefault();
-    dropzone.classList.remove("drag");
-    if(e.dataTransfer.files.length > 0){
-      processImage(e.dataTransfer.files[0]);
-    }
+  dropzone.addEventListener("click", () => fileInput.click());
+  ["dragenter","dragover"].forEach(ev => dropzone.addEventListener(ev, e => {
+    e.preventDefault(); dropzone.classList.add("drag");
+  }));
+  ["dragleave","drop"].forEach(ev => dropzone.addEventListener(ev, e => {
+    e.preventDefault(); dropzone.classList.remove("drag");
+  }));
+  dropzone.addEventListener("drop", e => {
+    const file = e.dataTransfer.files[0];
+    if(file) loadImage(file);
+  });
+  fileInput.addEventListener("change", e => {
+    const file = e.target.files[0];
+    if(file) loadImage(file);
   });
 
-  photoInput.addEventListener("change", (e) => {
-    if(e.target.files.length > 0){
-      processImage(e.target.files[0]);
-    }
-  });
-
-  function processImage(file){
-    if(!file.type.startsWith("image/")){
-      alert("Bitte wählen Sie eine Bilddatei");
-      return;
-    }
-
+  function loadImage(file){
+    if(!file.type.startsWith("image/")) return;
     const reader = new FileReader();
     reader.onload = (e) => {
       const img = new Image();
       img.onload = () => {
-        const maxW = 1280, maxH = 960;
-        let w = img.width, h = img.height;
-        if(w > maxW || h > maxH){
-          const scale = Math.min(maxW / w, maxH / h);
-          w = Math.round(w * scale);
-          h = Math.round(h * scale);
-        }
+        state.imageDataUrl = e.target.result;
+        state.imageNaturalW = img.naturalWidth;
+        state.imageNaturalH = img.naturalHeight;
 
-        baseCanvas.width = w;
-        baseCanvas.height = h;
-        const ctx = baseCanvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, w, h);
-        state.imageDataUrl = baseCanvas.toDataURL("image/jpeg", 0.92);
+        const maxW = 1000;
+        const scale = Math.min(1, maxW / img.naturalWidth);
+        const w = Math.round(img.naturalWidth * scale);
+        const h = Math.round(img.naturalHeight * scale);
 
-        baseCanvasDisplay.width = w;
-        baseCanvasDisplay.height = h;
-        const dispCtx = baseCanvasDisplay.getContext("2d");
-        dispCtx.drawImage(baseCanvas, 0, 0);
-
-        const maskCanvas = document.getElementById("maskCanvas");
-        maskCanvas.width = w;
-        maskCanvas.height = h;
-        maskCanvas.getContext("2d").clearRect(0,0,w,h);
-
-        maskHistory = [];
-        hasMaskContent = false;
+        [baseCanvas, maskCanvas].forEach(c => { c.width = w; c.height = h; });
+        baseCtx.drawImage(img, 0, 0, w, h);
+        maskCtx.clearRect(0,0,w,h);
 
         dropzone.style.display = "none";
-        document.getElementById("stage").classList.add("active");
-        stageWrap.style.display = "block";
-
+        stage.classList.add("active");
+        toolbar.style.display = "flex";
+        stageHint.style.display = "block";
+        maskHistory = [];
         updateGenerateState();
       };
       img.src = e.target.result;
@@ -744,44 +1205,67 @@
     reader.readAsDataURL(file);
   }
 
-  // ---- DRAWING MASK ----
-  const maskCanvas = document.getElementById("maskCanvas");
-  const maskCtx = maskCanvas.getContext("2d");
+  document.getElementById("changePhotoBtn").addEventListener("click", () => {
+    dropzone.style.display = "flex";
+    stage.classList.remove("active");
+    toolbar.style.display = "none";
+    stageHint.style.display = "none";
+    fileInput.value = "";
+    state.imageDataUrl = null;
+    updateGenerateState();
+  });
+
+  // ---- mask drawing ----
   let drawing = false;
-  let lastPos = { x: 0, y: 0 };
   let maskHistory = [];
   let hasMaskContent = false;
+  const brushSize = document.getElementById("brushSize");
 
-  maskCtx.strokeStyle = "rgba(217,103,63,0.5)";
-  maskCtx.lineCap = "round";
-  maskCtx.lineJoin = "round";
+  function getPos(e){
+    const rect = maskCanvas.getBoundingClientRect();
+    const scaleX = maskCanvas.width / rect.width;
+    const scaleY = maskCanvas.height / rect.height;
+    const point = e.touches ? e.touches[0] : e;
+    return {
+      x: (point.clientX - rect.left) * scaleX,
+      y: (point.clientY - rect.top) * scaleY
+    };
+  }
 
   function pushHistory(){
+    if(maskHistory.length > 12) maskHistory.shift();
     maskHistory.push(maskCtx.getImageData(0,0,maskCanvas.width, maskCanvas.height));
   }
 
   function startDraw(e){
     e.preventDefault();
+    pushHistory();
     drawing = true;
-    const rect = maskCanvas.getBoundingClientRect();
-    const brushSize = parseInt(document.getElementById("brushSize").value);
-    maskCtx.lineWidth = brushSize;
-    lastPos = { x: e.clientX - rect.left || e.touches?.[0].clientX - rect.left, y: e.clientY - rect.top || e.touches?.[0].clientY - rect.top };
-    if(!hasMaskContent) pushHistory();
+    maskCtx.globalCompositeOperation = "source-over";
+    maskCtx.fillStyle = "rgba(217,103,63,0.55)";
+    maskCtx.strokeStyle = "rgba(217,103,63,0.55)";
+    maskCtx.lineWidth = brushSize.value;
+    maskCtx.lineCap = "round";
+    maskCtx.lineJoin = "round";
+    const p = getPos(e);
+    maskCtx.beginPath();
+    maskCtx.moveTo(p.x, p.y);
+    maskCtx.arc(p.x, p.y, brushSize.value/2, 0, Math.PI*2);
+    maskCtx.fill();
+    lastPos = p;
     hasMaskContent = true;
   }
-
+  let lastPos = null;
   function moveDraw(e){
     if(!drawing) return;
     e.preventDefault();
-    const rect = maskCanvas.getBoundingClientRect();
-    const p = { x: e.clientX - rect.left || e.touches?.[0].clientX - rect.left, y: e.clientY - rect.top || e.touches?.[0].clientY - rect.top };
+    const p = getPos(e);
+    maskCtx.beginPath();
     maskCtx.moveTo(lastPos.x, lastPos.y);
     maskCtx.lineTo(p.x, p.y);
     maskCtx.stroke();
     lastPos = p;
   }
-
   function endDraw(){
     drawing = false;
     updateGenerateState();
@@ -800,7 +1284,6 @@
     maskCtx.putImageData(prev, 0, 0);
     updateGenerateState();
   });
-
   document.getElementById("clearMaskBtn").addEventListener("click", () => {
     pushHistory();
     maskCtx.clearRect(0,0,maskCanvas.width, maskCanvas.height);
@@ -808,16 +1291,14 @@
     updateGenerateState();
   });
 
-  // ---- GENERATE STATE ----
+  // ---- generate button state ----
   const generateBtn = document.getElementById("generateBtn");
   const generateNote = document.getElementById("generateNote");
-
   function maskHasPixels(){
     const data = maskCtx.getImageData(0,0,maskCanvas.width, maskCanvas.height).data;
     for(let i=3; i<data.length; i+=4*97){ if(data[i] > 0) return true; }
     return false;
   }
-
   function updateGenerateState(){
     const hasImage = !!state.imageDataUrl;
     const hasProduct = !!state.productId;
@@ -830,7 +1311,7 @@
   }
   updateGenerateState();
 
-  // ---- GENERATE ----
+  // ---- generate ----
   const errorBox = document.getElementById("errorBox");
   const resultWrap = document.getElementById("resultWrap");
   const beforeImg = document.getElementById("beforeImg");
@@ -846,6 +1327,7 @@
     try{
       const product = PRODUCTS.find(p => p.id === state.productId);
 
+      // flatten original + highlighted mask overlay for the model to "see" the target region
       const overlayCanvas = document.createElement("canvas");
       overlayCanvas.width = baseCanvas.width;
       overlayCanvas.height = baseCanvas.height;
@@ -860,6 +1342,10 @@
         highlightedImage: highlightedDataUrl,
         productName: product.name,
         productDescription: product.desc,
+        productDims: product.dims || null,
+        productShapeHint: product.shapeHint || null,
+        productAspectRatio: product.aspectRatio || null,
+        productImage: product.img,
         surface: state.surface,
         layout: state.layout,
         mount: state.mount,
@@ -885,10 +1371,12 @@
         }
         throw new Error(err.error || `Serverfehler (${res.status})`);
       }
-
       const data = await res.json();
       if(!data.image){
         throw new Error("Der Server hat kein Ergebnisbild zurückgegeben.");
+      }
+      if(data.modelUsed){
+        console.log("[wizualizator] generiert mit Modell:", data.modelUsed);
       }
 
       beforeImg.src = originalDataUrl;
@@ -896,7 +1384,7 @@
       const remainingNote = (data.remaining !== null && data.remaining !== undefined)
         ? ` · heute übrig: ${data.remaining}/${data.limit}`
         : "";
-      resultMeta.textContent = `${product.name}${remainingNote}`;
+      resultMeta.textContent = `${product.name} · ${labelFor(state.surface)} · ${labelFor(state.mount)}${remainingNote}`;
       downloadBtn.href = data.image;
       resultWrap.classList.add("show");
       resultWrap.scrollIntoView({behavior:"smooth", block:"start"});
@@ -909,12 +1397,20 @@
     }
   });
 
+  function labelFor(v){
+    const map = {
+      "elewacja":"Fassade", "sciana-wewnetrzna":"Innenwand", "kominek":"Kamin / Verkleidung", "inna":"Andere Fläche",
+      "z-fuga":"Mit Fuge", "bez-fugi":"Ohne Fuge"
+    };
+    return map[v] || v;
+  }
+
   document.getElementById("tryAgainBtn").addEventListener("click", () => {
     resultWrap.classList.remove("show");
-    window.scrollTo({top: stageWrap.offsetTop - 100, behavior:"smooth"});
+    window.scrollTo({top: stage.offsetTop - 100, behavior:"smooth"});
   });
 
-  // ---- COMPARE SLIDER ----
+  // ---- compare slider (diagonal "trowel cut" reveal) ----
   const compare = document.getElementById("compare");
   const afterWrap = document.getElementById("afterWrap");
   const compareHandle = document.getElementById("compareHandle");
@@ -924,7 +1420,7 @@
 
   function setReveal(pct){
     revealPct = Math.max(0, Math.min(100, pct));
-    const skew = 8;
+    const skew = 8; // percentage points of diagonal skew, echoes the angled divider style
     afterWrap.style.clipPath = `polygon(0 0, ${revealPct}% 0, ${revealPct - skew}% 100%, 0 100%)`;
     compareHandle.style.left = revealPct + "%";
     compareGrip.setAttribute("aria-valuenow", Math.round(revealPct));
@@ -946,13 +1442,11 @@
     setReveal(pctFromClientX(e.clientX));
     e.preventDefault();
   }
-
   function handlePointerMove(e){
     if(!dragging) return;
     setReveal(pctFromClientX(e.clientX));
     e.preventDefault();
   }
-
   function handlePointerUp(){
     dragging = false;
   }
@@ -962,6 +1456,7 @@
   window.addEventListener("pointerup", handlePointerUp);
   compare.addEventListener("pointercancel", handlePointerUp);
 
+  // keyboard accessibility (arrow keys while grip is focused)
   compareGrip.addEventListener("keydown", (e) => {
     if(e.key === "ArrowLeft"){ setReveal(revealPct - 3); e.preventDefault(); }
     else if(e.key === "ArrowRight"){ setReveal(revealPct + 3); e.preventDefault(); }
