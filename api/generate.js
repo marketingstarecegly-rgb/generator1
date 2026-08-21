@@ -123,22 +123,32 @@ module.exports = async (req, res) => {
       layout,
       mount,
       mortarColor,
-      customerId
+      customerId,
+      lang
     } = req.body || {};
+
+    const isDE = lang === "de";
 
     // ---- limit dziennych generowań ----
     const isLoggedIn = !!(customerId && String(customerId).trim());
     const identity = isLoggedIn ? `cust:${String(customerId).trim()}` : `ip:${getClientIp(req)}`;
     const limit = isLoggedIn ? LIMIT_LOGGED_IN : LIMIT_ANONYMOUS;
     const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD (UTC)
-    const rlKey = `wizualizator:${identity}:${today}`;
+    const rlKey = `wizualizator:${isDE ? "de" : "pl"}:${identity}:${today}`;
 
     const rl = await checkAndIncrementLimit(rlKey, limit);
     if(!rl.allowed){
+      const messages = isDE
+        ? {
+            loggedIn: `Sie haben Ihr tägliches Limit von ${LIMIT_LOGGED_IN} Visualisierungen für heute erreicht. Kommen Sie morgen wieder, um weitere zu erstellen.`,
+            anonymous: `Sie haben Ihre kostenlose, einmalige Visualisierung für heute genutzt. Melden Sie sich bei Ihrem Konto auf alteziegel.com an, um Zugang zu ${LIMIT_LOGGED_IN} Visualisierungen pro Tag zu erhalten.`
+          }
+        : {
+            loggedIn: `Wykorzystałeś dzienny limit ${LIMIT_LOGGED_IN} generowań na dziś. Wróć jutro, żeby stworzyć kolejne wizualizacje.`,
+            anonymous: `Wykorzystałeś swoją bezpłatną, jednorazową wizualizację na dziś. Zaloguj się na swoje konto na starecegly.com, żeby mieć dostęp do ${LIMIT_LOGGED_IN} generowań dziennie.`
+          };
       return res.status(429).json({
-        error: isLoggedIn
-          ? `Wykorzystałeś dzienny limit ${LIMIT_LOGGED_IN} generowań na dziś. Wróć jutro, żeby stworzyć kolejne wizualizacje.`
-          : `Wykorzystałeś swoją bezpłatną, jednorazową wizualizację na dziś. Zaloguj się na swoje konto na starecegly.com, żeby mieć dostęp do ${LIMIT_LOGGED_IN} generowań dziennie.`,
+        error: isLoggedIn ? messages.loggedIn : messages.anonymous,
         limitReached: true,
         loggedIn: isLoggedIn
       });
