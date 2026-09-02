@@ -71,6 +71,7 @@ const SURFACE_LABELS = {
 const LAYOUT_LABELS = {
   "klasyczne-przesuniecie": "klasyczny układ z przesunięciem (running bond) — poziome rzędy cegieł, każdy kolejny rząd przesunięty względem poprzedniego o pół długości cegły, jak w tradycyjnym murowaniu",
   "prosty": "prosty układ siatkowy (stack bond) — cegły ułożone dokładnie jedna nad drugą w idealnie pionowych i poziomych liniach, BEZ żadnego przesunięcia między rzędami",
+  "pionowy": "pionowy układ (vertical/stretcher bond) — cegły ułożone w pionie, gdzie dłuższy bok płytki jest ustawiony pionowo (nie poziomo). Cegły są ułożone w pionowych kolumnach, jedna obok drugiej, tworząc pionowe linie. Każda płytka stoi na swojej długości — to tworzy wydłużony, pionowy efekt wizualny zamiast tradycyjnych poziomych rzędów. To jest fundamentalnie inny układ niż domyślny — pamiętaj że cegły mają być PIONOWO ustawione, a nie jak zwykle poziomo.",
   "mieszanka": "naturalną, nieregularną mieszankę formatów i odcieni — cegły o lekko różnych długościach i szerokościach, ułożone z nieregularnym, przypadkowym przesunięciem (nie idealnie powtarzalnym jak running bond), z widocznym zróżnicowaniem koloru między poszczególnymi sztukami",
   "jodelka": "UKŁAD W JODEŁKĘ (herringbone) — cegły ułożone POD KĄTEM (zwykle 45° lub 90° względem siebie) w powtarzający się wzór przypominający litery V/zygzak lub szkielet ryby (jak parkiet w jodełkę). To NIE są poziome rzędy — każda cegła stoi ukośnie względem sąsiednich, tworząc charakterystyczny, geometryczny, ukośny wzór na całej powierzchni. Jeśli wynik pokazuje zwykłe poziome rzędy cegieł, to jest BŁĄD."
 };
@@ -123,32 +124,22 @@ module.exports = async (req, res) => {
       layout,
       mount,
       mortarColor,
-      customerId,
-      lang
+      customerId
     } = req.body || {};
-
-    const isDE = lang === "de";
 
     // ---- limit dziennych generowań ----
     const isLoggedIn = !!(customerId && String(customerId).trim());
     const identity = isLoggedIn ? `cust:${String(customerId).trim()}` : `ip:${getClientIp(req)}`;
     const limit = isLoggedIn ? LIMIT_LOGGED_IN : LIMIT_ANONYMOUS;
     const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD (UTC)
-    const rlKey = `wizualizator:${isDE ? "de" : "pl"}:${identity}:${today}`;
+    const rlKey = `wizualizator:${identity}:${today}`;
 
     const rl = await checkAndIncrementLimit(rlKey, limit);
     if(!rl.allowed){
-      const messages = isDE
-        ? {
-            loggedIn: `Sie haben Ihr tägliches Limit von ${LIMIT_LOGGED_IN} Visualisierungen für heute erreicht. Kommen Sie morgen wieder, um weitere zu erstellen.`,
-            anonymous: `Sie haben Ihre kostenlose, einmalige Visualisierung für heute genutzt. Melden Sie sich bei Ihrem Konto auf alteziegel.com an, um Zugang zu ${LIMIT_LOGGED_IN} Visualisierungen pro Tag zu erhalten.`
-          }
-        : {
-            loggedIn: `Wykorzystałeś dzienny limit ${LIMIT_LOGGED_IN} generowań na dziś. Wróć jutro, żeby stworzyć kolejne wizualizacje.`,
-            anonymous: `Wykorzystałeś swoją bezpłatną, jednorazową wizualizację na dziś. Zaloguj się na swoje konto na starecegly.com, żeby mieć dostęp do ${LIMIT_LOGGED_IN} generowań dziennie.`
-          };
       return res.status(429).json({
-        error: isLoggedIn ? messages.loggedIn : messages.anonymous,
+        error: isLoggedIn
+          ? `Wykorzystałeś dzienny limit ${LIMIT_LOGGED_IN} generowań na dziś. Wróć jutro, żeby stworzyć kolejne wizualizacje.`
+          : `Wykorzystałeś swoją bezpłatną, jednorazową wizualizację na dziś. Zaloguj się na swoje konto na starecegly.com, żeby mieć dostęp do ${LIMIT_LOGGED_IN} generowań dziennie.`,
         limitReached: true,
         loggedIn: isLoggedIn
       });
@@ -197,7 +188,7 @@ WAŻNE: mimo wydłużonego formatu, cała zaznaczona powierzchnia MA WYGLĄDAĆ 
 `
       : "";
 
-    const layoutAlert = (layout === "jodelka" || layout === "mieszanka")
+    const layoutAlert = (layout === "jodelka" || layout === "mieszanka" || layout === "pionowy")
       ? `UWAGA — NIESTANDARDOWY UKŁAD UŁOŻENIA CEGŁY, PRZECZYTAJ PRZED WYKONANIEM ZADANIA:
 Użytkownik wybrał układ: ${layoutLabel}
 Załączone zdjęcie referencyjne produktu prawdopodobnie pokazuje cegłę ułożoną w zwykły, poziomy sposób (running bond) — to zdjęcie ma służyć WYŁĄCZNIE jako wzorzec KOLORU, FAKTURY i CHARAKTERU materiału. CAŁKOWICIE ZIGNORUJ sposób ułożenia/wzór widoczny na tym zdjęciu referencyjnym. Układ ułożenia na finalnym obrazie musi być zgodny wyłącznie z opisem: ${layoutLabel}. Jeśli wynik będzie pokazywał zwykłe poziome rzędy zamiast opisanego układu, to jest BŁĄD — sprawdź to przed zakończeniem generowania.
@@ -237,7 +228,7 @@ Zasady krytyczne:
 
 PODSUMOWANIE — sprawdź przed wygenerowaniem, że wynik spełnia WSZYSTKIE poniższe punkty:
 1. Produkt: ${productName} (${productDescription || "naturalna faktura cegły"}).
-2. Układ: ${layoutLabel}.${(layout === "jodelka" || layout === "mieszanka") ? " Sprawdź jeszcze raz: to NIE ma być zwykły poziomy układ z przesunięciem, nawet jeśli zdjęcie referencyjne produktu tak sugeruje." : ""}
+2. Układ: ${layoutLabel}.${(layout === "jodelka" || layout === "mieszanka" || layout === "pionowy") ? " Sprawdź jeszcze raz: to NIE ma być zwykły poziomy układ z przesunięciem, nawet jeśli zdjęcie referencyjne produktu tak sugeruje." : ""}
 3. ${mount === "bez-fugi" ? "Brak fugi między płytkami." : `Fuga WIDOCZNA, w kolorze: ${mortarColorLabel}.`}
 4. Brak białych/jasnych, niepomalowanych obwódek wokół okien, drzwi lub innych otworów w zaznaczonym obszarze — cegła sięga dokładnie do ich krawędzi.
 ${productDims ? `5. Proporcje pojedynczej płytki: ${productDims}${productShapeHint ? ` — ${productShapeHint}` : ""}.\n6. Jednolita okładzina bez dodatkowych ramek/podziałów.\n7. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian.` : "5. Jednolita okładzina bez dodatkowych ramek/podziałów.\n6. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian."}`
