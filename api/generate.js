@@ -120,6 +120,9 @@ module.exports = async (req, res) => {
       productShapeHint,
       productAspectRatio,
       productImage,
+      productTextureDetails,
+      productColorPalette,
+      productMaterialsInfo,
       surface,
       layout,
       mount,
@@ -200,15 +203,24 @@ Załączone zdjęcie referencyjne produktu prawdopodobnie pokazuje cegłę uło�
 
     promptParts.push({
       text:
-`${shapeAlert}${layoutAlert}Jesteś precyzyjnym narzędziem do fotorealistycznej wizualizacji materiałów budowlanych na zdjęciach architektonicznych.
+`${shapeAlert}${layoutAlert}Jesteś precyzyjnym narzędziem do fotorealistycznej wizualizacji materiałów budowlanych na zdjęciach architektonicznych. Twoje zadanie to KLUCZOWE — każdy szczegół liczy się do dokładności wynikowego obrazu.
 
 Otrzymujesz dwa zdjęcia:
 1. Oryginalne zdjęcie ściany/elewacji.
 2. To samo zdjęcie z obszarem podświetlonym na pomarańczowo-czerwono (kolor nakładki: rgba(217,103,63)) — ten podświetlony obszar precyzyjnie wskazuje, KTÓRY fragment ściany ma zostać przebudowany.
 
+INSTRUKCJE DOTYCZĄCE KOLORU I FAKTURY (KRYTYCZNE):
+- KOLOR: Dopasuj barwę DOKŁADNIE do załączonego zdjęcia referencyjnego produktu. Obserwuj wszystkie odcienie, zciemnienia, plamki, nieregularności kolorystyczne widoczne na referencji. Jeśli płytki mają naturalną zmienność — zachowaj ją. Jeśli są jednolite — nie dodawaj sztucznych wariacji.
+- TEKSTURA POWIERZCHNI: Zdjęcie referencyjne pokazuje DOKŁADNIE jak powinna wyglądać tekstura materiału. Analizuj: czy powierzchnia jest gładka/chropowata, czy widać pory, rysy, ziarnistość, czy są szczegóły — i odtwórz to z wierności fotorealistycznej.
+- FAKTYCZNE DETALE: Jeśli na referencji widzisz naturalne zabrudzenia, przebarwienia, nierówności powierzchni — to są CECHY PRODUKTU, zintegruj je. To nie są błędy — to właśnie charakterystyka materiału.
+- BRAK UPROSZCZENIA: Nie idealizuj — jeśli materiał ma szorstką, nieregularną fakturę, musi być wyraźnie szorstki. Jeśli ma pory — muszą być widoczne.
+
 Twoje zadanie:
 Zastąp WYŁĄCZNIE podświetlony obszar realistyczną okładziną z płytek z cegły "${productName}". Opis materiału: ${productDescription || "płytka z cegły o naturalnej, nieregularnej fakturze"}.
-${productInline ? "Dołączam też osobne zdjęcie referencyjne samego materiału/tekstury — dopasuj kolor, fakturę i charakter cegły dokładnie do tego wzorca." : ""}
+${productTextureDetails ? `\nDETALI TEKSTURY (BARDZO WAŻNE, przeczytaj uważnie): ${productTextureDetails}` : ""}
+${productColorPalette ? `\nPALETA KOLORÓW (KRYTYCZNE dla dokładności): ${productColorPalette}` : ""}
+${productMaterialsInfo ? `\nINFORMACJE O MATERIALE: ${productMaterialsInfo}` : ""}
+${productInline ? "Dołączam też osobne zdjęcie referencyjne samego materiału/tekstury — dopasuj DOKŁADNIE kolor, fakturę, detale i charakter cegły do tego wzorca. To zdjęcie jest KLUCZOWE." : ""}
 
 Zastosuj dokładnie następujące parametry:
 - Powierzchnia: ${surfaceLabel}.
@@ -218,20 +230,25 @@ Zastosuj dokładnie następujące parametry:
 Zasady krytyczne:
 - Usuń całkowicie pomarańczową nakładkę z wyniku — finalny obraz ma wyglądać jak naturalna, niezmodyfikowana fotografia, BEZ śladu podświetlenia.
 - Zachowaj dokładnie oryginalną perspektywę, kąt kamery, proporcje budynku oraz wszystkie elementy poza zaznaczonym obszarem (okna, drzwi, rynny, otoczenie, niebo, oświetlenie) bez zmian.
-- Dopasuj cień, kierunek światła i odbicia na nowej okładzinie tak, by pasowały do oświetlenia sceny na oryginalnym zdjęciu.
+- Dopasuj cień, kierunek światła i odbicia na nowej okładzinie tak, by pasowały do oświetlenia sceny na oryginalnym zdjęciu. WAŻNE: zwróć uwagę na KIERUNEK światła, INTENSYWNOŚĆ cieni i ODBICIA na referencyjnym zdjęciu produktu.
 - Zachowaj naturalne, realistyczne przejścia na krawędziach zaznaczonego obszaru — bez twardych, sztucznych linii cięcia.
 - Cała zaznaczona powierzchnia ma być pokryta JEDNOLITĄ okładziną — bez ramek, obwódek, listew, podziału na panele lub sekcje, chyba że wynika to wyłącznie z naturalnego układu płytek opisanego wyżej.
 - KRYTYCZNE — BRAK BIAŁYCH/JASNYCH OBWÓDEK WOKÓŁ OTWORÓW: jeśli w zaznaczonym obszarze znajdują się okna, drzwi lub inne otwory, okładzina z cegły MUSI sięgać dokładnie do ich krawędzi (do ramy okna/drzwi), bez żadnego niepomalowanego, jasnego, białego lub pustego paska/obwódki pozostawionego między cegłą a otworem. To bardzo częsty błąd do uniknięcia — sprawdź dokładnie każdą krawędź otworu w zaznaczonym obszarze przed zakończeniem generowania. Jedyna dozwolona "ramka" to prawdziwa, fizyczna framuga/ościeżnica okna lub drzwi, jeśli była widoczna na oryginalnym zdjęciu — nic ponad to.
 - SPÓJNOŚĆ TEKSTURY NA CAŁEJ POWIERZCHNI: każda pojedyncza cegła i każda spoina w zaznaczonym obszarze musi być wyraźna, ostra i spójna z resztą okładziny — bez lokalnych rozmyć, zniekształceń, "poszarpanych" fragmentów, zlewających się ze sobą cegieł ani innych lokalnych artefaktów. Jeśli jakikolwiek pojedynczy fragment (nawet mały) odbiega jakością lub wyrazistością od reszty wygenerowanej okładziny, popraw go tak, żeby pasował do reszty przed zwróceniem wyniku.
+- ROZMIARY PŁYTEK: Cegły w zaznaczonym obszarze muszą mieć REALISTYCZNE proporcje. Sprawdź: czy są drażniąco duże, czy drażniąco małe względem reszty sceny? Porównaj ze zdjęciem referencyjnym — tam widzisz jak duże powinny być w stosunku do detali otoczenia. Jeśli wygenerujesz płytki zbyt duże lub zbyt małe, wynik będzie nieprzekonujący.
 - Nie dodawaj znaków wodnych, tekstu ani elementów graficznych spoza sceny.
 - Wygeneruj wyłącznie finalny, fotorealistyczny obraz wynikowy.
 
 PODSUMOWANIE — sprawdź przed wygenerowaniem, że wynik spełnia WSZYSTKIE poniższe punkty:
 1. Produkt: ${productName} (${productDescription || "naturalna faktura cegły"}).
-2. Układ: ${layoutLabel}.${(layout === "jodelka" || layout === "mieszanka" || layout === "pionowy") ? " Sprawdź jeszcze raz: to NIE ma być zwykły poziomy układ z przesunięciem, nawet jeśli zdjęcie referencyjne produktu tak sugeruje." : ""}
-3. ${mount === "bez-fugi" ? "Brak fugi między płytkami." : `Fuga WIDOCZNA, w kolorze: ${mortarColorLabel}.`}
-4. Brak białych/jasnych, niepomalowanych obwódek wokół okien, drzwi lub innych otworów w zaznaczonym obszarze — cegła sięga dokładnie do ich krawędzi.
-${productDims ? `5. Proporcje pojedynczej płytki: ${productDims}${productShapeHint ? ` — ${productShapeHint}` : ""}.\n6. Jednolita okładzina bez dodatkowych ramek/podziałów.\n7. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian.` : "5. Jednolita okładzina bez dodatkowych ramek/podziałów.\n6. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian."}`
+2. Kolor dopasowany DOKŁADNIE do zdjęcia referencyjnego (sprawdź odcienie, zaciemnienia, plamki, wszystkie detale kolorystyczne).
+3. Tekstura jest wiernie odtworzona — nie uproszczona, nie wyglądająca "czysto" jeśli materiał jest szorstki.
+4. Układ: ${layoutLabel}.${(layout === "jodelka" || layout === "mieszanka" || layout === "pionowy") ? " Sprawdź jeszcze raz: to NIE ma być zwykły poziomy układ z przesunięciem, nawet jeśli zdjęcie referencyjne produktu tak sugeruje." : ""}
+5. ${mount === "bez-fugi" ? "Brak fugi między płytkami." : `Fuga WIDOCZNA, w kolorze: ${mortarColorLabel}.`}
+6. Brak białych/jasnych, niepomalowanych obwódek wokół okien, drzwi lub innych otworów w zaznaczonym obszarze — cegła sięga dokładnie do ich krawędzi.
+7. Rozmiary płytek są realistyczne i proporcjonalne do otoczenia.
+8. Tekstura na całej powierzchni jest spójna, ostra i czyszczna — bez rozmyć i artefaktów.
+${productDims ? `9. Proporcje pojedynczej płytki: ${productDims}${productShapeHint ? ` — ${productShapeHint}` : ""}.\n10. Jednolita okładzina bez dodatkowych ramek/podziałów.\n11. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian.` : "9. Jednolita okładzina bez dodatkowych ramek/podziałów.\n10. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian."}`
     });
 
     promptParts.push({ text: "Zdjęcie oryginalne:" });
