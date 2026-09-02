@@ -365,8 +365,8 @@
 
 <section class="hero">
   <p class="hero-eyebrow">Narzędzie / bezpłatna wizualizacja</p>
-  <h1>Stwórz wizualizację swojej ściany z wybraną płytką ceglaną.</h1>
-  <p>Dodaj zdjęcie ściany lub elewacji, zaznacz powierzchnię, którą chcesz zmienić, a następnie wybierz produkt z naszej oferty. W ciągu kilkunastu sekund wygenerujemy wizualizację. — <strong>bez zakładania konta</strong>.</p>
+  <h1>Zobacz tę cegłę na swojej ścianie, zanim ją zamówisz</h1>
+  <p>Dodaj zdjęcie ściany albo elewacji, zaznacz palcem lub myszką powierzchnię do przemiany i wybierz jeden z produktów Stare Cegły. Wynik wygenerujemy w kilkanaście sekund — <strong>bez zakładania konta</strong>.</p>
 </section>
 
 <div class="studio">
@@ -420,17 +420,17 @@
         <div class="chip-row" data-group="surface">
           <button class="chip active" data-value="elewacja">Elewacja</button>
           <button class="chip" data-value="sciana-wewnetrzna">Ściana wewnętrzna</button>
-          <button class="chip" data-value="kominek">Kominek / zabudowa</button>
-          <button class="chip" data-value="inna">Inna powierzchnia</button>
+          
+          <button class="chip" data-value="inna">Podłoga</button>
         </div>
       </div>
 
       <div>
         <p class="field-label">Układ</p>
         <div class="chip-row" data-group="layout">
-          <button class="chip active" data-value="klasyczne-przesuniecie">Klasyczne przesunięcie</button>
-          <button class="chip" data-value="prosty">Prosty układ</button>
-          <button class="chip" data-value="mieszanka">Naturalna mieszanka</button>
+          <button class="chip active" data-value="klasyczne-przesuniecie">Klasyczny</button>
+          <button class="chip" data-value="prosty">Prosty</button>
+          <button class="chip" data-value="pionowy">Pionowy</button>
           <button class="chip" data-value="jodelka">Jodełka</button>
         </div>
       </div>
@@ -1618,7 +1618,8 @@ Przed zakupem zalecamy zapoznanie się ze zdjęciami produktu, a w przypadku wą
   function labelFor(v){
     const map = {
       "elewacja":"Elewacja", "sciana-wewnetrzna":"Ściana wewnętrzna", "kominek":"Kominek / zabudowa", "inna":"Inna powierzchnia",
-      "z-fuga":"Montaż z fugą", "bez-fugi":"Montaż bez fugi"
+      "z-fuga":"Montaż z fugą", "bez-fugi":"Montaż bez fugi",
+      "klasyczne-przesuniecie":"Klasyczny", "prosty":"Prosty", "pionowy":"Pionowy", "jodelka":"Jodełka"
     };
     return map[v] || v;
   }
