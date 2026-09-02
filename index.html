@@ -420,6 +420,7 @@
         <div class="chip-row" data-group="surface">
           <button class="chip active" data-value="elewacja">Elewacja</button>
           <button class="chip" data-value="sciana-wewnetrzna">Ściana wewnętrzna</button>
+          
           <button class="chip" data-value="inna">Podłoga</button>
         </div>
       </div>
@@ -514,18 +515,13 @@ Przed zakupem zalecamy zapoznanie się ze zdjęciami produktu, a w przypadku wą
 
 <script>
 (function(){
-  "use strict";
-
-  // ---- product catalogue (real Stare Cegły products, całą ofertą płytek) ----
-  const PRODUCTS = [
-    {
       id: "cut-brick-classic",
       name: "Cut Brick CLASSIC",
       sub: "historic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4854_500_500/Ceglane-plytki-Stara-cegla-Cegla-na-sciane---Plytki-z-cegly---Lico-klasyczne---Cut-Brick-classic-plytki-ciete-z-cegly-rozbiorkowej-dekoracyjne-i-na-elewacje.-Wersja-limitowana-cegly..webp?overlay=1",
       desc: "autentyczne płytki cięte z XIX-wiecznej cegły rozbiórkowej. Ciepła, pomarańczowo-ceglana kolorystyka, naturalne przebarwienia oraz porowate, chropowate lico tworzą efekt prawdziwego starego muru. Regularna forma ułatwia estetyczne ułożenie, natomiast zachowane ślady czasu nadają powierzchni wyjątkowy, niepowtarzalny charakter.",
       dims: "ok. 25,5–27,5 cm długości x ok. 6,5–7,5 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 3,7:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "cut-brick-yellow",
       name: "Cut Brick YELLOW",
@@ -533,7 +529,7 @@ Przed zakupem zalecamy zapoznanie się ze zdjęciami produktu, a w przypadku wą
       img: "https://starecegly.com/environment/cache/images/productGfx_6083_500_500/Cegla-na-sciane-plytki-dekoracyjne-z-cegly-rozbiorkowej-lico-klasyczne-cut-brick-yellow-plytki-dekoracyjne-na-elewacje.webp?overlay=1",
       desc: "wyjątkowo jasne płytki cięte z oryginalnej XIX-wiecznej cegły rozbiórkowej. Ich słoneczna kolorystyka łączy delikatne odcienie żółci, jasnego pomarańczu i terakoty z naturalnymi czerwonymi refleksami. Chropowate, porowate lico, drobne wżery, przebarwienia i ślady dawnej zaprawy zachowują autentyczny charakter starej cegły, natomiast regularny kształt pozwala stworzyć uporządkowaną i elegancką powierzchnię.",
       dims: "ok. 25,5–27,5 cm długości x ok. 6,5–7,5 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 3,7:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "old-style-classic",
       name: "Old Style CLASSIC",
@@ -541,7 +537,7 @@ Przed zakupem zalecamy zapoznanie się ze zdjęciami produktu, a w przypadku wą
       img: "https://starecegly.com/environment/cache/images/productGfx_4865_500_500/Old-Style-Classic.jpgCeglane-plytki-Stara-cegla-Cegla-na-sciane-lico--klasyczne-Old-Style-classic-glowne.webp?overlay=1",
       desc: "płytki z autentycznej cegły rozbiórkowej o ciepłej, jasnoczerwonej kolorystyce. Zachowane oryginalne lico starej cegły wyróżnia się naturalną, chropowatą fakturą, delikatnymi przebarwieniami, śladami dawnej zaprawy oraz subtelnym wapiennym zabieleniem. Ostre, regularne krawędzie pozwalają stworzyć uporządkowaną i elegancką kompozycję, podczas gdy naturalna powierzchnia zachowuje autentyczny charakter historycznego materiału.",
       dims: "ok. 25,5–27,5 cm długości x ok. 6,5–7,5 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 3,7:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "lico-klasyczne-wulkaniczne",
       name: "Lico Klasyczne WULKANICZNE",
@@ -549,7 +545,7 @@ Przed zakupem zalecamy zapoznanie się ze zdjęciami produktu, a w przypadku wą
       img: "https://starecegly.com/environment/cache/images/productGfx_5049_500_500/Ceglane-plytki-Stara-cegla-Cegla-na-sciane-lico--klasyczne-Wulkaniczna.webp?overlay=1",
       desc: "wyjątkowe płytki wykonane z autentycznej XIX-wiecznej cegły rozbiórkowej. Ich największym atutem jest niezwykła kolorystyka inspirowana rozgrzaną lawą – od głębokiej czerwieni i rdzy, przez miedziane tony, aż po intensywny, ognisty pomarańcz. Płaskie lico i ostre krawędzie nadają płytkom uporządkowany, elegancki wygląd, podczas gdy naturalne różnice kolorystyczne i ślady dawnej cegły zachowują ich autentyczny charakter.",
       dims: "ok. 25,5–27,5 cm długości x ok. 6,5–7,5 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 3,7:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "lico-klasyczne-mix",
       name: "Lico Klasyczne MIX",
@@ -557,31 +553,31 @@ Przed zakupem zalecamy zapoznanie się ze zdjęciami produktu, a w przypadku wą
       img: "https://starecegly.com/environment/cache/images/productGfx_6704_500_500/Plytki-z-cegly-rozbiorkowej---Klasyczny-MIX---zdjecie-glowne.webp?overlay=1",
       desc: "Surowa, postarzana i mocno zróżnicowana faktura — chropowata powierzchnia, nierówności, odpryski, ubytki i ślady starej zaprawy. Nieregularne krawędzie. Naturalna, wielotonowa kolorystyka: ceglasty, rdzawy, czerwony, terakotowy i brązowy, z subtelnymi różnicami odcieni między płytkami. Autentyczny wygląd starego muru, matowa powierzchnia, realistyczna porowatość i mikrostruktura, zróżnicowane wymiary płytek",
       dims: "ok. 5,0 –27,5 cm długości x ok. 6,5–7,5 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 3,7:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "loft-super-slim",
       name: "Loft Super Slim",
       sub: "historic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_6446_500_500/Plytki-dekoracyjne-z-cegly-rozbiorkowej-loft-super-slim-glowne.webp?overlay=1",
-      desc: "Ciepłe, rustykalne płytki ceglane o naturalnej, porowatej strukturze. Zróżnicowane odcienie terakoty, pomarańczy i klasycznej czerwieni tworzą wyjątkową kompozycję inspirowaną autentycznym starym murem. Liczne wżery, delikatne przebarwienia oraz nieregularne krawędzie podkreślają naturalność materiału i nadają powierzchni niepowtarzalny charakter.",
+      desc: "Ciepłe, rustykalne płytki ceglane o naturalnej, porowatej strukturze. Zróżnicowane odcienie terakoty, pomarańczy i klasycznej czerwieni tworzą wyjątkową kompozycję inspirowaną autentycznym starym murem. Liczne wżery, delikatne przebarwienia oraz nieregularne krawędzie podkreślają naturalność materiału i nadają powierzchni niepowtarzalny charakter."
 dims: "ok. 24–26 cm długości x ok. 5–6 cm wysokości x ok. 0,7 cm grubości (proporcje ok. 8,3–9:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "loft-style",
       name: "Loft Style",
       sub: "historic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_3924_500_500/Plytki-z-cegly-loft-cegla-na-sciane-dekoracyjna.webp?overlay=1",
-      desc: "Ciepłe, rustykalne płytki ceglane o naturalnej, porowatej strukturze. Zróżnicowane odcienie terakoty, pomarańczy i klasycznej czerwieni tworzą wyjątkową kompozycję inspirowaną autentycznym starym murem. Liczne wżery, delikatne przebarwienia oraz nieregularne krawędzie podkreślają naturalność materiału i nadają powierzchni niepowtarzalny charakter.",
+      desc: "Ciepłe, rustykalne płytki ceglane o naturalnej, porowatej strukturze. Zróżnicowane odcienie terakoty, pomarańczy i klasycznej czerwieni tworzą wyjątkową kompozycję inspirowaną autentycznym starym murem. Liczne wżery, delikatne przebarwienia oraz nieregularne krawędzie podkreślają naturalność materiału i nadają powierzchni niepowtarzalny charakter."
       dims: "ok. 25–29 cm długości x ok. 6–7 cm wysokości x ok. 2 cm grubości (proporcje ok. 3,7:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "prowansalski-loft",
       name: "Prowansalski Loft",
       sub: "historic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_6273_500_500/Plytki-z-cegly-na-sciane-prowansalskie-LOFT-sciana-uklad-wozowy-glowne.webp?overlay=1",
-      desc: "płytki z cegły rozbiórkowej w stylu prowansalskiego loftu. Płaskie, równe lico i ostre, regularne krawędzie, z delikatną naturalną fakturą oraz subtelnymi śladami historycznej cegły. Jasna, ciepła kolorystyka — dominują odcienie piaskowego beżu, kremu, jasnej terakoty i delikatnego pomarańczu, z naturalnymi przejściami między tonami. Widoczny subtelny, nieregularny balejaż kolorystyczny, miejscami jaśniejsze i bardziej nasycone fragmenty, przywodzące na myśl ciepły piasek i słońce. Matowa, naturalna powierzchnia, autentyczna ceglana mikrostruktura.",
+      desc: "płytki z cegły rozbiórkowej w stylu prowansalskiego loftu. Płaskie, równe lico i ostre, regularne krawędzie, z delikatną naturalną fakturą oraz subtelnymi śladami historycznej cegły. Jasna, ciepła kolorystyka — dominują odcienie piaskowego beżu, kremu, jasnej terakoty i delikatnego pomarańczu, z naturalnymi przejściami między tonami. Widoczny subtelny, nieregularny balejaż kolorystyczny, miejscami jaśniejsze i bardziej nasycone fragmenty, przywodzące na myśl ciepły piasek i słońce. Matowa, naturalna powierzchnia, autentyczna ceglana mikrostruktura."
       dims: "ok. 25–29 cm długości x ok. 6–7 cm wysokości x ok. 2 cm grubości (proporcje ok. 3,7:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "lico-gdanskie-retro",
       name: "Lico Gdańskie Retro",
@@ -590,7 +586,7 @@ dims: "ok. 24–26 cm długości x ok. 5–6 cm wysokości x ok. 0,7 cm grubośc
       desc: "Płytki są smukłe i wydłużone, o lekko nieregularnych krawędziach i naturalnie zróżnicowanej powierzchni. Lico jest matowe, delikatnie chropowate i porowate, z widocznymi drobnymi ubytkami, przetarciami, przebarwieniami oraz śladami upływu czasu.
 Kolorystyka jest ciepła i stonowana — dominują odcienie jasnego ceglanego, piaskowego, ochry, karmelowego i rdzawobrązowego. Pojawiają się również jaśniejsze kremowe i beżowe fragmenty oraz ciemniejsze brązowe, rdzawe i miejscami czerwone akcenty. Kolor nie jest jednolity – na powierzchni widoczne są naturalne plamy, smugi i subtelne przejścia tonalne, dzięki czemu każda płytka ma nieco inny wygląd.",
       dims: "ok. 25,5–27,5 cm długości x ok. 6,5–7,5 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 3,7:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "lico-torunskie",
       name: "Lico Toruńskie",
@@ -598,7 +594,7 @@ Kolorystyka jest ciepła i stonowana — dominują odcienie jasnego ceglanego, p
       img: "https://starecegly.com/environment/cache/images/productGfx_3995_500_500/wnetrze-pomieszczenia-barn-door-czarna-rama-cegla-na-scianie-lico-torunskie..webp?overlay=1",
       desc: "Ciepła, rustykalna kolorystyka w odcieniach naturalnej terakoty, ceglastych pomarańczy i subtelnych brązów, uzupełniona nieregularnymi jasnymi nalotami. Lekko chropowata, porowata powierzchnia oraz delikatnie nieregularne krawędzie nadają płytkom autentyczny charakter starej cegły, z widocznymi śladami patyny, przetarć i naturalnego starzenia.",
       dims: "ok. 25,5–27,5 cm długości x ok. 6,5–7,5 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 3,7:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "lico-torunskie-retro",
       name: "Lico Toruńskie Retro",
@@ -607,7 +603,7 @@ Kolorystyka jest ciepła i stonowana — dominują odcienie jasnego ceglanego, p
       desc: "Smukłe, wydłużone płytki o lekko nieregularnych krawędziach i wyraźnie naturalnej, postarzonej fakturze. Powierzchnia matowa, chropowata i porowata, z widocznymi drobnymi ubytkami, przetarciami, pęknięciami oraz śladami starej zaprawy i wapiennych nalotów.
 Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych ceglastych, łososiowych i terakotowych odcieni, przez klasyczną czerwień cegły, aż po głębokie rdzawe i brązowe fragmenty. Liczne kremowe, beżowe i jasnoszare przebarwienia oraz białe ślady zaprawy tworzą charakterystyczny, nieregularny efekt postarzenia. Każda płytka ma inny odcień, wzór przebarwień i stopień zużycia, dzięki czemu całość wygląda jak autentyczna, historyczna ściana z odzyskanej cegły.",
       dims: "ok. 25–27 cm długości x ok. 6,5–8 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 4,2:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "lico-klasyczne",
       name: "Lico Klasyczne",
@@ -615,7 +611,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       img: "https://starecegly.com/environment/cache/images/productGfx_6382_500_500/ceglane-plytki-stara-cegla-cegla-na-sciane-plytki-z-cegly-lico-klasyczne.webp?overlay=1",
       desc: "Rustykalne płytki ceglane o intensywnej, wielobarwnej tonacji czerwieni, terakoty, rdzawego pomarańczu, brązu i miejscami głębokiego bordo. Powierzchnia jest mocno postarzana, chropowata i porowata, z licznymi nierównościami, pęknięciami, przetarciami oraz naturalnymi białymi i szarymi nalotami. Zróżnicowana kolorystyka i nieregularne krawędzie nadają im autentyczny charakter starej, ręcznie formowanej cegły z wyraźną patyną i śladami wieloletniego użytkowania.",
       dims: "ok. 25–29 cm długości x ok. 6–7,5 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 4:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "lico-klasyczne-retro",
       name: "Lico Klasyczne RETRO",
@@ -623,15 +619,15 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       img: "https://starecegly.com/environment/cache/images/productGfx_5560_500_500/Ceglane-plytki-Stara-cegla-Cegla-na-sciane-Plytki-z-cegly-lico-klasyczne-zdjecie-glowne.webp?overlay=1",
       desc: "Ciepłe, jasne płytki ceglane w naturalnych odcieniach jasnej terakoty, ceglastopomarańczowego, rdzawego beżu i delikatnego brązu. Kolorystyka jest nieregularna i zróżnicowana, z subtelnymi kremowymi, białawymi oraz szarawymi przebarwieniami i naturalnymi nalotami. Powierzchnia jest matowa, lekko chropowata i porowata, z widocznymi drobnymi przetarciami, zagłębieniami, rysami, nierównościami oraz śladami naturalnego starzenia. Krawędzie są nieregularne, miejscami lekko zaokrąglone i wyszczerbione, a poszczególne płytki delikatnie różnią się kształtem, kolorem i stopniem zużycia.",
       dims: "ok. 25–29 cm długości x ok. 6–7,5 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 4:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "loft-slim",
       name: "Loft Slim",
       sub: "historic line",
       img: "https://starecegly.com/environment/cache/images/productGfx_6029_500_500/Plytki-dekoracyjne-z-cegly-rozbiorkowej-na-sciane-Loft-Slim-aranzacja-zdjecie-ogolne_MIN.webp?overlay=1",
-      desc: "Smukłe, naturalne płytki ceglane w ciepłych, stonowanych odcieniach czerwonej cegły, jasnej terakoty, ceglastobrązowego oraz delikatnie przygaszonego pomarańczu. Kolorystyka jest nieregularna i zróżnicowana, z widocznymi naturalnymi przebarwieniami, miejscami jaśniejszymi i ciemniejszymi fragmentami oraz subtelnymi śladami wieloletniego starzenia. Powierzchnia jest matowa, surowa i lekko chropowata, z charakterystyczną porowatością, drobnymi zagłębieniami, przetarciami, rysami i nierównościami typowymi dla autentycznej cegły rozbiórkowej. Krawędzie są naturalne, miejscami lekko nieregularne, wyszczerbione lub delikatnie zaokrąglone. Poszczególne płytki różnią się między sobą kolorem, fakturą, kształtem i stopniem naturalnego zużycia.",
+      desc: "Smukłe, naturalne płytki ceglane w ciepłych, stonowanych odcieniach czerwonej cegły, jasnej terakoty, ceglastobrązowego oraz delikatnie przygaszonego pomarańczu. Kolorystyka jest nieregularna i zróżnicowana, z widocznymi naturalnymi przebarwieniami, miejscami jaśniejszymi i ciemniejszymi fragmentami oraz subtelnymi śladami wieloletniego starzenia. Powierzchnia jest matowa, surowa i lekko chropowata, z charakterystyczną porowatością, drobnymi zagłębieniami, przetarciami, rysami i nierównościami typowymi dla autentycznej cegły rozbiórkowej. Krawędzie są naturalne, miejscami lekko nieregularne, wyszczerbione lub delikatnie zaokrąglone. Poszczególne płytki różnią się między sobą kolorem, fakturą, kształtem i stopniem naturalnego zużycia."
       dims: "ok. 25–27 cm długości x ok. 3 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 9:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "lico-klasyczne-pomorskie",
       name: "Lico Klasyczne Pomorskie",
@@ -639,7 +635,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       img: "https://starecegly.com/environment/cache/images/productGfx_4751_500_500/Ceglane-plytki-Stara-cegla-Cegla-na-sciane---Lico-pomorskie-Plytki-z-cegly---Lico-pomorskie-glowne.webp?overlay=1",
       desc: "Ciepłe, stonowane płytki ceglane w naturalnych odcieniach ciemnej czerwieni, ceglastobrązowego, przygaszonej terakoty i delikatnych tonów rdzawych. Kolorystyka jest naturalnie zróżnicowana, ale bardziej harmonijna i uporządkowana niż w przypadku mocno surowej cegły rozbiórkowej, z subtelnymi przebarwieniami i różnicami odcieni pomiędzy poszczególnymi płytkami. Powierzchnia jest matowa, naturalna i lekko chropowata, z delikatną porowatością, drobnymi nierównościami, przetarciami oraz subtelnymi śladami historycznego użytkowania. Charakterystyczną cechą tych płytek jest bardzo wysoki stopień wyczyszczenia – na powierzchni znajduje się znikoma ilość pozostałości starej zaprawy, dzięki czemu lico prezentuje się czysto, szlachetnie i estetycznie. Krawędzie są naturalne i delikatnie nieregularne, a poszczególne płytki mogą różnić się kolorem, wymiarami, fakturą i stopniem zachowania.",
       dims: "ok. 25–29 cm długości x ok. 6–7,5 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 4:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "stary-mur",
       name: "Stary Mur",
@@ -647,7 +643,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       img: "https://starecegly.com/environment/cache/images/productGfx_3821_500_500/Plytki-z-cegly---stary-mur-2.webp?overlay=1",
       desc: "Bardzo zróżnicowane, naturalne płytki ceglane w mieszance ciepłych odcieni czerwonej cegły, terakoty, ceglastobrązowego, rdzawego oraz miejscami przygaszonych, ciemniejszych tonów. Kolorystyka jest mocno nieregularna i wielobarwna, z naturalnymi przebarwieniami, różnicami odcieni oraz śladami wieloletniego starzenia. Powierzchnia jest surowa, matowa i wyraźnie chropowata, z licznymi nierównościami, porowatością, odpryskami, przetarciami, pęknięciami i zagłębieniami. Charakterystyczne są widoczne pozostałości dawnej zaprawy, które miejscami pozostają na licu i krawędziach płytek, nadając im wyjątkowo autentyczny wygląd. Krawędzie są mocno nieregularne, postrzępione i miejscami wyszczerbione, a poszczególne elementy znacząco różnią się długością, kształtem, kolorem oraz stopniem zużycia.",
       dims: "ok. 25,5–27,5 cm długości x ok. 6,5–7,5 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 3,7:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "glowki-historyczne",
       name: "Główki – małe płytki historyczne",
@@ -655,7 +651,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       img: "https://starecegly.com/environment/cache/images/productGfx_6207_500_500/glowki-ceglane-plytki-stara-cegla-cegla-na-sciane-plytki-z-cegly-lico-klasyczne-miniatura.webp?overlay=1",
       desc: "Smukłe płytki ceglane typu „główka”, utrzymane w naturalnej, ciepłej kolorystyce inspirowanej historycznymi cegłami z terenów Pomorza i Kujaw. Powierzchnia jest matowa, lekko chropowata i nieregularna, z charakterystycznymi spękaniami, przepaleniami, drobnymi kruszeniami oraz niejednorodną fakturą imitującą autentyczne, wiekowe lico cegły. Poszczególne elementy mogą delikatnie różnić się odcieniem i strukturą, co pozwala uzyskać naturalny efekt starego muru. Charakterystyczny krótki format odpowiadający główce cegły pozwala przełamywać regularny układ długich płytek i odwzorowywać tradycyjne historyczne wiązania ceglane.",
       dims: "ok. 11,5–12 cm długości x ok. 6,4–7 cm wysokości x ok. 1,8–2 cm grubości (proporcje ok. 1,7–1,9:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "lico-klasyczne-industrialne",
       name: "Lico Klasyczne Industrialne",
@@ -663,7 +659,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       img: "https://starecegly.com/environment/cache/images/productGfx_4792_500_500/Ceglane-plytki-Stara-cegla-Cegla-na-sciane---Plytki-z-cegly-lico-industrialne-glowne-bez-fugi.webp?overlay=1",
       desc: "Intensywnie zróżnicowane płytki ceglane w głębokich odcieniach czerwieni, ceglastych brązów i energetycznych pomarańczy, z widocznymi ciemniejszymi przepaleniami oraz naturalnymi przebarwieniami. Kolorystyka jest mocno nieregularna, a poszczególne płytki mogą wyraźnie różnić się od siebie tonacją, nasyceniem i stopniem zużycia. Powierzchnia jest matowa, surowa i nierównomierna, z wyraźnie zniszczoną fakturą, porowatością, przetarciami, odpryskami, zagłębieniami i śladami wieloletniego użytkowania. Charakterystyczne są również miejscowe pozostałości starej zaprawy oraz mocniejsze ślady przepalenia, które nadają powierzchni autentyczny, przemysłowy charakter. Krawędzie są naturalnie nieregularne, miejscami lekko wyszczerbione i zużyte, dzięki czemu każda płytka wygląda jak fragment odzyskanej cegły z historią.",
       dims: "ok. 25–29 cm długości x ok. 6–7 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 3,6–4,8:1)"
-    },
+    },,
     {
       id: "lico-klasyczne-prowansalskie",
       name: "Lico Klasyczne Prowansalskie",
@@ -671,7 +667,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       img: "https://starecegly.com/environment/cache/images/productGfx_4801_500_500/Ceglane-plytki-Stara-cegla-Cegla-na-sciane---Plytki-z-cegly-lico-prowansalskie-glowne.webp?overlay=1",
       desc: "Jasne, ciepłe płytki ceglane w delikatnej, prowansalskiej kolorystyce łączącej odcienie piaskowego beżu, jasnego kremu, ciepłej ochry, rozbielonej terakoty oraz subtelnych tonów jasnej ceglanej czerwieni i przygaszonego różu. Kolorystyka jest naturalnie zróżnicowana, ale harmonijna i znacznie jaśniejsza niż w przypadku klasycznej czerwonej cegły, z delikatnymi przebarwieniami i miejscowymi szarawymi oraz białawymi akcentami. Powierzchnia jest matowa, lekko chropowata i porowata, z subtelną fakturą ręcznie formowanej cegły, drobnymi nierównościami, przetarciami, zagłębieniami i delikatnymi śladami upływu czasu. Widoczne są również pojedyncze, subtelne pozostałości dawnej zaprawy, niewielkie odpryski oraz naturalne różnice w strukturze lica. Krawędzie są lekko nieregularne, miejscami delikatnie zaokrąglone i zużyte, bez efektu idealnie równo przyciętej współczesnej płytki.",
       dims: "ok. 25–29 cm długości x ok. 6–7 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 3,6–4,8:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "lico-klasyczne-toskanskie",
       name: "Lico Klasyczne Toskańskie",
@@ -679,7 +675,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       img: "https://starecegly.com/environment/cache/images/productGfx_6044_500_500/Plytki-dekoracyjne-z-cegly-rozbiorkowej-lico-toskanskie-pokoj.webp?overlay=1",
       desc: "Ciepłe, naturalne płytki ceglane w odcieniach klasycznej czerwonej cegły, ceglastopomarańczowego, terakoty, rdzawego brązu oraz miejscami jaśniejszych, przygaszonych tonów. Kolorystyka jest wyraźnie zróżnicowana, a charakterystycznym elementem są liczne, jasne pozostałości oryginalnej zaprawy wapiennej, które miejscami pokrywają znaczną część powierzchni i tworzą kontrast z naturalnym kolorem cegły. Powierzchnia jest matowa, mocno postarzana, głęboko nierówna i wyraźnie chropowata, z licznymi zagłębieniami, odpryskami, przetarciami, spękaniami oraz śladami wieloletniego użytkowania. Widoczne pozostałości jasnej zaprawy nadają płytkom charakterystyczny, nieco rozbielony i rustykalny wygląd, dzięki czemu cała powierzchnia po ułożeniu tworzy efekt starego, wielowarstwowego muru. Krawędzie są naturalnie nieregularne, miejscami wyszczerbione i lekko zaokrąglone, a poszczególne płytki różnią się kolorem, fakturą, ilością zaprawy oraz stopniem zużycia.",
       dims: "ok. 25–29 cm długości x ok. 6–7 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 3,6–4,8:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "lico-prowansalskie-retro",
       name: "Lico Prowansalskie Retro",
@@ -687,7 +683,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       img: "https://starecegly.com/environment/cache/images/productGfx_5322_500_500/Plytki-z-cegly-na-sciane-Lico-prowansalskie-Retro-zdjecie-glowne.webp?overlay=1",
       desc: "Jasne, ciepłe płytki ceglane w charakterystycznej piaskowo-żółtej kolorystyce, z odcieniami jasnego beżu, kremu, rozbielonej żółci, piasku oraz miejscami delikatnych tonów ceglastych i rudawych. Kolorystyka jest naturalnie zróżnicowana, z wyraźną grą jasnych i nieco ciemniejszych fragmentów. Powierzchnia jest matowa, surowa i lekko chropowata, z nieregularną strukturą, drobnymi nierównościami, przetarciami, zagłębieniami i naturalnymi śladami starzenia. Bardzo charakterystyczne są widoczne pozostałości historycznej zaprawy, miejscami tworzące jasne naloty i nieregularne fragmenty na licu, co nadaje płytkom autentyczny wygląd starego muru. Krawędzie są ostre i wyraźne, ale zachowują naturalne niedoskonałości starej cegły, a poszczególne płytki różnią się między sobą odcieniem, fakturą, ilością zachowanej zaprawy oraz stopniem zużycia.",
       dims: "ok. 25–27 cm długości x ok. 6–7 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 3,6–4,5:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "lico-klasyczne-premium",
       name: "Lico Klasyczne Premium",
@@ -695,7 +691,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       img: "https://starecegly.com/environment/cache/images/productGfx_6059_500_500/Plytki-dekoracyjne-z-cegly-rozbiorkowej-na-sciane-lico-klasyczne-premium.webp?overlay=1",
       desc: "Ciepłe, naturalne płytki ceglane w zróżnicowanych odcieniach klasycznej czerwieni, ceglastopomarańczowego, terakoty, jasnego rdzawo-brązowego oraz miejscami przygaszonych, szarawych tonów. Kolorystyka jest nieregularna, ale harmonijna – poszczególne płytki różnią się nasyceniem, temperaturą barwy i stopniem naturalnego postarzenia. Na powierzchni widoczne są charakterystyczne jasne pozostałości dawnej zaprawy wapiennej, delikatne białawe naloty i przebarwienia, które tworzą subtelny kontrast z ciepłym kolorem cegły. Lico jest matowe, naturalne i lekko chropowate, z widoczną porowatością, drobnymi odpryskami, przetarciami, zagłębieniami i nierównościami wynikającymi z wieloletniego użytkowania. Krawędzie są naturalne i delikatnie nieregularne, miejscami lekko wyszczerbione, ale całość zachowuje stosunkowo regularny, klasyczny format. Poszczególne płytki mogą różnić się fakturą, kolorem, ilością zaprawy oraz stopniem zużycia.",
       dims: "ok. 25–29 cm długości x ok. 6–7 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 3,6–4,8:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "lico-klasyczne-limitowana",
       name: "Lico Klasyczne do 30 cm – Edycja Limitowana",
@@ -703,7 +699,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       img: "https://starecegly.com/environment/cache/images/productGfx_4799_500_500/Ceglane-plytki-Stara-cegla-Cegla-na-sciane---Plytki-z-cegly-lico-klasyczne-do-30-cm-EDYCJA-LIMITOWANA.webp?overlay=1",
       desc: "Ciepłe, naturalne płytki ceglane w klasycznych odcieniach czerwonej cegły, ceglastobrązowego, terakoty i przygaszonych rdzawych tonów, z wyraźnymi, ciemniejszymi śladami wypalenia nadającymi powierzchni głębię i charakter. Kolorystyka jest zróżnicowana, ale stosunkowo czysta i harmonijna, z naturalnymi różnicami pomiędzy poszczególnymi płytkami. Lico jest matowe, surowe i lekko chropowate, z delikatną porowatością, naturalnymi nierównościami, drobnymi przetarciami, odpryskami oraz subtelnymi śladami dawnego użytkowania. Charakterystyczną cechą tej edycji jest wyjątkowo czyste lico przełamane szlachetnymi, ciemnymi przepaleniami, które tworzą nieregularne akcenty i podkreślają autentyczność historycznej cegły. Krawędzie są naturalne i delikatnie nieregularne, miejscami lekko wyszczerbione, a poszczególne płytki różnią się między sobą odcieniem, strukturą, wzorem lica oraz intensywnością przepaleń.",
       dims: "ok. 27–30 cm długości x ok. 6,5–7 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 3,9–4,6:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "jodla-chevron",
       name: "Jodła Chevron",
@@ -711,7 +707,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       img: "https://starecegly.com/environment/cache/images/productGfx_4800_500_500/Ceglane-plytki-Stara-cegla-Cegla-na-sciane---Plytki-z-cegly-lico-Jodla-Chevron.webp?overlay=1",
       desc: "Wyraziste płytki ceglane z autentycznej XIX-wiecznej cegły rozbiórkowej, przeznaczone do układania w efektowny wzór jodełki Chevron. Ich wygląd zachowuje naturalny, historyczny charakter starej cegły – z ciepłymi, zróżnicowanymi odcieniami czerwieni, terakoty, ceglastych brązów i miejscami jaśniejszych przebarwień. Powierzchnia jest matowa, surowa i lekko chropowata, z naturalną porowatością, nierównościami, drobnymi odpryskami, przetarciami oraz śladami dawnej zaprawy. Poszczególne elementy mogą różnić się kolorem, strukturą, stopniem zużycia i ilością zachowanych śladów historycznego muru, dzięki czemu ułożony wzór nie jest idealnie jednolity. Charakterystyczny format płytek został specjalnie przygotowany do tworzenia dynamicznego układu Chevron, który nadaje ścianie bardziej dekoracyjny, elegancki i ekskluzywny charakter niż klasyczny układ cegły.",
       dims: "ok. 17–18 cm długości x ok. 9–10 cm wysokości x ok. 2 cm grubości (proporcje ok. 1,7–2:1)"
-    },
+    },,
     {
       id: "stary-mur-prowansalski",
       name: "Stary Mur Prowansalski",
@@ -719,28 +715,30 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       img: "https://starecegly.com/environment/cache/images/productGfx_3267_500_500/Ceglane-plytki-Stara-cegla-Cegla-na-sciane---Plytki-z-cegly---stary-mur-prowansalski.webp?overlay=1",
       desc: "Jasne, ciepłe płytki ceglane w charakterystycznej prowansalskiej palecie barw – od słonecznych pomarańczy, jasnej terakoty i ciepłych odcieni ceglastych po delikatne żółcie, piaskowe beże i rozbielone tony. Kolorystyka jest mocno zróżnicowana i nieregularna, a poszczególne fragmenty wyraźnie różnią się odcieniem, nasyceniem oraz stopniem naturalnego postarzenia. Powierzchnia jest matowa, surowa i chropowata, z widoczną porowatością, nierównościami, odpryskami, przetarciami, zagłębieniami oraz naturalnymi śladami wieloletniego użytkowania. Charakterystyczne są pozostałości starej zaprawy, drobne kruszenia i nieregularne fragmenty lica, które dodatkowo podkreślają autentyczność materiału. Krawędzie są mocno nieregularne, miejscami wyszczerbione i postrzępione, a różna długość elementów tworzy wyjątkowo mozaikowy charakter. Płytki występują w niestandardowym miksie długości, dzięki czemu po ułożeniu nie tworzą regularnego, powtarzalnego wzoru, lecz przypominają autentyczny, wielowiekowy mur z przypadkowo rozmieszczonymi fragmentami cegły.",
       dims: "mix długości ok. 5–20 cm x ok. 6,5–7 cm wysokości x ok. 2 cm grubości (proporcje ok. 0,7–3,1:1)"
-    },
+    },,
     {
       id: "historic-classic-podloga",
       name: "Historic Classic – płytki podłogowe",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6860_500_500/Plytki-podlogowe-z-cegly-historyczne_MIN.webp?overlay=1",
-      desc: "podłogowa płytka z historycznej cegły, ceglastoczerwony kolor, gęsta, trwała faktura",
-    },
+      desc: "podłogowa płytka z historycznej cegły, ceglastoczerwony kolor, gęsta, trwała faktura"
+    },,
     {
       id: "pustynny-bez-podloga",
       name: "Pustynny Beż – płytki podłogowe",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6070_500_500/Plytki-dekoracyjne-z-cegly-rozbiorkowej-pustynny-bez-2_MIN.webp?overlay=1",
-      desc: "jasna, piaskowo-beżowa płytka podłogowa z historycznej cegły, ciepły pustynny odcień",
-    },
+      desc: "jasna, piaskowo-beżowa płytka podłogowa z historycznej cegły, ciepły pustynny odcień"
+    },,
     {
       id: "terakota-loft-podloga",
       name: "Terakota Loft – płytki podłogowe",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_5428_500_500/historyczna-cegla-plytki-podlogowe-ogolny.webp?overlay=1",
-      desc: "podłogowa płytka w odcieniu terakoty, ciepły, czerwono-pomarańczowy kolor starej cegły",
+      desc: "podłogowa płytka w odcieniu terakoty, ciepły, czerwono-pomarańczowy kolor starej cegły"
     },
+
+    // ---- Modern Line – płytki podłogowe i tarasowe (te same kolory co na ścianę) ----,
 
     // ---- Modern Line – płytki podłogowe i tarasowe (te same kolory co na ścianę) ----
     {
@@ -748,99 +746,99 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       name: "Modern Line – Gotyckie (podłoga)",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6897_500_500/Plytka-podlogowa-Gotycka-ekspozycja-new-1_MIN.webp?overlay=1",
-      desc: "podłogowa płytka betonowa w ciemnym, głębokim odcieniu czerwieni, gotycki charakter",
-    },
+      desc: "podłogowa płytka betonowa w ciemnym, głębokim odcieniu czerwieni, gotycki charakter"
+    },,
     {
       id: "podloga-modern-skalne",
       name: "Modern Line – Skalne (podłoga)",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6853_500_500/Ceglane-plytki-Stara-cegla-Cegla-na-podloge-Plytki-z-cegly-Plytka-podlogowa-Skalna-pojedyncze-plytki.webp?overlay=1",
-      desc: "podłogowa płytka betonowa w kamiennej, szarej tonacji",
-    },
+      desc: "podłogowa płytka betonowa w kamiennej, szarej tonacji"
+    },,
     {
       id: "podloga-modern-historyczne",
       name: "Modern Line – Historyczne (podłoga)",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6852_500_500/plytki-ceglane-na-podloge-stara-cegla-Historyzne-pojedyncze-plytki.webp?overlay=1",
-      desc: "podłogowa płytka betonowa w klasycznym, ceglastoczerwonym odcieniu",
-    },
+      desc: "podłogowa płytka betonowa w klasycznym, ceglastoczerwonym odcieniu"
+    },,
     {
       id: "podloga-modern-szare",
       name: "Modern Line – Szare (podłoga)",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6854_500_500/Ceglane-plytki-podlogowe-Stara-cegla-Cegla-na-podloge-Szare-pojedyncze-plytki.webp?overlay=1",
-      desc: "podłogowa płytka betonowa w nowoczesnym, neutralnym odcieniu szarości",
-    },
+      desc: "podłogowa płytka betonowa w nowoczesnym, neutralnym odcieniu szarości"
+    },,
     {
       id: "podloga-modern-grafitowe",
       name: "Modern Line – Grafitowe (podłoga)",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6850_500_500/grafitowe-plytki-ceglane-stara-cegla-na-podloge-pojedyncze-plytki.webp?overlay=1",
-      desc: "podłogowa płytka betonowa w odcieniu grafitu, ciemna, elegancka tonacja",
-    },
+      desc: "podłogowa płytka betonowa w odcieniu grafitu, ciemna, elegancka tonacja"
+    },,
     {
       id: "podloga-modern-xix-wieczny",
       name: "Modern Line – wzór XIX wieczny (podłoga)",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6855_500_500/Ceglane-plytki-podlogowe-Stara-cegla-Cegla-na-podloge-dziewietnastowieczna-1x1-pojedyncze-plytki.webp?overlay=1",
-      desc: "podłogowa płytka betonowa stylizowana na XIX-wieczną cegłę, ciepły, historyczny odcień",
-    },
+      desc: "podłogowa płytka betonowa stylizowana na XIX-wieczną cegłę, ciepły, historyczny odcień"
+    },,
     {
       id: "podloga-modern-mostowe",
       name: "Modern Line – Mostowe (podłoga)",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6859_500_500/Ceglane-plytki-na-podloge-stara-cegla-plytki-ceglane-podlogowe-Mostowe-1x1-pojedyncze-plytki.webp?overlay=1",
-      desc: "podłogowa płytka betonowa wielotonowa, czerwienie i brązy z efektem przetarć",
-    },
+      desc: "podłogowa płytka betonowa wielotonowa, czerwienie i brązy z efektem przetarć"
+    },,
     {
       id: "podloga-modern-lubelskie",
       name: "Modern Line – Lubelskie (podłoga)",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6856_500_500/Ceglane-plytki-na-podloge-Stara-cegla-plytki-ceglane-podlogowe-Lubelskie-1x1-pojedyncze-plytki.webp?overlay=1",
-      desc: "podłogowa płytka betonowa w ciepłym, ceglastym odcieniu z regionalnym charakterem",
-    },
+      desc: "podłogowa płytka betonowa w ciepłym, ceglastym odcieniu z regionalnym charakterem"
+    },,
     {
       id: "podloga-modern-brazowe",
       name: "Modern Line – Brązowe (podłoga)",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6845_500_500/brazowa_MIN.webp?overlay=1",
-      desc: "podłogowa płytka betonowa w ciepłym, ziemistym odcieniu brązu",
-    },
+      desc: "podłogowa płytka betonowa w ciepłym, ziemistym odcieniu brązu"
+    },,
     {
       id: "podloga-modern-zamkowe-03",
       name: "Modern Line – Zamkowe 03 (podłoga)",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6848_500_500/plytki-ceglane-na-podloge-taras-patio-balkon-Zamkowe-03-pojedyncze-plytki.webp?overlay=1",
-      desc: "podłogowa płytka betonowa o precyzyjnej krawędzi, ciepły ceglasty odcień",
-    },
+      desc: "podłogowa płytka betonowa o precyzyjnej krawędzi, ciepły ceglasty odcień"
+    },,
     {
       id: "podloga-modern-historyczne-jasne",
       name: "Modern Line – Historyczne Jasne (podłoga)",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6846_500_500/plytki-ceglane-na-podloge-taras-patio-balkon-historyczne-jasne-pojedyncze-plytki.webp?overlay=1",
-      desc: "podłogowa płytka betonowa w jaśniejszym, piaskowo-ceglastym odcieniu",
-    },
+      desc: "podłogowa płytka betonowa w jaśniejszym, piaskowo-ceglastym odcieniu"
+    },,
     {
       id: "podloga-modern-hiszpanskie",
       name: "Modern Line – Hiszpańskie (podłoga)",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6847_500_500/plytki-ceglane-na-podloge-taras-patio-balkon-Hiszpanskie-pojedyncze-plytki.webp?overlay=1",
-      desc: "podłogowa płytka betonowa w ciepłych, słonecznych odcieniach terakoty",
-    },
+      desc: "podłogowa płytka betonowa w ciepłych, słonecznych odcieniach terakoty"
+    },,
     {
       id: "podloga-modern-barokowe",
       name: "Modern Line – Barokowe (podłoga, sześciokątne)",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6857_500_500/Ceglane-plytki-na-podloge-Stara-cegla-plytki-ceglane-podlogowe-Barokowe-1x1-pojedyncze-plytki.webp?overlay=1",
-      desc: "podłogowa płytka betonowa o sześciokątnym kształcie, barokowy, ozdobny wzór",
-    },
+      desc: "podłogowa płytka betonowa o sześciokątnym kształcie, barokowy, ozdobny wzór"
+    },,
     {
       id: "podloga-modern-renesansowe",
       name: "Modern Line – Renesansowe (podłoga, kwadratowe)",
       sub: "podłoga / taras",
       img: "https://starecegly.com/environment/cache/images/productGfx_6858_500_500/Ceglane-plytki-na-podloge-stara-cegla-plytki-ceglane-podlogowe-Renesansowe-1x1-pojedyncze-plytki.webp?overlay=1",
-      desc: "podłogowa płytka betonowa o kwadratowym kształcie, renesansowy, klasyczny wzór",
-    },
+      desc: "podłogowa płytka betonowa o kwadratowym kształcie, renesansowy, klasyczny wzór"
+    },,
 
     {
       id: "fat-brick",
@@ -849,7 +847,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       img: "https://starecegly.com/environment/cache/images/productGfx_5508_500_500/plytki-z-cegly-fat-brick-grube-cegla-rozbiorkowa-na-podloge-sciane-elewacje-glowne.webp?overlay=1",
       desc: "gruba, masywna płytka z cegły rozbiórkowej, wyrazista faktura, uniwersalna do ścian i podłóg",
       dims: "ok. 25,5–27,5 cm długości x ok. 6,5–7,5 cm wysokości x ok. 2–2,5 cm grubości (proporcje ok. 3,7:1) — typowy format cegły ciętej, WYRAŹNIE bardziej wydłużony niż standardowa cegła budowlana (2:1)"
-    },
+    },,
     {
       id: "lico-kujawskie",
       name: "Lico Kujawskie",
@@ -859,7 +857,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       textureDetails: "Powierzchnia ma naturalną, drażniacą strukturę betonu — widoczne drobne pory, nierówności, ryski charakterystyczne dla procesu produkcji. Nie jest gładka, ale chropowata w sposób naturalny. Szczegóły: drobnoziarinista faktura, bez błysku, matowa.",
       colorPalette: "Kolor całkowicie równomierny w odcieniu ceglastoczerwonym (ok. RGB 180-100-70). Brak wariacji kolorystycznej, jednolite zabarwienie na całej powierzchni płytki. Brak ciemnych plamek, zciemnień ani przebarwień — to jest najważniejsze — całkowita spójność koloru.",
       materialsInfo: "Beton architektoniczny, stylizowany na starą cegłę, materiał wytwarzany przez odlanie, stąd naturalne znaki techniczne (drobne ślady po formach)."
-    },
+    },,
     {
       id: "lico-kujawskie-industrialne",
       name: "Lico Kujawskie Industrialne",
@@ -869,7 +867,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       textureDetails: "Powierzchnia wyraźnie szorstkała, drażniacza, z widocznymi porami betonu. Faktyka jest bardziej ekspresyjna niż w standardowym lico — wyglądaj na fotografii rozdzielczości i powtórz wszystkie detale szorstkości.",
       colorPalette: "Ciemny, grafitowo-ceglasty odcień (ok. RGB 100-70-60). Kolor jest jednolity ale głęboki — brak wariacji, ale głębia odcienia. To jest kluczowe — nie jasny szary, ale ciemny, prawie antracytowy ceglany kolor.",
       materialsInfo: "Beton architektoniczny z ciemnym pigmentem, surowa faktura, industrialny charakter."
-    },
+    },,
     {
       id: "lico-kujawskie-toskanskie",
       name: "Lico Kujawskie Toskańskie",
@@ -878,9 +876,9 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       desc: "betonowa płytka stylizowana na historyczne lico starej cegły, bardzo jasny pudrowo-różowy i pastelowoceglasty kolor przełamany delikatną bielą, inspirowana cegłą naturalnie pokrytą śladami dawnej zaprawy wapiennej, z subtelnym śródziemnomorskim charakterem",
       textureDetails: "Powierzchnia matowa, lekko chropowata i nieregularna. Widoczne drobne pory, naturalne spękania, delikatne przepalenia oraz subtelne nierówności faktury charakterystyczne dla stylizowanego betonu. Lico nie jest idealnie gładkie ani jednolite, zachowuje naturalny, lekko postarzoną strukturę  przypominającą historyczną cegłę.",
       colorPalette: "Dominują bardzo jasne, pastelowe odcienie pudrowego różu, jasnej czerwieni i delikatnej terakoty, przełamane subtelnymi białymi i kremowymi akcentami. Kolor jest celowo zróżnicowany, ale utrzymany w jasnej, harmonijnej tonacji. Widoczne są delikatne przebarwienia, subtelne przepalenia i jasne naloty przypominające pozostałości dawnej zaprawy wapiennej.",
-      materialsInfo: "Beton architektoniczny stylizowany na historyczną cegłę rozbiórkową. Barwa jest uzyskiwana w masie materiału lub poprzez technologię barwienia betonu, a nieregularna faktura, spękania i delikatne przepalenia są elementami celowo odwzorowującymi wygląd starej cegły.",
+      materialsInfo: "Beton architektoniczny stylizowany na historyczną cegłę rozbiórkową. Barwa jest uzyskiwana w masie materiału lub poprzez technologię barwienia betonu, a nieregularna faktura, spękania i delikatne przepalenia są elementami celowo odwzorowującymi wygląd starej cegły."
       dims: "ok. 24–25,5 cm długości x ok. 6,4–7 cm wysokości x ok. 1,8–2 cm grubości (proporcje ok. 3,4–4:1)"
-    },
+    },,
     {
       id: "lico-kujawskie-onyx",
       name: "Lico Kujawskie Onyx",
@@ -891,7 +889,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       colorPalette: "Dominują głębokie odcienie antracytu, grafitu i ciemnej szarości. Kolor jest wyraźnie niejednorodny — poszczególne płytki oraz fragmenty ich powierzchni różnią się intensywnością barwy. Występują charakterystyczne jasnoszare i białawe zabielenia, tworzące nieregularne kontrasty. Brak jednolitego, płaskiego koloru — najważniejsza jest wielotonowość antracytowej powierzchni i naturalny efekt starego muru.",
       materialsInfo: "Wytrzymały beton architektoniczny barwiony i stylizowany na historyczną cegłę. Materiał odwzorowuje wygląd starego lica poprzez nieregularną fakturę, spękania, przepalenia oraz zabielenia. Płytki są przeznaczone zarówno do wnętrz, jak i na elewacje; producent podaje ich mrozoodporność i odporność na promieniowanie UV.",
       dims: "ok. 24–25,5 cm długości x ok. 6,4–7 cm wysokości x ok. 1,8–2 cm grubości (proporcje ok. 3,4–4:1)"
-    },
+    },,
     {
       id: "lico-kujawskie-stone-grey",
       name: "Lico Kujawskie Stone Grey",
@@ -902,7 +900,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       colorPalette: "Bazowy kolor to ciemny grafit i chłodna szarość, przechodzące miejscami w jaśniejsze popielate i szarobeżowe tony. Powierzchnia jest wyraźnie niejednorodna — grafitowe fragmenty przeplatają się z jasnymi, kontrastowymi przebarwieniami. Widoczne są miejscowe rozjaśnienia na krawędziach i licu oraz ciemniejsze grafitowe zagłębienia, co tworzy mocną, wielotonową strukturę. Brak jednolitego koloru; najważniejsza jest wyraźna gra ciemnej grafitowej bazy z jasnymi przebarwieniami.",
       materialsInfo: "Wytrzymały beton architektoniczny stylizowany na historyczną cegłę z Kujaw i Pomorza. Materiał został zaprojektowany tak, aby odwzorować charakterystyczną fakturę starego lica — spękania, przepalenia, nierówności i naturalne ślady zużycia. Płytki mogą być stosowane zarówno we wnętrzach, jak i na elewacjach.",
       dims: "ok. 24–25,5 cm długości x ok. 6,4–7 cm wysokości x ok. 1,8–2 cm grubości (proporcje ok. 3,4–4:1)"
-    },
+    },,
     {
       id: "lico-kujawskie-desert",
       name: "Lico Kujawskie Desert",
@@ -913,7 +911,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       colorPalette: "Dominują jasne, ciepłe odcienie piaskowego beżu, pustynnego piasku i delikatnego kremu. Kolorystyka jest jasna i słoneczna, z subtelnymi różnicami tonalnymi oraz delikatnymi ciemniejszymi akcentami wynikającymi z przepaleń i nierówności powierzchni. Brak mocnych czerwieni i intensywnych kontrastów — najważniejszy jest jasny, ciepły i harmonijny charakter piaskowej palety.",
       materialsInfo: "Wytrzymały beton architektoniczny stylizowany na historyczne lico starej cegły. Materiał odwzorowuje charakterystyczną strukturę dawnej cegły poprzez subtelne spękania, przepalenia i nieregularności powierzchni. Płytki są odporne na mróz i wilgoć oraz przeznaczone do stosowania we wnętrzach i na elewacjach.",
       dims: "ok. 24–25,5 cm długości x ok. 6,4–7 cm wysokości x ok. 1,8–2 cm grubości (proporcje ok. 3,4–4:1)"
-    },
+    },,
     {
       id: "lico-kujawskie-antique-white",
       name: "Lico Kujawskie Antique White",
@@ -924,7 +922,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       colorPalette: "Dominują jasne odcienie bieli wapiennej, kredowej i bardzo jasnego kremu, z delikatnymi ciepłymi tonami przypominającymi naturalny wapień i jasny piasek. Kolorystyka jest jasna i subtelnie zróżnicowana, bez intensywnych kontrastów. Widoczne są delikatne różnice tonalne pomiędzy fragmentami powierzchni, dzięki czemu płytka nie wygląda jak idealnie jednolita, śnieżnobiała powierzchnia.",
       materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, stylizowany na historyczne lico starej cegły. Materiał łączy trwałość betonu z matową, lekko postarzoną strukturą inspirowaną naturalnym kamieniem, wapieniem i dawną cegłą. Płytki są przeznaczone do zastosowania we wnętrzach oraz na elewacjach.",
       dims: "ok. 24–25,5 cm długości x ok. 6,4–7 cm wysokości x ok. 1,8–2 cm grubości (proporcje ok. 3,4–4:1)"
-    },
+    },,
     {
       id: "lico-kujawskie-cloud-grey",
       name: "Lico Kujawskie Cloud Grey",
@@ -935,7 +933,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       colorPalette: "Bazowy kolor jest chłodny, siwy i popielaty, przypominający stalowe niebo lub poranną mgłę. Kolorystyka jest stonowana i niejednolita, z delikatnymi szarymi różnicami tonalnymi oraz subtelnymi, ciemniejszymi śladami zabrudzeń, patyny i przepaleń. Brak ciepłych czerwieni i intensywnych kolorów — najważniejsza jest chłodna, szara baza przełamana naturalnymi, delikatnymi akcentami postarzenia.",
       materialsInfo: "Wysokogatunkowy beton architektoniczny stylizowany na historyczną cegłę rozbiórkową z terenów Pomorza i Kujaw. Materiał odwzorowuje charakterystyczne spękania, kruszenia krawędzi, przepalenia i nieregularną strukturę starego lica. Płytka jest mrozoodporna i przeznaczona do stosowania zarówno we wnętrzach, jak i na elewacjach.",
       dims: "ok. 24–25,5 cm długości x ok. 6,4–7 cm wysokości x ok. 1,8–2 cm grubości (proporcje ok. 3,4–4:1)"
-    },
+    },,
     {
       id: "lico-kujawskie-white",
       name: "Lico Kujawskie White",
@@ -946,7 +944,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       colorPalette: "Kolor śnieżnobiały, bardzo jasny i czysty. Powierzchnia zachowuje spójny biały charakter, z jedynie subtelnymi różnicami tonalnymi wynikającymi z naturalnej struktury lica i zagłębień. Brak czerwonych, rdzawych czy intensywnie ciemnych przebarwień — najważniejsza jest czysta, jednolita biel połączona z matową, postarzoną fakturą.",
       materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, stylizowany na historyczne lico starej cegły. Materiał został wykonany tak, aby odwzorować charakterystyczne spękania, drobne kruszenia i strukturę dawnej cegły, zachowując jednocześnie trwałość współczesnego betonu.",
       dims: "ok. 24–25,5 cm długości x ok. 6,4–7 cm wysokości x ok. 1,8–2 cm grubości (proporcje ok. 3,4–4:1)"
-    },
+    },,
     {
       id: "lico-kujawskie-glowki",
       name: "Lico Kujawskie – główki",
@@ -959,6 +957,8 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       dims: "ok. 11,5–12 cm długości x ok. 6,4–7 cm wysokości x ok. 1,8–2 cm grubości (proporcje ok. 1,6–1,9:1)"
     },
 
+    // ---- Modern Line (betonowe, ponad 20 kolorów, precyzyjna krawędź) ----,
+
     // ---- Modern Line (betonowe, ponad 20 kolorów, precyzyjna krawędź) ----
     {
       id: "modern-zamkowa-01",
@@ -970,18 +970,18 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       colorPalette: "Bazę stanowi naturalny, ciepły pomarańczowo-ceglasty kolor. Na jego powierzchni znajduje się nieregularne białe i kremowe wykończenie w formie przecierki — miejscami delikatne i półprzezroczyste, a miejscami mocniej kryjące. Najważniejszy jest kontrast pomiędzy jasną warstwą przecierki a przebijającym spod niej pomarańczowym licem. Kolorystyka nie jest jednolita, tworząc efekt wieloletniego postarzenia.",
       materialsInfo: "Wysokogatunkowy beton barwiony w masie, stylizowany na oryginalną cegłę z XIX wieku. Głęboka faktura oraz efekt białej przecierki zostały zaprojektowane tak, aby odwzorować wygląd historycznej cegły i nadać powierzchni autentyczny, szlachetny charakter. Materiał nadaje się do zastosowania we wnętrzach oraz na elewacjach.",
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-zamkowa-04",
       name: "Zamkowa 04",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4097_500_500/Plytki-z-cegly-stara-cegla-plytki-ceglane-biala-szara-zamkowa041x1.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na starą, wapienno-szarą cegłę, jasna biel przełamana delikatnymi szarymi przecierkami i cieniowaniami, surowy rustykalny charakter z subtelnym efektem postarzenia",
-      textureDetails: "Powierzchnia matowa, wyraźnie nieregularna i lekko chropowata, z widocznymi drobnymi porami, ziarnistością, płytkimi zagłębieniami, rysami i naturalnymi nierównościami. Lico ma miejscami lekko falującą strukturę przypominającą ręcznie formowaną cegłę. Krawędzie są nieregularne, delikatnie zaokrąglone i miejscami lekko wykruszone. Widoczne są subtelne szare przebarwienia i przetarcia osadzone w zagłębieniach powierzchni, podkreślające efekt starego, wapiennego materiału.",
-      colorPalette: "Dominują bardzo jasne odcienie bieli, złamanej bieli i jasnego wapiennego kremu. Powierzchnia jest przełamana chłodnymi, delikatnymi szarymi i popielatymi przecierkami oraz cieniowaniami, szczególnie w zagłębieniach i przy krawędziach. Kolorystyka jest jasna, stonowana i niejednorodna — nie jest to czysta, jednolita biel. Szare akcenty tworzą subtelny kontrast i nadają płytkom naturalny efekt starej, wapiennej cegły.",
-      materialsInfo: "Wysokogatunkowy beton architektoniczny stylizowany na XIX-wieczną cegłę wapienno-szarą. Materiał został uformowany z nieregularną, postarzaną strukturą, a jasna kolorystyka oraz szare przecierki odwzorowują charakter starego lica ceglanego. Płytki przeznaczone są do stosowania zarówno we wnętrzach, jak i na elewacjach.",
+      desc: "betonowa płytka stylizowana na starą, wapienno-szarą cegłę, jasna biel przełamana delikatnymi szarymi przecierkami i cieniowaniami, surowy rustykalny charakter z subtelnym efektem postarzenia"
+      textureDetails: "Powierzchnia matowa, wyraźnie nieregularna i lekko chropowata, z widocznymi drobnymi porami, ziarnistością, płytkimi zagłębieniami, rysami i naturalnymi nierównościami. Lico ma miejscami lekko falującą strukturę przypominającą ręcznie formowaną cegłę. Krawędzie są nieregularne, delikatnie zaokrąglone i miejscami lekko wykruszone. Widoczne są subtelne szare przebarwienia i przetarcia osadzone w zagłębieniach powierzchni, podkreślające efekt starego, wapiennego materiału."
+      colorPalette: "Dominują bardzo jasne odcienie bieli, złamanej bieli i jasnego wapiennego kremu. Powierzchnia jest przełamana chłodnymi, delikatnymi szarymi i popielatymi przecierkami oraz cieniowaniami, szczególnie w zagłębieniach i przy krawędziach. Kolorystyka jest jasna, stonowana i niejednorodna — nie jest to czysta, jednolita biel. Szare akcenty tworzą subtelny kontrast i nadają płytkom naturalny efekt starej, wapiennej cegły."
+      materialsInfo: "Wysokogatunkowy beton architektoniczny stylizowany na XIX-wieczną cegłę wapienno-szarą. Materiał został uformowany z nieregularną, postarzaną strukturą, a jasna kolorystyka oraz szare przecierki odwzorowują charakter starego lica ceglanego. Płytki przeznaczone są do stosowania zarówno we wnętrzach, jak i na elewacjach."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-zamkowa-mix",
       name: "Zamkowa MIX",
@@ -991,7 +991,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       textureDetails: "Powierzchnia gładka, precyzyjna, minimalistyczna, bez wyraźnej szorstkości. Faktura jest delikatnie zróżnicowana — widać naturalne znaki techniczne betonu (śladowe nierówności), ale całość jest czyszcze niż w seriach rustic. Matowa, bez błysku.",
       colorPalette: "MIX kilku odcieni: przede wszystkim ceglastoczerwone (RGB 180-80-70), ale również przemieszane z jasniejszymi tonami beżu (RGB 200-150-100) i subtelnymi szarościami. W obrębie kolekcji płytki mają RÓŻNE odcienie — to jest kluczowe, to nie jest jednolity produkt. Każda płytka może mieć inny kolor: jedna ceglasta, druga beżowa, trzecia szara. Zróżnicowanie jest naturalne, organiczne, nie sztuczne. Obserwuj zdjęcie referencyjne — tam widzisz dokładnie jakie proporcje poszczególnych odcieni.",
       materialsInfo: "Beton architektoniczny z mieszanką pigmentów, seria wielokolorowa — celowe zróżnicowanie kolorystyczne jest cechą produktu."
-    },
+    },,
     {
       id: "modern-biale",
       name: "Modern Line – Białe",
@@ -1001,62 +1001,62 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       textureDetails: "Powierzchnia bardzo gładka, precyzyjna, czysta. To nie rustykalna faktura — to nowoczesny minimalizm. Widać efekt krawędzi (precyzyjnie odcięta), ale sama powierzchnia jest gładka, bez wyraźnych porów czy szorstkości. Matowa, bez błysku.",
       colorPalette: "Czysta biel (ok. RGB 250-250-250 lub bardzo bliska). WAŻNE: biel nie jest śnieżnobiała ani dziewiczo czyszcza — może mieć bardzo subtelny, ledwo widoczny odcień beżowoszary lub szary. To jest naturalna biel betonu, nie chemicznie czyszcza. Może być bardzo subtelne zróżnicowanie na powierzchni (prawie niezauważalne), ale ogólnie to jest biel jako dominująca charakterystyka.",
       materialsInfo: "Beton architektoniczny białego pigmentu, seria nowoczesna, czysta, minimalistyczna, bez naturalistycznych detali."
-    },
+    },,
     {
       id: "modern-hiszpanskie",
       name: "Modern Line – Hiszpańskie",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4117_500_500/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-Hiszpanskie-1x1-ekspozytor.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na starą, ręcznie formowaną cegłę, w bardzo jasnej kremowo-mlecznej kolorystyce z delikatnymi jasnopomarańczowymi refleksami, subtelna, ciepła i śródziemnomorska, z wyraźnie rustykalnym charakterem",
-      textureDetails: "Powierzchnia matowa, wyraźnie rustykalna, chropowata i nieregularna. Widoczne są drobne pory, ziarnistość, płytkie zagłębienia, delikatne rysy i nierówności przypominające strukturę starej cegły ręcznie formowanej. Lico miejscami lekko faluje, a krawędzie są nieregularne, delikatnie zaokrąglone i miejscami lekko wykruszone. Powierzchnia nie jest idealnie gładka ani jednolita, dzięki czemu po ułożeniu tworzy naturalny efekt historycznego muru.",
-      colorPalette: "Dominują bardzo jasne odcienie kremu, mlecznej bieli, złamanej bieli i jasnego piasku. Na powierzchni występują subtelne, jasnopomarańczowe i delikatnie brzoskwiniowe refleksy oraz lekkie tonalne przebarwienia. Pomarańczowe akcenty są łagodne i nie tworzą mocnego kontrastu — mają charakter delikatnych cieniowań na jasnej bazie. Całość jest ciepła, słoneczna i harmonijna, bez intensywnych czerwieni czy ciemnych przebarwień.",
-      materialsInfo: "Wytrzymały beton architektoniczny stylizowany na tradycyjną, ręcznie formowaną cegłę. Materiał należy do kolekcji Modern Line; płytki mają rustykalną, nieregularną fakturę inspirowaną starą cegłą. W przypadku tego modelu beton jest barwiony w masie, dzięki czemu kolor jest obecny w całym przekroju płytki.",
+      desc: "betonowa płytka stylizowana na starą, ręcznie formowaną cegłę, w bardzo jasnej kremowo-mlecznej kolorystyce z delikatnymi jasnopomarańczowymi refleksami, subtelna, ciepła i śródziemnomorska, z wyraźnie rustykalnym charakterem"
+      textureDetails: "Powierzchnia matowa, wyraźnie rustykalna, chropowata i nieregularna. Widoczne są drobne pory, ziarnistość, płytkie zagłębienia, delikatne rysy i nierówności przypominające strukturę starej cegły ręcznie formowanej. Lico miejscami lekko faluje, a krawędzie są nieregularne, delikatnie zaokrąglone i miejscami lekko wykruszone. Powierzchnia nie jest idealnie gładka ani jednolita, dzięki czemu po ułożeniu tworzy naturalny efekt historycznego muru."
+      colorPalette: "Dominują bardzo jasne odcienie kremu, mlecznej bieli, złamanej bieli i jasnego piasku. Na powierzchni występują subtelne, jasnopomarańczowe i delikatnie brzoskwiniowe refleksy oraz lekkie tonalne przebarwienia. Pomarańczowe akcenty są łagodne i nie tworzą mocnego kontrastu — mają charakter delikatnych cieniowań na jasnej bazie. Całość jest ciepła, słoneczna i harmonijna, bez intensywnych czerwieni czy ciemnych przebarwień."
+      materialsInfo: "Wytrzymały beton architektoniczny stylizowany na tradycyjną, ręcznie formowaną cegłę. Materiał należy do kolekcji Modern Line; płytki mają rustykalną, nieregularną fakturę inspirowaną starą cegłą. W przypadku tego modelu beton jest barwiony w masie, dzięki czemu kolor jest obecny w całym przekroju płytki."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-skalne",
       name: "Modern Line – Skalne",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4114_500_500/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-Skalne-1x1-ekspozytor.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na starą, ręcznie formowaną cegłę, w ciepłej i bogatej kolorystyce ziemi z dominacją jasnego beżu, kremu i złamanej bieli, przełamanych ciepłym brązem, jasną czerwienią oraz subtelnymi szaro-brązowymi przyciemnieniami",
-      textureDetails: "Powierzchnia matowa, lekko chropowata i wyraźnie nieregularna, z drobną ziarnistością, porami, delikatnymi zagłębieniami i nierównościami charakterystycznymi dla stylizowanej cegły ręcznie formowanej. Widoczne są nieregularne przetarcia w odcieniach kawy z mlekiem oraz delikatna patyna, które nadają licu naturalną głębię i efekt postarzenia. Krawędzie są lekko nieregularne i miejscami delikatnie wykruszone. Poszczególne płytki celowo różnią się nasyceniem i rozmieszczeniem kolorów, dzięki czemu całość nie tworzy powtarzalnego wzoru.",
-      colorPalette: "Dominują jasne odcienie beżu, kremu, złamanej bieli i jasnego, ciepłego brązu. Kolorystykę wzbogacają delikatne jasnoczerwone i ceglane akcenty oraz subtelne szaro-brązowe przyciemnienia. Charakterystyczne są nieregularne przetarcia w kolorze kawy z mlekiem, miejscami tworzące delikatne cieniowanie. Paleta jest wyraźnie wielotonowa, ale utrzymana w ciepłych, naturalnych odcieniach ziemi; jasna baza sprawia, że płytka pozostaje optycznie lekka.",
-      materialsInfo: "Wytrzymały beton architektoniczny stylizowany na starą, ręcznie formowaną cegłę. Materiał odwzorowuje charakter historycznej cegły poprzez nieregularną fakturę, patynę, przetarcia oraz zróżnicowanie kolorystyczne poszczególnych elementów. Płytki są wykonane z betonu i przeznaczone zarówno do wnętrz, jak i zastosowań zewnętrznych; producent podaje ich mrozoodporność.",
+      desc: "betonowa płytka stylizowana na starą, ręcznie formowaną cegłę, w ciepłej i bogatej kolorystyce ziemi z dominacją jasnego beżu, kremu i złamanej bieli, przełamanych ciepłym brązem, jasną czerwienią oraz subtelnymi szaro-brązowymi przyciemnieniami"
+      textureDetails: "Powierzchnia matowa, lekko chropowata i wyraźnie nieregularna, z drobną ziarnistością, porami, delikatnymi zagłębieniami i nierównościami charakterystycznymi dla stylizowanej cegły ręcznie formowanej. Widoczne są nieregularne przetarcia w odcieniach kawy z mlekiem oraz delikatna patyna, które nadają licu naturalną głębię i efekt postarzenia. Krawędzie są lekko nieregularne i miejscami delikatnie wykruszone. Poszczególne płytki celowo różnią się nasyceniem i rozmieszczeniem kolorów, dzięki czemu całość nie tworzy powtarzalnego wzoru."
+      colorPalette: "Dominują jasne odcienie beżu, kremu, złamanej bieli i jasnego, ciepłego brązu. Kolorystykę wzbogacają delikatne jasnoczerwone i ceglane akcenty oraz subtelne szaro-brązowe przyciemnienia. Charakterystyczne są nieregularne przetarcia w kolorze kawy z mlekiem, miejscami tworzące delikatne cieniowanie. Paleta jest wyraźnie wielotonowa, ale utrzymana w ciepłych, naturalnych odcieniach ziemi; jasna baza sprawia, że płytka pozostaje optycznie lekka."
+      materialsInfo: "Wytrzymały beton architektoniczny stylizowany na starą, ręcznie formowaną cegłę. Materiał odwzorowuje charakter historycznej cegły poprzez nieregularną fakturę, patynę, przetarcia oraz zróżnicowanie kolorystyczne poszczególnych elementów. Płytki są wykonane z betonu i przeznaczone zarówno do wnętrz, jak i zastosowań zewnętrznych; producent podaje ich mrozoodporność."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-zeglarska",
       name: "Modern Line – Żeglarska",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4108_500_500/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-Zeglarska-1x1-ekspozytor.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na XIX-wieczną, ręcznie formowaną cegłę, w bardzo jasnej biało-kremowej kolorystyce z delikatnymi ceglastymi i różowawo-rdzawymi przebarwieniami, subtelny, historyczny charakter inspirowany starym Toruniem",
-      textureDetails: "Powierzchnia matowa, mocno nieregularna i wyraźnie chropowata, z drobną ziarnistością, licznymi porami, płytkimi zagłębieniami, rysami oraz delikatnymi ubytkami. Widoczna jest charakterystyczna surowa faktura przypominająca ręcznie formowaną cegłę, z lekko falującym licem i nierównomiernym rozłożeniem struktury. Krawędzie są nieregularne, lekko zaokrąglone i miejscami delikatnie wykruszone. Na powierzchni występują subtelne przebarwienia i drobne ciemniejsze punkty, które nadają płytce naturalny efekt postarzenia.",
-      colorPalette: "Dominują bardzo jasne odcienie złamanej bieli, chłodnej bieli, jasnego kremu i delikatnej szarości. Na jasnej bazie widoczne są subtelne różowawe, ceglasto-rude i lekko brązowawe przebarwienia, miejscami przypominające delikatne ślady dawnego wypalenia cegły. Kolorystyka jest jasna, stonowana i wyraźnie niejednorodna, ale bez mocnych kontrastów. Ciemniejsze akcenty pojawiają się punktowo i nieregularnie, podkreślając surową strukturę lica.",
-      materialsInfo: "Wysokiej jakości beton stylizowany na XIX-wieczną cegłę. Płytki wykonywane są w technologii odlewu z ręcznym dopracowaniem formy, dzięki czemu posiadają nieregularne krawędzie i charakterystyczne niedoskonałości lica przypominające dawną cegłę ręcznie formowaną. Materiał jest przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach oraz charakteryzuje się mrozoodpornością.",
+      desc: "betonowa płytka stylizowana na XIX-wieczną, ręcznie formowaną cegłę, w bardzo jasnej biało-kremowej kolorystyce z delikatnymi ceglastymi i różowawo-rdzawymi przebarwieniami, subtelny, historyczny charakter inspirowany starym Toruniem"
+      textureDetails: "Powierzchnia matowa, mocno nieregularna i wyraźnie chropowata, z drobną ziarnistością, licznymi porami, płytkimi zagłębieniami, rysami oraz delikatnymi ubytkami. Widoczna jest charakterystyczna surowa faktura przypominająca ręcznie formowaną cegłę, z lekko falującym licem i nierównomiernym rozłożeniem struktury. Krawędzie są nieregularne, lekko zaokrąglone i miejscami delikatnie wykruszone. Na powierzchni występują subtelne przebarwienia i drobne ciemniejsze punkty, które nadają płytce naturalny efekt postarzenia."
+      colorPalette: "Dominują bardzo jasne odcienie złamanej bieli, chłodnej bieli, jasnego kremu i delikatnej szarości. Na jasnej bazie widoczne są subtelne różowawe, ceglasto-rude i lekko brązowawe przebarwienia, miejscami przypominające delikatne ślady dawnego wypalenia cegły. Kolorystyka jest jasna, stonowana i wyraźnie niejednorodna, ale bez mocnych kontrastów. Ciemniejsze akcenty pojawiają się punktowo i nieregularnie, podkreślając surową strukturę lica."
+      materialsInfo: "Wysokiej jakości beton stylizowany na XIX-wieczną cegłę. Płytki wykonywane są w technologii odlewu z ręcznym dopracowaniem formy, dzięki czemu posiadają nieregularne krawędzie i charakterystyczne niedoskonałości lica przypominające dawną cegłę ręcznie formowaną. Materiał jest przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach oraz charakteryzuje się mrozoodpornością."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-historyczne",
       name: "Modern Line – Historyczne",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4113_500_500/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-Historyczne-1x1_MIN-ekspozycja.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na XIX-wieczną cegłę, w intensywnej ciepłej kolorystyce pomarańczowo-morelowej z głębokimi czerwonymi i brązowymi tonami oraz charakterystycznymi ciemnymi przetarciami przypominającymi ślady sadzy i dawnego wypalenia",
-      textureDetails: "Powierzchnia matowa, surowa i wyraźnie nieregularna, z drobną ziarnistością, porami, płytkimi zagłębieniami, rysami oraz delikatnymi nierównościami typowymi dla starej cegły. Lico jest lekko falujące i miejscami niejednorodne, z widocznymi śladami ręcznego formowania. Krawędzie są nieregularne, lekko zaokrąglone i miejscami delikatnie wykruszone. Charakterystycznym elementem są ciemne, nieregularne przetarcia i przybrudzenia osadzone w strukturze powierzchni, przypominające naturalne ślady sadzy oraz wieloletniego użytkowania.",
-      colorPalette: "Dominują intensywne, ciepłe odcienie pomarańczowej i morelowej cegły, przechodzące w ceglastą czerwień, rudości oraz głębsze brązy. Powierzchnia jest wyraźnie wielotonowa — jasne pomarańczowo-morelowe partie przeplatają się z ciemniejszymi czerwonymi i brązowymi fragmentami. Widoczne są charakterystyczne ciemne, grafitowo-brązowe przetarcia przypominające sadzę i ślady dawnego wypalenia. Kolorystyka jest ciepła, nasycona i zdecydowanie bardziej intensywna niż w jasnych wariantach cegły.",
-      materialsInfo: "Wysokogatunkowy beton stylizowany na historyczną cegłę z XIX wieku. Materiał został uformowany tak, aby odwzorować naturalną, nieregularną strukturę starej cegły, a zróżnicowana kolorystyka i ciemne przetarcia są integralną częścią barwienia płytki. Model przeznaczony jest do zastosowania we wnętrzach oraz na elewacjach.",
+      desc: "betonowa płytka stylizowana na XIX-wieczną cegłę, w intensywnej ciepłej kolorystyce pomarańczowo-morelowej z głębokimi czerwonymi i brązowymi tonami oraz charakterystycznymi ciemnymi przetarciami przypominającymi ślady sadzy i dawnego wypalenia"
+      textureDetails: "Powierzchnia matowa, surowa i wyraźnie nieregularna, z drobną ziarnistością, porami, płytkimi zagłębieniami, rysami oraz delikatnymi nierównościami typowymi dla starej cegły. Lico jest lekko falujące i miejscami niejednorodne, z widocznymi śladami ręcznego formowania. Krawędzie są nieregularne, lekko zaokrąglone i miejscami delikatnie wykruszone. Charakterystycznym elementem są ciemne, nieregularne przetarcia i przybrudzenia osadzone w strukturze powierzchni, przypominające naturalne ślady sadzy oraz wieloletniego użytkowania."
+      colorPalette: "Dominują intensywne, ciepłe odcienie pomarańczowej i morelowej cegły, przechodzące w ceglastą czerwień, rudości oraz głębsze brązy. Powierzchnia jest wyraźnie wielotonowa — jasne pomarańczowo-morelowe partie przeplatają się z ciemniejszymi czerwonymi i brązowymi fragmentami. Widoczne są charakterystyczne ciemne, grafitowo-brązowe przetarcia przypominające sadzę i ślady dawnego wypalenia. Kolorystyka jest ciepła, nasycona i zdecydowanie bardziej intensywna niż w jasnych wariantach cegły."
+      materialsInfo: "Wysokogatunkowy beton stylizowany na historyczną cegłę z XIX wieku. Materiał został uformowany tak, aby odwzorować naturalną, nieregularną strukturę starej cegły, a zróżnicowana kolorystyka i ciemne przetarcia są integralną częścią barwienia płytki. Model przeznaczony jest do zastosowania we wnętrzach oraz na elewacjach."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)""
-    },
+    },,
     {
       id: "modern-historyczne-jasne",
       name: "Modern Line – Historyczne Jasne",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4112_500_500/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-historyczne-jasne-1x1.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na XIX-wieczną, ręcznie formowaną cegłę, w jasnej, pastelowej kolorystyce piaskowego beżu, jasnego ugru i spłowiałego różu, z delikatnie postarzoną, surową powierzchnią",
-      textureDetails: "Powierzchnia matowa, mocno nieregularna i wyraźnie chropowata, z drobną ziarnistością, licznymi porami, płytkimi zagłębieniami, rysami i naturalnymi nierównościami. Lico ma wyraźnie ręcznie formowany charakter — miejscami jest lekko falujące, z nieregularnymi krawędziami, drobnymi wykruszeniami i ubytkami. Widoczne są również charakterystyczne podłużne ślady, rysy i delikatne spękania, które nadają powierzchni autentyczny wygląd starej cegły. Struktura jest głęboka i niejednorodna, z wyraźnym efektem 3D.",
-      colorPalette: "Dominują jasne, ciepłe odcienie piaskowego beżu, jasnego ugru, kremu i delikatnego terakotowego różu. Poszczególne płytki różnią się tonalnie — od bardzo jasnych, spłowiałych beżowo-różowych fragmentów po cieplejsze, bardziej nasycone ugrowo-pomarańczowe partie. Widoczne są subtelne przejścia tonalne i delikatne przyciemnienia w zagłębieniach faktury. Kolorystyka jest pastelowa, lekko wyblakła i pozbawiona mocnych, ciemnych przetarć czy sadzy, dzięki czemu całość ma jasny, słoneczny charakter.",
-      materialsInfo: "Wysokogatunkowy beton architektoniczny stylizowany na XIX-wieczną, ręcznie formowaną cegłę. Materiał został ukształtowany tak, aby odwzorować nieregularne lico, pory, spękania, rysy i drobne wykruszenia charakterystyczne dla historycznej cegły. Jasna kolorystyka została zaprojektowana jako subtelniejsza odmiana modelu Historycznego, z ograniczoną ilością ciemnych przetarć i sadzy.",
+      desc: "betonowa płytka stylizowana na XIX-wieczną, ręcznie formowaną cegłę, w jasnej, pastelowej kolorystyce piaskowego beżu, jasnego ugru i spłowiałego różu, z delikatnie postarzoną, surową powierzchnią"
+      textureDetails: "Powierzchnia matowa, mocno nieregularna i wyraźnie chropowata, z drobną ziarnistością, licznymi porami, płytkimi zagłębieniami, rysami i naturalnymi nierównościami. Lico ma wyraźnie ręcznie formowany charakter — miejscami jest lekko falujące, z nieregularnymi krawędziami, drobnymi wykruszeniami i ubytkami. Widoczne są również charakterystyczne podłużne ślady, rysy i delikatne spękania, które nadają powierzchni autentyczny wygląd starej cegły. Struktura jest głęboka i niejednorodna, z wyraźnym efektem 3D."
+      colorPalette: "Dominują jasne, ciepłe odcienie piaskowego beżu, jasnego ugru, kremu i delikatnego terakotowego różu. Poszczególne płytki różnią się tonalnie — od bardzo jasnych, spłowiałych beżowo-różowych fragmentów po cieplejsze, bardziej nasycone ugrowo-pomarańczowe partie. Widoczne są subtelne przejścia tonalne i delikatne przyciemnienia w zagłębieniach faktury. Kolorystyka jest pastelowa, lekko wyblakła i pozbawiona mocnych, ciemnych przetarć czy sadzy, dzięki czemu całość ma jasny, słoneczny charakter."
+      materialsInfo: "Wysokogatunkowy beton architektoniczny stylizowany na XIX-wieczną, ręcznie formowaną cegłę. Materiał został ukształtowany tak, aby odwzorować nieregularne lico, pory, spękania, rysy i drobne wykruszenia charakterystyczne dla historycznej cegły. Jasna kolorystyka została zaprojektowana jako subtelniejsza odmiana modelu Historycznego, z ograniczoną ilością ciemnych przetarć i sadzy."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-zamkowa-02",
       name: "Zamkowa 02",
@@ -1067,150 +1067,152 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       colorPalette: "Dominują ciepłe odcienie ceglastopomarańczowe, terakotowe i rdzawoczerwone. Kolor jest wyraźnie zróżnicowany tonalnie — od jasnych, łososiowo-pomarańczowych fragmentów po głębsze ceglastoczerwone i rdzawobrązowe partie. Widoczne są subtelne, nieregularne przebarwienia i ciemniejsze akcenty, ale całość pozostaje w ciepłej, harmonijnej palecie starej cegły. Brak jednolitego koloru jest istotnym elementem wyglądu.",
       materialsInfo: "Wysokogatunkowy beton barwiony w masie, stylizowany na starą, ręcznie formowaną cegłę rozbiórkową. Nieregularna struktura i zróżnicowanie powierzchni mają odwzorowywać charakter historycznych murów. Płytki są przeznaczone do stosowania zarówno wewnątrz, jak i na elewacjach; producent podaje mrozoodporność i trwałość koloru.",
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-zamkowa-03",
       name: "Zamkowa 03",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4099_500_500/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-Zamkowa-031x1.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na starą, ręcznie formowaną cegłę, z charakterystycznym efektem przydymienia i nadpalenia, ciepła ceglasto-pomarańczowa kolorystyka przełamana ciemnymi brązowo-grafitowymi przebarwieniami, mocno rustykalny i historyczny charakter",
-      textureDetails: "Powierzchnia matowa, wyraźnie chropowata i nieregularna, z drobnymi porami, ziarnistą strukturą, płytkimi zagłębieniami, rysami oraz miejscowymi śladami zużycia. Widoczne są nieregularne ciemne przepalenia i przydymienia, które wnikają wizualnie w strukturę lica. Krawędzie są lekko nieregularne, miejscami wyszczerbione, z delikatnymi ubytkami i zaokrągleniami charakterystycznymi dla starej, ręcznie formowanej cegły. Powierzchnia nie jest powtarzalna ani idealnie płaska, dzięki czemu tworzy naturalny, lekko trójwymiarowy efekt starego muru.",
-      colorPalette: "Bazę stanowią ciepłe odcienie ceglastopomarańczowe, terakotowe, rdzawoczerwone i miejscami łososiowe. Powierzchnia jest mocno wielotonowa — jasniejsze pomarańczowo-ceglaste fragmenty przeplatają się z głębszymi rdzawobrązowymi i brązowo-grafitowymi przebarwieniami. Charakterystyczne są nieregularne ciemne plamy przypominające ślady nadpalenia i przydymienia, miejscami niemal grafitowe. Kolorystyka jest wyraźnie zróżnicowana, ale zachowuje ciepły, naturalny charakter starej cegły.",
-      materialsInfo: "Wysokogatunkowy beton barwiony w masie, stylizowany na starą, ręcznie formowaną cegłę. Efekt przydymienia i nadpalenia uzyskiwany jest poprzez specjalny proces barwienia betonu w masie oraz obróbkę powierzchniową, tworząc wielotonowe przejścia kolorystyczne. Płytki przeznaczone są do stosowania we wnętrzach oraz na elewacjach.",
+      desc: "betonowa płytka stylizowana na starą, ręcznie formowaną cegłę, z charakterystycznym efektem przydymienia i nadpalenia, ciepła ceglasto-pomarańczowa kolorystyka przełamana ciemnymi brązowo-grafitowymi przebarwieniami, mocno rustykalny i historyczny charakter"
+      textureDetails: "Powierzchnia matowa, wyraźnie chropowata i nieregularna, z drobnymi porami, ziarnistą strukturą, płytkimi zagłębieniami, rysami oraz miejscowymi śladami zużycia. Widoczne są nieregularne ciemne przepalenia i przydymienia, które wnikają wizualnie w strukturę lica. Krawędzie są lekko nieregularne, miejscami wyszczerbione, z delikatnymi ubytkami i zaokrągleniami charakterystycznymi dla starej, ręcznie formowanej cegły. Powierzchnia nie jest powtarzalna ani idealnie płaska, dzięki czemu tworzy naturalny, lekko trójwymiarowy efekt starego muru."
+      colorPalette: "Bazę stanowią ciepłe odcienie ceglastopomarańczowe, terakotowe, rdzawoczerwone i miejscami łososiowe. Powierzchnia jest mocno wielotonowa — jasniejsze pomarańczowo-ceglaste fragmenty przeplatają się z głębszymi rdzawobrązowymi i brązowo-grafitowymi przebarwieniami. Charakterystyczne są nieregularne ciemne plamy przypominające ślady nadpalenia i przydymienia, miejscami niemal grafitowe. Kolorystyka jest wyraźnie zróżnicowana, ale zachowuje ciepły, naturalny charakter starej cegły."
+      materialsInfo: "Wysokogatunkowy beton barwiony w masie, stylizowany na starą, ręcznie formowaną cegłę. Efekt przydymienia i nadpalenia uzyskiwany jest poprzez specjalny proces barwienia betonu w masie oraz obróbkę powierzchniową, tworząc wielotonowe przejścia kolorystyczne. Płytki przeznaczone są do stosowania we wnętrzach oraz na elewacjach."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-zamkowa-05",
       name: "Zamkowa 05",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4096_500_500/plytki-z-cegly-stara-cegla-zamkowa051x1.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na XIX-wieczną, ręcznie formowaną cegłę, o bardzo bogatej i mocno zróżnicowanej kolorystyce łączącej beże, rudości, głębokie czerwienie i subtelne szarości, z naturalnym, surowym i rustykalnym charakterem",
-      textureDetails: "Powierzchnia matowa, surowa i wyraźnie nieregularna, z drobną ziarnistością, porami, zagłębieniami, przetarciami oraz delikatnymi nierównościami przypominającymi historyczną cegłę ręcznie formowaną. Lico nie jest idealnie płaskie ani powtarzalne, a miejscowe różnice struktury nadają mu naturalną głębię. Krawędzie są lekko nieregularne, miejscami delikatnie zaokrąglone lub wykruszone, co wzmacnia efekt postarzenia i autentyczności starego muru.",
-      colorPalette: "Bardzo szeroka, wielotonowa paleta obejmująca ciepłe beże, piaskowe i kremowobeżowe fragmenty, rudości, ceglastą czerwień, głębokie czerwienie oraz subtelne szarości. Poszczególne płytki mogą wyraźnie różnić się między sobą, tworząc dynamiczny mix kolorystyczny. Widoczne są zarówno jasne, ciepłe partie, jak i głębsze czerwono-rude oraz szare akcenty. Kolorystyka nie jest jednolita — właśnie duża rozpiętość tonalna jest jedną z najbardziej charakterystycznych cech tego modelu.",
-      materialsInfo: "Wysokogatunkowy beton barwiony w masie, stylizowany na autentyczną cegłę z XIX wieku. Specyficzny sposób produkcji nadaje powierzchni surowy, naturalny charakter oraz zróżnicowanie przypominające historyczne cegły ręcznie formowane. Płytki przeznaczone są do stosowania zarówno we wnętrzach, jak i na elewacjach; zastosowane pigmenty są odporne na promieniowanie UV.",
+      desc: "betonowa płytka stylizowana na XIX-wieczną, ręcznie formowaną cegłę, o bardzo bogatej i mocno zróżnicowanej kolorystyce łączącej beże, rudości, głębokie czerwienie i subtelne szarości, z naturalnym, surowym i rustykalnym charakterem"
+      textureDetails: "Powierzchnia matowa, surowa i wyraźnie nieregularna, z drobną ziarnistością, porami, zagłębieniami, przetarciami oraz delikatnymi nierównościami przypominającymi historyczną cegłę ręcznie formowaną. Lico nie jest idealnie płaskie ani powtarzalne, a miejscowe różnice struktury nadają mu naturalną głębię. Krawędzie są lekko nieregularne, miejscami delikatnie zaokrąglone lub wykruszone, co wzmacnia efekt postarzenia i autentyczności starego muru."
+      colorPalette: "Bardzo szeroka, wielotonowa paleta obejmująca ciepłe beże, piaskowe i kremowobeżowe fragmenty, rudości, ceglastą czerwień, głębokie czerwienie oraz subtelne szarości. Poszczególne płytki mogą wyraźnie różnić się między sobą, tworząc dynamiczny mix kolorystyczny. Widoczne są zarówno jasne, ciepłe partie, jak i głębsze czerwono-rude oraz szare akcenty. Kolorystyka nie jest jednolita — właśnie duża rozpiętość tonalna jest jedną z najbardziej charakterystycznych cech tego modelu."
+      materialsInfo: "Wysokogatunkowy beton barwiony w masie, stylizowany na autentyczną cegłę z XIX wieku. Specyficzny sposób produkcji nadaje powierzchni surowy, naturalny charakter oraz zróżnicowanie przypominające historyczne cegły ręcznie formowane. Płytki przeznaczone są do stosowania zarówno we wnętrzach, jak i na elewacjach; zastosowane pigmenty są odporne na promieniowanie UV."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-gotyckie",
       name: "Modern Line – Gotyckie",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4116_500_500/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-Gotyckie-1x1-ekspozytor.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na historyczną cegłę gotycką, w głębokiej, przygaszonej czerwieni i bordo z subtelnymi ziemistymi brązami, o surowym, zabytkowym i wyrazistym charakterze",
-      textureDetails: "Powierzchnia matowa, mocno nieregularna i wyraźnie chropowata, z licznymi żłobieniami, wgłębieniami, drobnymi porami, rysami i miejscowymi nierównościami. Lico ma surową, lekko ziarnistą strukturę przypominającą starą, ręcznie formowaną cegłę. Widoczne są delikatne wykruszenia i ubytki oraz nieregularne krawędzie, które podkreślają historyczny charakter. Powierzchnia nie jest jednolita ani idealnie płaska, dzięki czemu po ułożeniu tworzy naturalną, przestrzenną strukturę starego muru.",
-      colorPalette: "Dominują głębokie, stonowane odcienie ciemnej czerwieni, ceglanej czerwieni i przygaszonego bordo. Miejscami kolor przechodzi w ziemiste, ciepłe brązy oraz delikatne rdzawo-brązowe tony. Powierzchnia jest wielotonowa, z subtelnymi różnicami nasycenia pomiędzy poszczególnymi płytkami i fragmentami lica. Brak intensywnie jaskrawej czerwieni — całość ma przygaszoną, szlachetną kolorystykę starej cegły.",
-      materialsInfo: "Wysokogatunkowy beton barwiony w masie, stylizowany na historyczną cegłę rozbiórkową. Materiał został uformowany z nieregularną, mocno fakturowaną powierzchnią, odwzorowującą żłobienia, wgłębienia i niedoskonałości dawnej cegły. Płytki należą do kolekcji Modern Line i są przeznaczone do stosowania we wnętrzach oraz na elewacjach.",
+      desc: "betonowa płytka stylizowana na historyczną cegłę gotycką, w głębokiej, przygaszonej czerwieni i bordo z subtelnymi ziemistymi brązami, o surowym, zabytkowym i wyrazistym charakterze"
+      textureDetails: "Powierzchnia matowa, mocno nieregularna i wyraźnie chropowata, z licznymi żłobieniami, wgłębieniami, drobnymi porami, rysami i miejscowymi nierównościami. Lico ma surową, lekko ziarnistą strukturę przypominającą starą, ręcznie formowaną cegłę. Widoczne są delikatne wykruszenia i ubytki oraz nieregularne krawędzie, które podkreślają historyczny charakter. Powierzchnia nie jest jednolita ani idealnie płaska, dzięki czemu po ułożeniu tworzy naturalną, przestrzenną strukturę starego muru."
+      colorPalette: "Dominują głębokie, stonowane odcienie ciemnej czerwieni, ceglanej czerwieni i przygaszonego bordo. Miejscami kolor przechodzi w ziemiste, ciepłe brązy oraz delikatne rdzawo-brązowe tony. Powierzchnia jest wielotonowa, z subtelnymi różnicami nasycenia pomiędzy poszczególnymi płytkami i fragmentami lica. Brak intensywnie jaskrawej czerwieni — całość ma przygaszoną, szlachetną kolorystykę starej cegły."
+      materialsInfo: "Wysokogatunkowy beton barwiony w masie, stylizowany na historyczną cegłę rozbiórkową. Materiał został uformowany z nieregularną, mocno fakturowaną powierzchnią, odwzorowującą żłobienia, wgłębienia i niedoskonałości dawnej cegły. Płytki należą do kolekcji Modern Line i są przeznaczone do stosowania we wnętrzach oraz na elewacjach."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-lubelska",
       name: "Płytka Ceglana – Lubelska",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4103_500_500/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-plytki-z-cegly-ceglane-na-sciane-stylizowane-Lubelska-1x1-ekspozytor.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na starą, ręcznie formowaną cegłę, w ciepłej piaskowo-beżowej kolorystyce z odcieniami jasnego brązu, ochry i delikatnej ceglanej rudości, o naturalnym, rustykalnym i lekko vintage charakterze",
-      textureDetails: "Powierzchnia matowa, wyraźnie chropowata i nieregularna, z licznymi drobnymi porami, ziarnistością, płytkimi zagłębieniami, rysami oraz delikatnymi nierównościami. Lico miejscami lekko faluje i posiada charakterystyczne ślady ręcznego formowania. Widoczne są drobne ubytki, przetarcia oraz nieregularne wgłębienia, szczególnie wzdłuż powierzchni lica. Krawędzie są lekko nieregularne, miejscami delikatnie zaokrąglone i wykruszone. Poszczególne płytki różnią się strukturą i nasyceniem koloru, dzięki czemu całość nie wygląda na powtarzalną.",
-      colorPalette: "Dominują ciepłe odcienie piaskowego beżu, jasnego brązu, ochry i jasnego terakotowego brązu. Widoczne są również delikatne kremowe oraz złocisto-beżowe partie, a miejscami subtelne rudoceglane akcenty. Kolorystyka jest wyraźnie wielotonowa — od jasnych, piaskowych fragmentów po głębsze brązowo-ochrowe partie. Przebarwienia są miękkie i naturalne, bez mocnych kontrastów; całość przypomina ciepłą, postarzoną cegłę o lekko wypłowiałej powierzchni.",
-      materialsInfo: "Wysokogatunkowy beton stylizowany na starą, ręcznie formowaną cegłę. Materiał odwzorowuje charakterystyczną strukturę historycznej cegły poprzez nieregularne lico, pory, zagłębienia, przetarcia i zróżnicowanie tonalne. Płytki należą do kolekcji Modern Line, są przeznaczone do stosowania we wnętrzach oraz na elewacjach i charakteryzują się odpornością na mróz oraz wilgoć.",
+      desc: "betonowa płytka stylizowana na starą, ręcznie formowaną cegłę, w ciepłej piaskowo-beżowej kolorystyce z odcieniami jasnego brązu, ochry i delikatnej ceglanej rudości, o naturalnym, rustykalnym i lekko vintage charakterze"
+      textureDetails: "Powierzchnia matowa, wyraźnie chropowata i nieregularna, z licznymi drobnymi porami, ziarnistością, płytkimi zagłębieniami, rysami oraz delikatnymi nierównościami. Lico miejscami lekko faluje i posiada charakterystyczne ślady ręcznego formowania. Widoczne są drobne ubytki, przetarcia oraz nieregularne wgłębienia, szczególnie wzdłuż powierzchni lica. Krawędzie są lekko nieregularne, miejscami delikatnie zaokrąglone i wykruszone. Poszczególne płytki różnią się strukturą i nasyceniem koloru, dzięki czemu całość nie wygląda na powtarzalną."
+      colorPalette: "Dominują ciepłe odcienie piaskowego beżu, jasnego brązu, ochry i jasnego terakotowego brązu. Widoczne są również delikatne kremowe oraz złocisto-beżowe partie, a miejscami subtelne rudoceglane akcenty. Kolorystyka jest wyraźnie wielotonowa — od jasnych, piaskowych fragmentów po głębsze brązowo-ochrowe partie. Przebarwienia są miękkie i naturalne, bez mocnych kontrastów; całość przypomina ciepłą, postarzoną cegłę o lekko wypłowiałej powierzchni."
+      materialsInfo: "Wysokogatunkowy beton stylizowany na starą, ręcznie formowaną cegłę. Materiał odwzorowuje charakterystyczną strukturę historycznej cegły poprzez nieregularne lico, pory, zagłębienia, przetarcia i zróżnicowanie tonalne. Płytki należą do kolekcji Modern Line, są przeznaczone do stosowania we wnętrzach oraz na elewacjach i charakteryzują się odpornością na mróz oraz wilgoć."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-podmurna",
       name: "Płytka Ceglana – Podmurna",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4107_500_500/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-Podmurna1x1_MIN-ekspozycja.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na XIX-wieczną, starą cegłę rozbiórkową, o głębokiej burgundowo-brązowej kolorystyce z mocnymi białymi przecierkami i jasnymi nalotami, surowy, miejski i industrialny charakter",
-      textureDetails: "Powierzchnia matowa, mocno chropowata i nieregularna, z wyraźną ziarnistością, porami, zagłębieniami, rysami oraz licznymi drobnymi odpryskami. Lico ma surową, lekko falującą strukturę przypominającą ręcznie formowaną starą cegłę. Widoczne są miejscowe ubytki, nierówności i drobne wykruszenia krawędzi. Charakterystycznym elementem są nieregularne białe przecierki i jasne naloty, częściowo osadzone w zagłębieniach powierzchni, które tworzą mocny kontrast z ciemnym kolorem cegły.",
-      colorPalette: "Dominują głębokie odcienie burgundu, ciemnej ceglanej czerwieni, czerwonego brązu i czekoladowego brązu. Powierzchnia jest wyraźnie wielotonowa, z ciemniejszymi i jaśniejszymi fragmentami oraz nieregularnymi przejściami kolorystycznymi. Bardzo charakterystyczne są jasne białe, kremowobiałe i lekko szarawe przecierki oraz naloty, miejscami pokrywające znaczną część lica. Kontrast pomiędzy głęboką bazą a jasnymi akcentami nadaje płytce efekt starego, wielokrotnie eksploatowanego muru.",
-      materialsInfo: "Wysokogatunkowy beton stylizowany na XIX-wieczną cegłę historyczną. Materiał został uformowany z nieregularną, mocno postarzaną strukturą, a charakterystyczne białe naloty i przecierki są integralnym elementem wykończenia uzyskiwanym w procesie produkcji. Płytki są przeznaczone do stosowania zarówno we wnętrzach, jak i na elewacjach.",
+      desc: "betonowa płytka stylizowana na XIX-wieczną, starą cegłę rozbiórkową, o głębokiej burgundowo-brązowej kolorystyce z mocnymi białymi przecierkami i jasnymi nalotami, surowy, miejski i industrialny charakter"
+      textureDetails: "Powierzchnia matowa, mocno chropowata i nieregularna, z wyraźną ziarnistością, porami, zagłębieniami, rysami oraz licznymi drobnymi odpryskami. Lico ma surową, lekko falującą strukturę przypominającą ręcznie formowaną starą cegłę. Widoczne są miejscowe ubytki, nierówności i drobne wykruszenia krawędzi. Charakterystycznym elementem są nieregularne białe przecierki i jasne naloty, częściowo osadzone w zagłębieniach powierzchni, które tworzą mocny kontrast z ciemnym kolorem cegły."
+      colorPalette: "Dominują głębokie odcienie burgundu, ciemnej ceglanej czerwieni, czerwonego brązu i czekoladowego brązu. Powierzchnia jest wyraźnie wielotonowa, z ciemniejszymi i jaśniejszymi fragmentami oraz nieregularnymi przejściami kolorystycznymi. Bardzo charakterystyczne są jasne białe, kremowobiałe i lekko szarawe przecierki oraz naloty, miejscami pokrywające znaczną część lica. Kontrast pomiędzy głęboką bazą a jasnymi akcentami nadaje płytce efekt starego, wielokrotnie eksploatowanego muru."
+      materialsInfo: "Wysokogatunkowy beton stylizowany na XIX-wieczną cegłę historyczną. Materiał został uformowany z nieregularną, mocno postarzaną strukturą, a charakterystyczne białe naloty i przecierki są integralnym elementem wykończenia uzyskiwanym w procesie produkcji. Płytki są przeznaczone do stosowania zarówno we wnętrzach, jak i na elewacjach."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-staromiejska",
       name: "Płytka Ceglana – Staromiejska",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_6892_500_500/Plytksa-ceglana-na-sciane-staromiejska-ekspozytor_MIN.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na historyczną cegłę staromiejską, w stonowanej kolorystyce brązu i ceglastoczerwonych tonów, z wyraźnymi ciemnymi grafitowo-antracytowymi akcentami oraz charakterystycznymi jasnymi przecierkami przypominającymi wapienny nalot",
-      textureDetails: "Powierzchnia matowa, głęboko fakturowana i mocno nieregularna, z licznymi porami, kawernami, zagłębieniami, drobnymi ubytkami i rysami. Lico ma surową, ziarnistą strukturę przypominającą wiekową cegłę ręcznie formowaną. Krawędzie są nieregularne, miejscami lekko wykruszone i delikatnie zaokrąglone. Charakterystycznym elementem są liczne jasne przecierki osadzone na powierzchni oraz w zagłębieniach, tworzące efekt starego wapiennego nalotu. Poszczególne płytki różnią się strukturą i rozłożeniem przebarwień, dzięki czemu całość jest naturalnie niejednorodna.",
-      colorPalette: "Dominują stonowane, ziemiste odcienie brązu, ciepłego brązowoczerwonego i przygaszonej ceglanej czerwieni. Część płytek i fragmentów lica przechodzi w ciemniejsze brązy, grafit i antracyt, tworząc wyraźne, ale nieregularne kontrasty. Bardzo charakterystyczne są jasne białawo-kremowe i szarobiałe przecierki przypominające wapienny nalot na starej cegle. Kolorystyka jest mocno wielotonowa, z naturalnym przemieszaniem jasnych, ciepłych i ciemnych akcentów.",
-      materialsInfo: "Wysokogatunkowy beton stylizowany na historyczną cegłę staromiejską. Materiał został uformowany z głęboką, nieregularną strukturą i licznymi kawernami, aby odwzorować charakter wiekowego muru. Kolorystyka oraz jasne przecierki są integralnym elementem wykończenia płytki, a ciemniejsze antracytowe akcenty są celowo rozmieszczane w partii produkcyjnej. Płytki są przeznaczone do wnętrz i na elewacje.",
+      desc: "betonowa płytka stylizowana na historyczną cegłę staromiejską, w stonowanej kolorystyce brązu i ceglastoczerwonych tonów, z wyraźnymi ciemnymi grafitowo-antracytowymi akcentami oraz charakterystycznymi jasnymi przecierkami przypominającymi wapienny nalot"
+      textureDetails: "Powierzchnia matowa, głęboko fakturowana i mocno nieregularna, z licznymi porami, kawernami, zagłębieniami, drobnymi ubytkami i rysami. Lico ma surową, ziarnistą strukturę przypominającą wiekową cegłę ręcznie formowaną. Krawędzie są nieregularne, miejscami lekko wykruszone i delikatnie zaokrąglone. Charakterystycznym elementem są liczne jasne przecierki osadzone na powierzchni oraz w zagłębieniach, tworzące efekt starego wapiennego nalotu. Poszczególne płytki różnią się strukturą i rozłożeniem przebarwień, dzięki czemu całość jest naturalnie niejednorodna."
+      colorPalette: "Dominują stonowane, ziemiste odcienie brązu, ciepłego brązowoczerwonego i przygaszonej ceglanej czerwieni. Część płytek i fragmentów lica przechodzi w ciemniejsze brązy, grafit i antracyt, tworząc wyraźne, ale nieregularne kontrasty. Bardzo charakterystyczne są jasne białawo-kremowe i szarobiałe przecierki przypominające wapienny nalot na starej cegle. Kolorystyka jest mocno wielotonowa, z naturalnym przemieszaniem jasnych, ciepłych i ciemnych akcentów."
+      materialsInfo: "Wysokogatunkowy beton stylizowany na historyczną cegłę staromiejską. Materiał został uformowany z głęboką, nieregularną strukturą i licznymi kawernami, aby odwzorować charakter wiekowego muru. Kolorystyka oraz jasne przecierki są integralnym elementem wykończenia płytki, a ciemniejsze antracytowe akcenty są celowo rozmieszczane w partii produkcyjnej. Płytki są przeznaczone do wnętrz i na elewacje."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-szewska",
       name: "Płytka Ceglana – Szewska",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4102_500_500/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-plytki-z-cegly-ceglane-na-sciane-stylizowane-Szewska1x1_MIN-ekspozycja.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na XIX-wieczną, ręcznie formowaną cegłę, w ciepłej piaskowo-terakotowej kolorystyce z wyraźnymi, spłowiałymi różowymi tonami oraz jasnymi wapiennymi nalotami, o surowym i historycznym charakterze",
-      textureDetails: "Powierzchnia matowa, wyraźnie chropowata i mocno nieregularna, z licznymi drobnymi porami, kawernami, zagłębieniami, rysami i nierównościami. Lico ma lekko falującą, surową strukturę przypominającą cegłę ręcznie formowaną. Widoczne są miejscowe ubytki, drobne wykruszenia oraz nieregularne krawędzie, częściowo zaokrąglone przez stylizowany proces postarzenia. Charakterystycznym elementem są jasne, białawo-szare naloty i przecierki, szczególnie widoczne w zagłębieniach oraz na fragmentach lica. Poszczególne płytki różnią się intensywnością faktury i rozmieszczeniem przebarwień.",
-      colorPalette: "Dominują ciepłe odcienie piaskowego beżu, jasnej terakoty, zgaszonego ceglanego różu i delikatnej rudości. Widoczne są subtelne przejścia pomiędzy jaśniejszymi beżowo-terakotowymi partiami a nieco głębszymi rdzawymi i brązowawymi fragmentami. Na powierzchni występują charakterystyczne jasne, białawo-kremowe i szarawe naloty przypominające pozostałości wapiennej zaprawy. Kolorystyka jest wielotonowa, ciepła i lekko spłowiała, bez bardzo intensywnych czerwieni.",
-      materialsInfo: "Wysokogatunkowy beton barwiony w masie, stylizowany na XIX-wieczną cegłę ręcznie formowaną. Materiał odwzorowuje charakter historycznego lica poprzez liczne wgłębienia, kawerny, nieregularne krawędzie i zróżnicowaną strukturę. Płytki są mrozoodporne i przeznaczone do zastosowania zarówno we wnętrzach, jak i na elewacjach.",
+      desc: "betonowa płytka stylizowana na XIX-wieczną, ręcznie formowaną cegłę, w ciepłej piaskowo-terakotowej kolorystyce z wyraźnymi, spłowiałymi różowymi tonami oraz jasnymi wapiennymi nalotami, o surowym i historycznym charakterze"
+      textureDetails: "Powierzchnia matowa, wyraźnie chropowata i mocno nieregularna, z licznymi drobnymi porami, kawernami, zagłębieniami, rysami i nierównościami. Lico ma lekko falującą, surową strukturę przypominającą cegłę ręcznie formowaną. Widoczne są miejscowe ubytki, drobne wykruszenia oraz nieregularne krawędzie, częściowo zaokrąglone przez stylizowany proces postarzenia. Charakterystycznym elementem są jasne, białawo-szare naloty i przecierki, szczególnie widoczne w zagłębieniach oraz na fragmentach lica. Poszczególne płytki różnią się intensywnością faktury i rozmieszczeniem przebarwień."
+      colorPalette: "Dominują ciepłe odcienie piaskowego beżu, jasnej terakoty, zgaszonego ceglanego różu i delikatnej rudości. Widoczne są subtelne przejścia pomiędzy jaśniejszymi beżowo-terakotowymi partiami a nieco głębszymi rdzawymi i brązowawymi fragmentami. Na powierzchni występują charakterystyczne jasne, białawo-kremowe i szarawe naloty przypominające pozostałości wapiennej zaprawy. Kolorystyka jest wielotonowa, ciepła i lekko spłowiała, bez bardzo intensywnych czerwieni."
+      materialsInfo: "Wysokogatunkowy beton barwiony w masie, stylizowany na XIX-wieczną cegłę ręcznie formowaną. Materiał odwzorowuje charakter historycznego lica poprzez liczne wgłębienia, kawerny, nieregularne krawędzie i zróżnicowaną strukturę. Płytki są mrozoodporne i przeznaczone do zastosowania zarówno we wnętrzach, jak i na elewacjach."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-braz-bez",
       name: "Modern Line – Brąz-Beż",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4123_500_500/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-Brazowo-bezowe-1x1-ekspozytor.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na XIX-wieczny mur, w jasnej, ciepłej kolorystyce łączącej piaskowy beż z naturalnym ciepłym brązem, o spokojnym, przytulnym i lekko rustykalnym charakterze",
-      textureDetails: "Powierzchnia matowa, subtelnie zróżnicowana i lekko chropowata, z delikatną ziarnistością, płytkimi wgłębieniami oraz drobnymi nierównościami. Faktura jest znacznie spokojniejsza niż w mocno postarzałych modelach — bez głębokich kawern i intensywnych uszkodzeń. Lico zachowuje naturalną, lekko nieregularną strukturę inspirowaną starą cegłą, a delikatne zagłębienia podkreślają tonalne przejścia koloru.",
-      colorPalette: "Dominują jasne, ciepłe odcienie piaskowego beżu, kremowego beżu i jasnego brązu. Beż stanowi bazę kolorystyczną, natomiast ciepłe brązowe tony płynnie przenikają przez powierzchnię, tworząc naturalne, miękkie przejścia. Kolorystyka jest wielotonowa, ale harmonijna i spokojna — bez mocnych czerwieni, grafitów czy kontrastowych przepaleń. Całość ma ciepły, piaskowo-ziemisty charakter i należy do jaśniejszych wariantów brązowych.",
-      materialsInfo: "Beton architektoniczny z kolekcji Modern Line, stylizowany na XIX-wieczną cegłę. Materiał odwzorowuje wygląd historycznego muru poprzez subtelnie nieregularną fakturę, delikatne wgłębienia i płynne zróżnicowanie kolorystyczne. Płytki są przeznaczone zarówno do wnętrz, jak i na elewacje; producent podaje odporność na uderzenia i wilgoć oraz mrozoodporność.",
+      desc: "betonowa płytka stylizowana na XIX-wieczny mur, w jasnej, ciepłej kolorystyce łączącej piaskowy beż z naturalnym ciepłym brązem, o spokojnym, przytulnym i lekko rustykalnym charakterze"
+      textureDetails: "Powierzchnia matowa, subtelnie zróżnicowana i lekko chropowata, z delikatną ziarnistością, płytkimi wgłębieniami oraz drobnymi nierównościami. Faktura jest znacznie spokojniejsza niż w mocno postarzałych modelach — bez głębokich kawern i intensywnych uszkodzeń. Lico zachowuje naturalną, lekko nieregularną strukturę inspirowaną starą cegłą, a delikatne zagłębienia podkreślają tonalne przejścia koloru."
+      colorPalette: "Dominują jasne, ciepłe odcienie piaskowego beżu, kremowego beżu i jasnego brązu. Beż stanowi bazę kolorystyczną, natomiast ciepłe brązowe tony płynnie przenikają przez powierzchnię, tworząc naturalne, miękkie przejścia. Kolorystyka jest wielotonowa, ale harmonijna i spokojna — bez mocnych czerwieni, grafitów czy kontrastowych przepaleń. Całość ma ciepły, piaskowo-ziemisty charakter i należy do jaśniejszych wariantów brązowych."
+      materialsInfo: "Beton architektoniczny z kolekcji Modern Line, stylizowany na XIX-wieczną cegłę. Materiał odwzorowuje wygląd historycznego muru poprzez subtelnie nieregularną fakturę, delikatne wgłębienia i płynne zróżnicowanie kolorystyczne. Płytki są przeznaczone zarówno do wnętrz, jak i na elewacje; producent podaje odporność na uderzenia i wilgoć oraz mrozoodporność."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-szare",
       name: "Modern Line – Szare",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4110_500_500/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-Szare-1x1-ekspozytor.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na starą cegłę, w chłodnej szarej kolorystyce z naturalnymi przejściami od jasnej, gołębiej szarości po głębsze betonowe tony, o surowym, minimalistycznym i industrialnym charakterze",
-      textureDetails: "Powierzchnia matowa, wyraźnie nieregularna i lekko chropowata, z drobnymi kawernami, porami, ziarnistością, płytkimi zagłębieniami oraz delikatnymi rysami. Lico jest lekko falujące i miejscami nierówne, przypominające powierzchnię starej cegły. Widoczne są subtelne ubytki, drobne odpryski i nierówności krawędzi, jednak całość zachowuje dość regularny format. Poszczególne płytki różnią się delikatnie strukturą oraz stopniem przyciemnienia, co tworzy naturalną, niejednorodną powierzchnię.",
-      colorPalette: "Dominują chłodne odcienie jasnej szarości, gołębiej szarości i popielu, przechodzące miejscami w głębsze betonowe, grafitowo-szare tony. Powierzchnia jest wyraźnie zróżnicowana tonalnie — część płytek pozostaje bardzo jasna, niemal srebrzysta, podczas gdy inne mają mocniejsze szare przyciemnienia. Widoczne są miękkie, nieregularne przejścia pomiędzy odcieniami, bez ciepłych czerwonych czy brązowych akcentów. Całość ma chłodną, neutralną paletę typową dla naturalnego betonu.",
-      materialsInfo: "Wysokogatunkowy beton architektoniczny o wysokiej gęstości, stylizowany na historyczną cegłę. Materiał odwzorowuje wygląd starego lica poprzez nieregularną fakturę, drobne kawerny i niedoskonałości powierzchni. Kolor określany przez producenta jako naturalny odcień betonu, z naturalnymi przejściami tonalnymi od jasnych do głębszych szarości. Płytki są przeznaczone do zastosowania we wnętrzach oraz na elewacjach.",
+      desc: "betonowa płytka stylizowana na starą cegłę, w chłodnej szarej kolorystyce z naturalnymi przejściami od jasnej, gołębiej szarości po głębsze betonowe tony, o surowym, minimalistycznym i industrialnym charakterze"
+      textureDetails: "Powierzchnia matowa, wyraźnie nieregularna i lekko chropowata, z drobnymi kawernami, porami, ziarnistością, płytkimi zagłębieniami oraz delikatnymi rysami. Lico jest lekko falujące i miejscami nierówne, przypominające powierzchnię starej cegły. Widoczne są subtelne ubytki, drobne odpryski i nierówności krawędzi, jednak całość zachowuje dość regularny format. Poszczególne płytki różnią się delikatnie strukturą oraz stopniem przyciemnienia, co tworzy naturalną, niejednorodną powierzchnię."
+      colorPalette: "Dominują chłodne odcienie jasnej szarości, gołębiej szarości i popielu, przechodzące miejscami w głębsze betonowe, grafitowo-szare tony. Powierzchnia jest wyraźnie zróżnicowana tonalnie — część płytek pozostaje bardzo jasna, niemal srebrzysta, podczas gdy inne mają mocniejsze szare przyciemnienia. Widoczne są miękkie, nieregularne przejścia pomiędzy odcieniami, bez ciepłych czerwonych czy brązowych akcentów. Całość ma chłodną, neutralną paletę typową dla naturalnego betonu."
+      materialsInfo: "Wysokogatunkowy beton architektoniczny o wysokiej gęstości, stylizowany na historyczną cegłę. Materiał odwzorowuje wygląd starego lica poprzez nieregularną fakturę, drobne kawerny i niedoskonałości powierzchni. Kolor określany przez producenta jako naturalny odcień betonu, z naturalnymi przejściami tonalnymi od jasnych do głębszych szarości. Płytki są przeznaczone do zastosowania we wnętrzach oraz na elewacjach."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-czarne",
       name: "Modern Line – Czarne",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4119_500_500/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-Czarne-1x1-ekspozytor.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na historyczną cegłę, w głębokiej czarnej i antracytowej kolorystyce, z surową, mocno nieregularną powierzchnią i wyraźnym industrialnym charakterem",
-      textureDetails: "Powierzchnia matowa, mocno chropowata i nieregularna, z licznymi porami, drobnymi wgłębieniami, rysami, przetarciami oraz miejscowymi nierównościami. Lico ma wyraźnie ziarnistą, surową strukturę betonu przypominającą stare cegły rozbiórkowe. Widoczne są drobne ubytki i nieregularne krawędzie, miejscami lekko wyszczerbione. Głębokie zagłębienia tworzą naturalną grę światła i cienia, dzięki czemu czarna powierzchnia nie wygląda płasko ani jednolicie.",
-      colorPalette: "Dominują bardzo ciemne odcienie czerni, głębokiego antracytu i grafitu. Powierzchnia nie jest idealnie jednolita — w zależności od oświetlenia pojawiają się subtelne przejścia od niemal czarnej bazy do ciemnych grafitowo-szarych refleksów na wypukłościach i krawędziach. Brak ciepłych czerwieni, brązów czy wyraźnych kolorowych przebarwień. Całość ma chłodną, głęboką i elegancką paletę czerni.",
-      materialsInfo: "Beton barwiony w masie, stylizowany na historyczną cegłę. Nieregularna, chropowata struktura betonu odwzorowuje pory, wgłębienia i niedoskonałości charakterystyczne dla starego lica ceglanego. Barwienie w masie zapewnia zachowanie czarnego koloru również w przekroju materiału. Płytki są przeznaczone do stosowania we wnętrzach oraz na elewacjach.",
+      ddesc: "betonowa płytka stylizowana na historyczną cegłę, w głębokiej czarnej i antracytowej kolorystyce, z surową, mocno nieregularną powierzchnią i wyraźnym industrialnym charakterem"
+      textureDetails: "Powierzchnia matowa, mocno chropowata i nieregularna, z licznymi porami, drobnymi wgłębieniami, rysami, przetarciami oraz miejscowymi nierównościami. Lico ma wyraźnie ziarnistą, surową strukturę betonu przypominającą stare cegły rozbiórkowe. Widoczne są drobne ubytki i nieregularne krawędzie, miejscami lekko wyszczerbione. Głębokie zagłębienia tworzą naturalną grę światła i cienia, dzięki czemu czarna powierzchnia nie wygląda płasko ani jednolicie."
+      colorPalette: "Dominują bardzo ciemne odcienie czerni, głębokiego antracytu i grafitu. Powierzchnia nie jest idealnie jednolita — w zależności od oświetlenia pojawiają się subtelne przejścia od niemal czarnej bazy do ciemnych grafitowo-szarych refleksów na wypukłościach i krawędziach. Brak ciepłych czerwieni, brązów czy wyraźnych kolorowych przebarwień. Całość ma chłodną, głęboką i elegancką paletę czerni."
+      materialsInfo: "Beton barwiony w masie, stylizowany na historyczną cegłę. Nieregularna, chropowata struktura betonu odwzorowuje pory, wgłębienia i niedoskonałości charakterystyczne dla starego lica ceglanego. Barwienie w masie zapewnia zachowanie czarnego koloru również w przekroju materiału. Płytki są przeznaczone do stosowania we wnętrzach oraz na elewacjach."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-grafitowe",
       name: "Modern Line – Grafitowe",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4111_500_500/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-Grafitowe-1x1-ekspozytor.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na starą cegłę, w chłodnej grafitowo-szarej kolorystyce z delikatnymi różnicami tonalnymi, surowym matowym licem i wyraźnie industrialnym charakterem",
-      textureDetails: "Powierzchnia matowa, lekko chropowata i nieregularna, z widoczną ziarnistą strukturą, drobnymi porami, płytkimi zagłębieniami, rysami i delikatnymi przetarciami. Lico miejscami lekko faluje i posiada nieregularne wgłębienia przypominające strukturę starej cegły. Krawędzie są delikatnie nieregularne, miejscami lekko zaokrąglone lub wyszczerbione. Faktura jest wyraźna, ale stosunkowo spokojna — bez głębokich uszkodzeń i mocnych przepaleń, dzięki czemu płytka zachowuje nowoczesny, uporządkowany charakter.",
-      colorPalette: "Dominują chłodne odcienie grafitu, ciemnej szarości i popielu. Poszczególne płytki oraz fragmenty ich powierzchni różnią się intensywnością — od głębokiego grafitu po jaśniejsze, stalowo-szare partie. Widoczne są subtelne tonalne rozjaśnienia na wypukłościach i delikatne przyciemnienia w zagłębieniach. Kolor jest stonowany i neutralny, bez ciepłych czerwonych czy brązowych akcentów.",
-      materialsInfo: "Wysokogatunkowy beton architektoniczny z serii Modern Line, stylizowany na historyczną cegłę. Grafitowy kolor betonu oraz wyrazista faktura lica zostały zaprojektowane tak, aby połączyć wygląd starej cegły z nowoczesną, industrialną kolorystyką. Płytki są odporne na wilgoć i zabrudzenia oraz przeznaczone do zastosowania na ścianach, również w wymagających warunkach.",
+      desc: "betonowa płytka stylizowana na starą cegłę, w chłodnej grafitowo-szarej kolorystyce z delikatnymi różnicami tonalnymi, surowym matowym licem i wyraźnie industrialnym charakterem"
+      textureDetails: "Powierzchnia matowa, lekko chropowata i nieregularna, z widoczną ziarnistą strukturą, drobnymi porami, płytkimi zagłębieniami, rysami i delikatnymi przetarciami. Lico miejscami lekko faluje i posiada nieregularne wgłębienia przypominające strukturę starej cegły. Krawędzie są delikatnie nieregularne, miejscami lekko zaokrąglone lub wyszczerbione. Faktura jest wyraźna, ale stosunkowo spokojna — bez głębokich uszkodzeń i mocnych przepaleń, dzięki czemu płytka zachowuje nowoczesny, uporządkowany charakter."
+      colorPalette: "Dominują chłodne odcienie grafitu, ciemnej szarości i popielu. Poszczególne płytki oraz fragmenty ich powierzchni różnią się intensywnością — od głębokiego grafitu po jaśniejsze, stalowo-szare partie. Widoczne są subtelne tonalne rozjaśnienia na wypukłościach i delikatne przyciemnienia w zagłębieniach. Kolor jest stonowany i neutralny, bez ciepłych czerwonych czy brązowych akcentów."
+      materialsInfo: "Wysokogatunkowy beton architektoniczny z serii Modern Line, stylizowany na historyczną cegłę. Grafitowy kolor betonu oraz wyrazista faktura lica zostały zaprojektowane tak, aby połączyć wygląd starej cegły z nowoczesną, industrialną kolorystyką. Płytki są odporne na wilgoć i zabrudzenia oraz przeznaczone do zastosowania na ścianach, również w wymagających warunkach."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-brazowe",
       name: "Modern Line – Brązowe",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4118_500_500/Plytki-ceglane-stylizowane-na-stara-cegle-plytki-scienne-betonowe-dekoracyjne-cegly-na-elewacje-aranzacja-wnetrz-dekoracja-scian-plytki-z-cegly-ceglane-na-sciane-stylizowane-brazowe-1x1-ekspozytor.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na starą cegłę z XIX wieku, w głębokiej, czekoladowej brązowej tonacji z subtelnymi przejściami kolorystycznymi, o eleganckim, ciepłym i lekko industrialnym charakterze",
-      textureDetails: "Powierzchnia matowa, surowa i lekko chropowata, z delikatną ziarnistością, drobnymi porami, płytkimi zagłębieniami i subtelnymi nierównościami. Lico ma naturalnie zróżnicowaną strukturę inspirowaną starą cegłą rozbiórkową, bez idealnie gładkiej powierzchni. Widoczne są delikatne przetarcia i tonalne różnice w obrębie pojedynczych płytek. Krawędzie są lekko nieregularne, z subtelnymi niedoskonałościami podkreślającymi stylizowany, historyczny charakter.",
-      colorPalette: "Dominują głębokie odcienie czekoladowego brązu, ciemnego brązu i ciepłego brązowo-kawowego koloru. Powierzchnia nie jest całkowicie jednolita — widoczne są subtelne przejścia tonalne od jaśniejszych, ciepłych brązów po głębsze, bardziej nasycone partie. Brak intensywnych czerwieni, pomarańczy czy grafitowych kontrastów. Całość ma ciemną, elegancką i harmonijną paletę inspirowaną naturalnym kolorem starego brązowego muru.",
-      materialsInfo: "Trwały beton stylizowany na cegłę rozbiórkową z XIX wieku, należący do serii Modern Line. Materiał odwzorowuje wygląd starej cegły poprzez zróżnicowaną strukturę powierzchni i subtelne przejścia barwne. Płytki są odporne na wilgoć i zanieczyszczenia oraz przeznaczone do stosowania zarówno we wnętrzach, jak i na elewacjach.",
+      desc: "betonowa płytka stylizowana na starą cegłę z XIX wieku, w głębokiej, czekoladowej brązowej tonacji z subtelnymi przejściami kolorystycznymi, o eleganckim, ciepłym i lekko industrialnym charakterze"
+      textureDetails: "Powierzchnia matowa, surowa i lekko chropowata, z delikatną ziarnistością, drobnymi porami, płytkimi zagłębieniami i subtelnymi nierównościami. Lico ma naturalnie zróżnicowaną strukturę inspirowaną starą cegłą rozbiórkową, bez idealnie gładkiej powierzchni. Widoczne są delikatne przetarcia i tonalne różnice w obrębie pojedynczych płytek. Krawędzie są lekko nieregularne, z subtelnymi niedoskonałościami podkreślającymi stylizowany, historyczny charakter."
+      colorPalette: "Dominują głębokie odcienie czekoladowego brązu, ciemnego brązu i ciepłego brązowo-kawowego koloru. Powierzchnia nie jest całkowicie jednolita — widoczne są subtelne przejścia tonalne od jaśniejszych, ciepłych brązów po głębsze, bardziej nasycone partie. Brak intensywnych czerwieni, pomarańczy czy grafitowych kontrastów. Całość ma ciemną, elegancką i harmonijną paletę inspirowaną naturalnym kolorem starego brązowego muru."
+      materialsInfo: "Trwały beton stylizowany na cegłę rozbiórkową z XIX wieku, należący do serii Modern Line. Materiał odwzorowuje wygląd starej cegły poprzez zróżnicowaną strukturę powierzchni i subtelne przejścia barwne. Płytki są odporne na wilgoć i zanieczyszczenia oraz przeznaczone do stosowania zarówno we wnętrzach, jak i na elewacjach."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
-    },
+    },,
     {
       id: "modern-mostowa",
       name: "Płytka Ceglana – Mostowa",
       sub: "modern line",
       img: "https://starecegly.com/environment/cache/images/productGfx_4104_500_500/Ceglane-plytki-Stara-cegla-Cegla-na-sciane---Plytki-z-cegly---Mostowa1x1_MIN-ekspozytor.webp?overlay=1",
-      desc: "betonowa płytka stylizowana na autentyczną XIX-wieczną cegłę, o bogatej ceglasto-rudej kolorystyce z głębokimi brązowymi tonami, licznymi jasnymi niemal białymi wykwitami i szarymi przecierkami, surowy i mocno postarzały charakter",
-      textureDetails: "Powierzchnia matowa, mocno chropowata i wyraźnie nieregularna, z głęboką ziarnistą strukturą, porami, zagłębieniami, rysami oraz miejscowymi ubytkami. Lico jest lekko falujące i przypomina powierzchnię starej, ręcznie formowanej cegły. Widoczne są nieregularne przetarcia, drobne kawerny i miejscowe wykruszenia, a krawędzie są lekko nieregularne, miejscami wyszczerbione i zaokrąglone. Najbardziej charakterystyczne są jasne, niemal białe wykwity oraz szare naloty rozłożone nieregularnie na powierzchni, tworzące wyraźną, wielowarstwową strukturę i mocny efekt 3D.",
-      colorPalette: "Dominują głębokie odcienie klasycznej ceglanej czerwieni, rudości i wypalonego brązu. Poszczególne fragmenty przechodzą od cieplejszych ceglasto-pomarańczowych tonów do ciemniejszych czerwono-brązowych i brunatnych partii. Bardzo charakterystyczne są liczne jasne, niemal białe wykwity oraz szare, popielate przecierki, które tworzą wyraźny kontrast z ciemniejszą bazą. Kolorystyka jest mocno wielotonowa i nieregularna, przypominająca wiekowy, wielokrotnie restaurowany mur.",
-      materialsInfo: "Wytrzymały beton architektoniczny z kolekcji Modern Line, stylizowany na XIX-wieczną cegłę. Materiał odwzorowuje naturalne niedoskonałości starego muru poprzez głęboką fakturę, nieregularne lico, przetarcia, wykwity i zróżnicowanie kolorystyczne. Płytki są przeznaczone zarówno do wnętrz, jak i na elewacje.",
+      desc: "betonowa płytka stylizowana na autentyczną XIX-wieczną cegłę, o bogatej ceglasto-rudej kolorystyce z głębokimi brązowymi tonami, licznymi jasnymi niemal białymi wykwitami i szarymi przecierkami, surowy i mocno postarzały charakter"
+      textureDetails: "Powierzchnia matowa, mocno chropowata i wyraźnie nieregularna, z głęboką ziarnistą strukturą, porami, zagłębieniami, rysami oraz miejscowymi ubytkami. Lico jest lekko falujące i przypomina powierzchnię starej, ręcznie formowanej cegły. Widoczne są nieregularne przetarcia, drobne kawerny i miejscowe wykruszenia, a krawędzie są lekko nieregularne, miejscami wyszczerbione i zaokrąglone. Najbardziej charakterystyczne są jasne, niemal białe wykwity oraz szare naloty rozłożone nieregularnie na powierzchni, tworzące wyraźną, wielowarstwową strukturę i mocny efekt 3D."
+      colorPalette: "Dominują głębokie odcienie klasycznej ceglanej czerwieni, rudości i wypalonego brązu. Poszczególne fragmenty przechodzą od cieplejszych ceglasto-pomarańczowych tonów do ciemniejszych czerwono-brązowych i brunatnych partii. Bardzo charakterystyczne są liczne jasne, niemal białe wykwity oraz szare, popielate przecierki, które tworzą wyraźny kontrast z ciemniejszą bazą. Kolorystyka jest mocno wielotonowa i nieregularna, przypominająca wiekowy, wielokrotnie restaurowany mur."
+      materialsInfo: "Wytrzymały beton architektoniczny z kolekcji Modern Line, stylizowany na XIX-wieczną cegłę. Materiał odwzorowuje naturalne niedoskonałości starego muru poprzez głęboką fakturę, nieregularne lico, przetarcia, wykwity i zróżnicowanie kolorystyczne. Płytki są przeznaczone zarówno do wnętrz, jak i na elewacje."
       dims: "ok. 26 cm długości x ok. 6,5 cm wysokości x ok. 1,5 cm grubości (proporcje ok. 4:1)"
     },
+
+    // ---- Seria LONG (betonowe, wydłużony format, elewacje) ----,
 
     // ---- Seria LONG (betonowe, wydłużony format, elewacje) ----
     {
@@ -1218,209 +1220,210 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
       name: "Long Klasyczne 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_5053_500_500/Plytki-ceglane-na-elewacje-dekoracja-long-klasyczne-na-sciane.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, inspirowana klasyczną cegłą rozbiórkową, w ciepłej, tradycyjnej czerwieni ceglanej z naturalnymi tonalnymi przejściami i autentycznym, postarzałym charakterem",
-      textureDetails: "Powierzchnia matowa, wyraźnie nieregularna i reliefowa, inspirowana licem historycznej cegły rozbiórkowej. Widoczne są przetarcia, drobne zarysowania, pęknięcia, pory, zagłębienia i miejscowe nierówności, które nadają powierzchni autentyczny, ręcznie wykonany charakter. Lico nie jest idealnie gładkie ani jednolite, a zróżnicowany relief tworzy subtelną grę światła i cienia. Krawędzie są wydłużone i stosunkowo proste, z delikatnymi nieregularnościami charakterystycznymi dla stylizowanej starej cegły.",
-      colorPalette: "Dominują ciepłe odcienie klasycznej czerwieni ceglanej, od średniej czerwieni i ceglastych tonów po głębsze, lekko brunatne fragmenty. Widoczne są naturalne przejścia tonalne oraz subtelne przyciemnienia w zagłębieniach faktury. Kolorystyka jest ciepła, tradycyjna i autentyczna, nawiązująca do klasycznej wypalanej cegły, bez dominacji chłodnych szarości.",
-      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Klasyczne łączy tradycyjną czerwień ceglaną i fakturę inspirowaną cegłą rozbiórkową z nowoczesnym, wydłużonym formatem 44 cm. Barwienie w masie zapewnia trwałość kolorystyki, a materiał jest odporny na mróz, deszcz i promieniowanie UV.",
-      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)",
+      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, inspirowana klasyczną cegłą rozbiórkową, w ciepłej, tradycyjnej czerwieni ceglanej z naturalnymi tonalnymi przejściami i autentycznym, postarzałym charakterem"
+      textureDetails: "Powierzchnia matowa, wyraźnie nieregularna i reliefowa, inspirowana licem historycznej cegły rozbiórkowej. Widoczne są przetarcia, drobne zarysowania, pęknięcia, pory, zagłębienia i miejscowe nierówności, które nadają powierzchni autentyczny, ręcznie wykonany charakter. Lico nie jest idealnie gładkie ani jednolite, a zróżnicowany relief tworzy subtelną grę światła i cienia. Krawędzie są wydłużone i stosunkowo proste, z delikatnymi nieregularnościami charakterystycznymi dla stylizowanej starej cegły."
+      colorPalette: "Dominują ciepłe odcienie klasycznej czerwieni ceglanej, od średniej czerwieni i ceglastych tonów po głębsze, lekko brunatne fragmenty. Widoczne są naturalne przejścia tonalne oraz subtelne przyciemnienia w zagłębieniach faktury. Kolorystyka jest ciepła, tradycyjna i autentyczna, nawiązująca do klasycznej wypalanej cegły, bez dominacji chłodnych szarości."
+      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Klasyczne łączy tradycyjną czerwień ceglaną i fakturę inspirowaną cegłą rozbiórkową z nowoczesnym, wydłużonym formatem 44 cm. Barwienie w masie zapewnia trwałość kolorystyki, a materiał jest odporny na mróz, deszcz i promieniowanie UV."
+      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)"
       aspectRatio: 8.8,
       shapeHint: "Każda płytka jest bardzo niska i wyjątkowo długa: format 44 × 5 cm daje smukłą proporcję ok. 8,8:1. W porównaniu ze standardową płytką 26 × 6,5 cm jest ok. 1,7 raza dłuższa i wyraźnie niższa, dlatego tworzy długie, wąskie, poziome pasy na ścianie. Wydłużony format wzmacnia horyzontalny rytm powierzchni, łącząc klasyczny wygląd cegły z nowoczesną formą."
-    },
+    },,
     {
       id: "long-biale",
       name: "Long Białe 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_4900_500_500/plytki-ceglane-rustic-long-biale-dlugie-cegly-na-sciane-i-elewacje.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, utrzymana w czystej, jasnej bieli, łącząca surowość betonu z minimalistycznym wyglądem nowoczesnej cegły i subtelną, naturalną strukturą powierzchni",
-      textureDetails: "Powierzchnia matowa, delikatnie nieregularna i wyraźnie mineralna, z drobnymi porami, ziarnistością, subtelnymi zagłębieniami oraz niewielkimi nierównościami lica. Struktura nie jest idealnie gładka, dzięki czemu biała powierzchnia zachowuje naturalny, betonowy charakter i delikatnie reaguje na światło. Widoczne są subtelne tonalne różnice wynikające z reliefu — wypukłości pozostają jaśniejsze, natomiast zagłębienia mogą być lekko przygaszone. Krawędzie są długie i stosunkowo regularne, z delikatnymi nieregularnościami typowymi dla stylizowanej płytki ceglanej.",
-      colorPalette: "Dominują bardzo jasne odcienie czystej bieli, złamanej bieli i delikatnej bieli mineralnej. W zagłębieniach faktury pojawiają się subtelne chłodniejsze szarobiałe tony, które podkreślają relief powierzchni. Kolorystyka jest minimalistyczna, neutralna i bardzo jasna, bez wyraźnych ciepłych czerwieni, brązów czy intensywnych przebarwień.",
-      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Białe łączy wyjątkowo wydłużony format 44 cm z czystą białą kolorystyką i surową, mineralną strukturą betonu. Barwienie w masie zapewnia jednolitość koloru na całym przekroju płytki. Materiał jest odporny na trudne warunki atmosferyczne, wilgoć, mróz i promieniowanie UV.",
-      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)",
+      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, utrzymana w czystej, jasnej bieli, łącząca surowość betonu z minimalistycznym wyglądem nowoczesnej cegły i subtelną, naturalną strukturą powierzchni"
+      textureDetails: "Powierzchnia matowa, delikatnie nieregularna i wyraźnie mineralna, z drobnymi porami, ziarnistością, subtelnymi zagłębieniami oraz niewielkimi nierównościami lica. Struktura nie jest idealnie gładka, dzięki czemu biała powierzchnia zachowuje naturalny, betonowy charakter i delikatnie reaguje na światło. Widoczne są subtelne tonalne różnice wynikające z reliefu — wypukłości pozostają jaśniejsze, natomiast zagłębienia mogą być lekko przygaszone. Krawędzie są długie i stosunkowo regularne, z delikatnymi nieregularnościami typowymi dla stylizowanej płytki ceglanej."
+      colorPalette: "Dominują bardzo jasne odcienie czystej bieli, złamanej bieli i delikatnej bieli mineralnej. W zagłębieniach faktury pojawiają się subtelne chłodniejsze szarobiałe tony, które podkreślają relief powierzchni. Kolorystyka jest minimalistyczna, neutralna i bardzo jasna, bez wyraźnych ciepłych czerwieni, brązów czy intensywnych przebarwień."
+      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Białe łączy wyjątkowo wydłużony format 44 cm z czystą białą kolorystyką i surową, mineralną strukturą betonu. Barwienie w masie zapewnia jednolitość koloru na całym przekroju płytki. Materiał jest odporny na trudne warunki atmosferyczne, wilgoć, mróz i promieniowanie UV."
+      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)"
       aspectRatio: 8.8,
       shapeHint: "Każda płytka jest bardzo niska i wyjątkowo długa: format 44 × 5 cm daje smukłą proporcję ok. 8,8:1. W porównaniu ze standardową płytką 26 × 6,5 cm jest ok. 1,7 raza dłuższa i wyraźnie niższa, dlatego tworzy długie, wąskie, poziome pasy na ścianie. Wydłużony format mocno podkreśla horyzontalny rytm i minimalistyczny charakter powierzchni."
-    },
+    },,
     {
       id: "long-szare",
       name: "Long Szare 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_4901_500_500/plytki-ceglane-rustic-long-szare-dlugie-cegly-na-sciane-i-elewacje.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, utrzymana w stonowanej szarej kolorystyce inspirowanej naturalnym betonem architektonicznym, łącząca surową strukturę cegły z minimalistycznym, nowoczesnym charakterem",
-      textureDetails: "Powierzchnia matowa, wyraźnie strukturalna i lekko nieregularna, z drobnymi porami, ziarnistością, zagłębieniami oraz subtelnymi nierównościami lica. Widoczna jest faktura inspirowana starą cegłą, ale utrzymana w bardziej minimalistycznym i uporządkowanym charakterze. Relief powierzchni tworzy delikatną grę światła i cienia, szczególnie w zagłębieniach i na wypukłościach. Krawędzie są długie i stosunkowo regularne, z niewielkimi nieregularnościami nadającymi płytkom naturalny wygląd.",
-      colorPalette: "Dominują neutralne odcienie szarości, od jasnego szarego i popielatego po średni betonowy szary. W zagłębieniach mogą pojawiać się nieco ciemniejsze grafitowo-szare tony, natomiast wypukłości pozostają jaśniejsze. Kolorystyka jest chłodna, stonowana i jednolita tonalnie, bez wyraźnych ciepłych czerwieni, brązów czy pomarańczy, dzięki czemu płytki dobrze wpisują się w nowoczesne i minimalistyczne aranżacje.",
-      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Szare łączy wydłużony format 44 cm z neutralną kolorystyką inspirowaną naturalnym betonem oraz fakturą nawiązującą do starej cegły. Barwienie w masie zwiększa trwałość kolorystyki, a materiał jest mrozoodporny i odporny na promieniowanie UV.",
-      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)",
+      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, utrzymana w stonowanej szarej kolorystyce inspirowanej naturalnym betonem architektonicznym, łącząca surową strukturę cegły z minimalistycznym, nowoczesnym charakterem"
+      textureDetails: "Powierzchnia matowa, wyraźnie strukturalna i lekko nieregularna, z drobnymi porami, ziarnistością, zagłębieniami oraz subtelnymi nierównościami lica. Widoczna jest faktura inspirowana starą cegłą, ale utrzymana w bardziej minimalistycznym i uporządkowanym charakterze. Relief powierzchni tworzy delikatną grę światła i cienia, szczególnie w zagłębieniach i na wypukłościach. Krawędzie są długie i stosunkowo regularne, z niewielkimi nieregularnościami nadającymi płytkom naturalny wygląd."
+      colorPalette: "Dominują neutralne odcienie szarości, od jasnego szarego i popielatego po średni betonowy szary. W zagłębieniach mogą pojawiać się nieco ciemniejsze grafitowo-szare tony, natomiast wypukłości pozostają jaśniejsze. Kolorystyka jest chłodna, stonowana i jednolita tonalnie, bez wyraźnych ciepłych czerwieni, brązów czy pomarańczy, dzięki czemu płytki dobrze wpisują się w nowoczesne i minimalistyczne aranżacje."
+      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Szare łączy wydłużony format 44 cm z neutralną kolorystyką inspirowaną naturalnym betonem oraz fakturą nawiązującą do starej cegły. Barwienie w masie zwiększa trwałość kolorystyki, a materiał jest mrozoodporny i odporny na promieniowanie UV."
+      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)"
       aspectRatio: 8.8,
       shapeHint: "Każda płytka jest bardzo niska i wyjątkowo długa: format 44 × 5 cm daje smukłą proporcję ok. 8,8:1. W porównaniu ze standardową płytką 26 × 6,5 cm jest ok. 1,7 raza dłuższa i wyraźnie niższa, dlatego tworzy długie, wąskie, poziome pasy na ścianie. Wydłużony format mocno podkreśla horyzontalny rytm, nadając powierzchni nowoczesny i minimalistyczny charakter."
-    },
+    },,
     {
       id: "long-slim-graphite",
       name: "Slim Long Graphite 52 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_5198_500_500/plytki-ceglane-long-slim-graphite-elewacja-nowoczesna.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie SLIM LONG, utrzymana w głębokiej grafitowo-antracytowej kolorystyce, o surowym, industrialnym charakterze i minimalistycznej, nowoczesnej formie",
-      textureDetails: "Powierzchnia matowa, płaska i uporządkowana, z subtelną, surową strukturą betonu. Widoczne są delikatne różnice w ziarnistości, drobne nierówności oraz tonalne przejścia podkreślające naturalny charakter materiału. Lico nie jest idealnie jednolite — w zależności od kąta padania światła pojawia się delikatna gra światła i cienia. Krawędzie są długie, proste i wyraźne, co mocno podkreśla geometryczny, wielkoformatowy charakter płytki.",
-      colorPalette: "Dominują głębokie odcienie grafitu, antracytu i ciemnej szarości. Powierzchnia nie jest jednolicie czarna — widoczne są subtelne przejścia pomiędzy głębokim grafitem a nieco jaśniejszymi, chłodnymi szarościami. Tonacja jest chłodna, ciemna i elegancka, bez ciepłych brązów, czerwieni czy pomarańczy. Zróżnicowanie tonalne wzmacnia efekt surowego betonu i nadaje powierzchni głębię.",
-      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony przede wszystkim do zastosowania na elewacjach, ale odpowiedni również do nowoczesnych wnętrz. Model Slim Long Graphite łączy ekstremalnie wydłużony format 52 cm z głęboką grafitową kolorystyką i surową strukturą betonu. Materiał jest mrozoodporny, odporny na promieniowanie UV i trudne warunki pogodowe.",
-      dims: "ok. 52 cm długości x ok. 4 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 13:1)",
+      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie SLIM LONG, utrzymana w głębokiej grafitowo-antracytowej kolorystyce, o surowym, industrialnym charakterze i minimalistycznej, nowoczesnej formie"
+      textureDetails: "Powierzchnia matowa, płaska i uporządkowana, z subtelną, surową strukturą betonu. Widoczne są delikatne różnice w ziarnistości, drobne nierówności oraz tonalne przejścia podkreślające naturalny charakter materiału. Lico nie jest idealnie jednolite — w zależności od kąta padania światła pojawia się delikatna gra światła i cienia. Krawędzie są długie, proste i wyraźne, co mocno podkreśla geometryczny, wielkoformatowy charakter płytki."
+      colorPalette: "Dominują głębokie odcienie grafitu, antracytu i ciemnej szarości. Powierzchnia nie jest jednolicie czarna — widoczne są subtelne przejścia pomiędzy głębokim grafitem a nieco jaśniejszymi, chłodnymi szarościami. Tonacja jest chłodna, ciemna i elegancka, bez ciepłych brązów, czerwieni czy pomarańczy. Zróżnicowanie tonalne wzmacnia efekt surowego betonu i nadaje powierzchni głębię."
+      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony przede wszystkim do zastosowania na elewacjach, ale odpowiedni również do nowoczesnych wnętrz. Model Slim Long Graphite łączy ekstremalnie wydłużony format 52 cm z głęboką grafitową kolorystyką i surową strukturą betonu. Materiał jest mrozoodporny, odporny na promieniowanie UV i trudne warunki pogodowe."
+      dims: "ok. 52 cm długości x ok. 4 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 13:1)"
       aspectRatio: 13,
       shapeHint: "Każda płytka jest ekstremalnie długa i bardzo niska: format 52 × 4 cm daje wyjątkowo smukłą proporcję ok. 13:1. W porównaniu ze standardową płytką 26 × 6,5 cm jest dokładnie 2 razy dłuższa i ok. 1,6 raza niższa, dlatego tworzy bardzo długie, cienkie, poziome pasy. Proste krawędzie i minimalistyczna forma mocno wzmacniają horyzontalny rytm elewacji."
-    },
+    },,
     {
       id: "long-slim-white",
       name: "Slim Long White 52 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_5188_500_500/plytki-ceglane-long-slim-white-elewacja-nowoczesna1_MIN.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie SLIM LONG, utrzymana w śnieżnobiałej, czystej kolorystyce, o minimalistycznej formie i eleganckiej, płaskiej powierzchni inspirowanej nowoczesnym betonem architektonicznym",
-      textureDetails: "Powierzchnia bardzo płaska, matowa i satynowa, bez głębokich żłobień, kawern i surowych nierówności charakterystycznych dla klasycznych płytek o strukturze starej cegły. Lico jest gładkie i uporządkowane, z bardzo subtelną mineralną ziarnistością oraz delikatnymi różnicami tonalnymi wynikającymi z odbicia światła. Krawędzie są długie, proste i precyzyjne, co wzmacnia minimalistyczny, nowoczesny charakter płytki.",
-      colorPalette: "Dominują czyste, śnieżnobiałe odcienie bieli, z bardzo subtelnymi przejściami w kierunku złamanej bieli i jasnych tonów mineralnych. Powierzchnia pozostaje wizualnie jasna i jednolita, a delikatne różnice tonalne pojawiają się głównie w zależności od oświetlenia i kąta padania światła. Brak wyraźnych szarości, beżów, czerwieni czy innych kolorowych przebarwień.",
-      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania na elewacjach oraz we wnętrzach. Model Slim Long White wyróżnia się płaską, satynową fakturą, śnieżnobiałą kolorystyką i wyjątkowo wydłużonym formatem 52 cm. Barwienie w masie zapewnia trwałość koloru, a materiał jest mrozoodporny i odporny na zmienne warunki pogodowe oraz promieniowanie UV.",
-      dims: "ok. 52 cm długości x ok. 4 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 13:1)",
+      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie SLIM LONG, utrzymana w śnieżnobiałej, czystej kolorystyce, o minimalistycznej formie i eleganckiej, płaskiej powierzchni inspirowanej nowoczesnym betonem architektonicznym"
+      textureDetails: "Powierzchnia bardzo płaska, matowa i satynowa, bez głębokich żłobień, kawern i surowych nierówności charakterystycznych dla klasycznych płytek o strukturze starej cegły. Lico jest gładkie i uporządkowane, z bardzo subtelną mineralną ziarnistością oraz delikatnymi różnicami tonalnymi wynikającymi z odbicia światła. Krawędzie są długie, proste i precyzyjne, co wzmacnia minimalistyczny, nowoczesny charakter płytki."
+      colorPalette: "Dominują czyste, śnieżnobiałe odcienie bieli, z bardzo subtelnymi przejściami w kierunku złamanej bieli i jasnych tonów mineralnych. Powierzchnia pozostaje wizualnie jasna i jednolita, a delikatne różnice tonalne pojawiają się głównie w zależności od oświetlenia i kąta padania światła. Brak wyraźnych szarości, beżów, czerwieni czy innych kolorowych przebarwień."
+      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania na elewacjach oraz we wnętrzach. Model Slim Long White wyróżnia się płaską, satynową fakturą, śnieżnobiałą kolorystyką i wyjątkowo wydłużonym formatem 52 cm. Barwienie w masie zapewnia trwałość koloru, a materiał jest mrozoodporny i odporny na zmienne warunki pogodowe oraz promieniowanie UV."
+      dims: "ok. 52 cm długości x ok. 4 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 13:1)"
       aspectRatio: 13,
       shapeHint: "Każda płytka jest ekstremalnie długa i bardzo niska: format 52 × 4 cm daje wyjątkowo smukłą proporcję ok. 13:1. W porównaniu ze standardową płytką 26 × 6,5 cm jest dokładnie 2 razy dłuższa i ok. 1,6 raza niższa, dlatego tworzy bardzo długie, cienkie, poziome pasy. Proste krawędzie i płaska, satynowa powierzchnia dodatkowo wzmacniają minimalistyczny, horyzontalny charakter elewacji."
-    },
+    },,
     {
       id: "long-sandstone-beige",
       name: "Long Sandstone Beige 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_6780_500_500/Plytki-ceglane-Long---Sandstone-Beige-glowne.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, inspirowana naturalnym piaskowcem, w ciepłej, głębokiej beżowej kolorystyce z delikatnymi słonecznymi przebarwieniami i eleganckim, kamiennym charakterem",
-      textureDetails: "Powierzchnia matowa, wyraźnie nieregularna i ręcznie postarzona, z fakturą inspirowaną naturalnym warstwowaniem piaskowca. Widoczne są charakterystyczne przetarcia, drobne zagłębienia, ziarnistość, nierówności oraz nieregularne przejścia pomiędzy poszczególnymi fragmentami lica. Struktura nie jest powtarzalna — poszczególne płytki różnią się delikatnie fakturą i nasyceniem, dzięki czemu całość po ułożeniu uzyskuje naturalny, kamienny efekt. Krawędzie są długie i smukłe, z subtelnymi nieregularnościami podkreślającymi ręcznie postarzaną powierzchnię.",
-      colorPalette: "Dominują ciepłe, głębokie odcienie beżu, piaskowego beżu i jasnego karmelu, uzupełnione złocistymi, słonecznymi tonami. Widoczne są subtelne tonalne przebarwienia — od jaśniejszych, piaskowych fragmentów po nieco głębsze, cieplejsze partie. Kolorystyka jest ciepła, naturalna i szlachetna, przypominająca naturalny piaskowiec nagrzany słońcem. Poszczególne płytki mogą delikatnie różnić się nasyceniem, tworząc niejednorodną, realistyczną powierzchnię.",
-      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, inspirowany wyglądem naturalnego piaskowca. Model Long Sandstone Beige łączy autentyczną, warstwową fakturę kamienia z wyjątkowo wydłużonym formatem 44 cm. Barwienie w masie zapewnia trwałość kolorystyki, a materiał jest mrozoodporny i odporny na promieniowanie UV, dzięki czemu nadaje się zarówno do wnętrz, jak i na elewacje.",
-      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)",
+      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, inspirowana naturalnym piaskowcem, w ciepłej, głębokiej beżowej kolorystyce z delikatnymi słonecznymi przebarwieniami i eleganckim, kamiennym charakterem"
+      textureDetails: "Powierzchnia matowa, wyraźnie nieregularna i ręcznie postarzona, z fakturą inspirowaną naturalnym warstwowaniem piaskowca. Widoczne są charakterystyczne przetarcia, drobne zagłębienia, ziarnistość, nierówności oraz nieregularne przejścia pomiędzy poszczególnymi fragmentami lica. Struktura nie jest powtarzalna — poszczególne płytki różnią się delikatnie fakturą i nasyceniem, dzięki czemu całość po ułożeniu uzyskuje naturalny, kamienny efekt. Krawędzie są długie i smukłe, z subtelnymi nieregularnościami podkreślającymi ręcznie postarzaną powierzchnię."
+      colorPalette: "Dominują ciepłe, głębokie odcienie beżu, piaskowego beżu i jasnego karmelu, uzupełnione złocistymi, słonecznymi tonami. Widoczne są subtelne tonalne przebarwienia — od jaśniejszych, piaskowych fragmentów po nieco głębsze, cieplejsze partie. Kolorystyka jest ciepła, naturalna i szlachetna, przypominająca naturalny piaskowiec nagrzany słońcem. Poszczególne płytki mogą delikatnie różnić się nasyceniem, tworząc niejednorodną, realistyczną powierzchnię."
+      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, inspirowany wyglądem naturalnego piaskowca. Model Long Sandstone Beige łączy autentyczną, warstwową fakturę kamienia z wyjątkowo wydłużonym formatem 44 cm. Barwienie w masie zapewnia trwałość kolorystyki, a materiał jest mrozoodporny i odporny na promieniowanie UV, dzięki czemu nadaje się zarówno do wnętrz, jak i na elewacje."
+      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)"
       aspectRatio: 8.8,
       shapeHint: "Każda płytka jest bardzo niska i wyjątkowo długa: format 44 × 5 cm daje smukłą proporcję ok. 8,8:1. W porównaniu ze standardową płytką 26 × 6,5 cm jest ok. 1,7 raza dłuższa i wyraźnie niższa, dlatego tworzy długie, wąskie, poziome pasy na ścianie. Wydłużony format mocno podkreśla horyzontalny rytm, nadając powierzchni elegancki, nowoczesny charakter."
-    },
+    },,
     {
       id: "long-lawa",
       name: "Long Lawa 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_5062_500_500/Plytki-ceglane-RUSTIC-LONG-LAWA-44-cm--plytki-elewacyjne-inspirowane-lawa-wulkaniczna-na-sciane-ekspozytor.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, inspirowana zastygłą lawą wulkaniczną, w głębokiej, ciemnej antracytowej kolorystyce z subtelnymi tonalnymi różnicami i surowym, mineralnym charakterem",
-      textureDetails: "Powierzchnia matowa, mocno nieregularna i wyraźnie reliefowa, inspirowana porowatą strukturą zastygłej lawy. Widoczne są liczne drobne i średnie zagłębienia, pory, kawerny, nierówności oraz miejscowe spękania. Lico ma surową, organiczną strukturę z wyraźną grą światła i cienia, bez efektu gładkiej, jednolitej powierzchni. Krawędzie są stosunkowo proste, ale zachowują delikatne nierówności wynikające z charakteru materiału. Poszczególne płytki mają subtelnie różniące się natężenie faktury, dzięki czemu ułożona powierzchnia wygląda naturalnie i przestrzennie.",
-      colorPalette: "Dominują bardzo ciemne odcienie antracytu, grafitu i głębokiej szarości, inspirowane kolorem zastygłej skały wulkanicznej. Powierzchnia jest niejednorodna tonalnie — wypukłości mogą być nieco jaśniejsze, grafitowe, natomiast zagłębienia pozostają głębsze i niemal czarne. Występują subtelne szarografitowe przejścia, bez ciepłych czerwieni, brązów czy intensywnych kolorowych akcentów. Całość ma chłodną, ciemną i surową paletę wulkanicznego antracytu.",
-      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Lawa łączy wyjątkowo wydłużony format z fakturą inspirowaną zastygłą lawą wulkaniczną. Barwienie w masie zapewnia trwałość głębokiego koloru, a materiał jest mrozoodporny i odporny na silne promieniowanie UV. ",
-      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)",
+      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, inspirowana zastygłą lawą wulkaniczną, w głębokiej, ciemnej antracytowej kolorystyce z subtelnymi tonalnymi różnicami i surowym, mineralnym charakterem"
+      textureDetails: "Powierzchnia matowa, mocno nieregularna i wyraźnie reliefowa, inspirowana porowatą strukturą zastygłej lawy. Widoczne są liczne drobne i średnie zagłębienia, pory, kawerny, nierówności oraz miejscowe spękania. Lico ma surową, organiczną strukturę z wyraźną grą światła i cienia, bez efektu gładkiej, jednolitej powierzchni. Krawędzie są stosunkowo proste, ale zachowują delikatne nierówności wynikające z charakteru materiału. Poszczególne płytki mają subtelnie różniące się natężenie faktury, dzięki czemu ułożona powierzchnia wygląda naturalnie i przestrzennie."
+      colorPalette: "Dominują bardzo ciemne odcienie antracytu, grafitu i głębokiej szarości, inspirowane kolorem zastygłej skały wulkanicznej. Powierzchnia jest niejednorodna tonalnie — wypukłości mogą być nieco jaśniejsze, grafitowe, natomiast zagłębienia pozostają głębsze i niemal czarne. Występują subtelne szarografitowe przejścia, bez ciepłych czerwieni, brązów czy intensywnych kolorowych akcentów. Całość ma chłodną, ciemną i surową paletę wulkanicznego antracytu."
+      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Lawa łączy wyjątkowo wydłużony format z fakturą inspirowaną zastygłą lawą wulkaniczną. Barwienie w masie zapewnia trwałość głębokiego koloru, a materiał jest mrozoodporny i odporny na silne promieniowanie UV. "
+      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)"
       aspectRatio: 8.8,
       shapeHint: "Każda płytka jest bardzo niska i wyjątkowo długa: format 44 × 5 cm daje smukłą proporcję ok. 8,8:1. W porównaniu ze standardową płytką 26 × 6,5 cm jest ok. 1,7 raza dłuższa i wyraźnie niższa, dlatego tworzy długie, wąskie, poziome pasy. Charakterystyczna jest duża długość przy niewielkiej wysokości oraz mocno reliefowa, organiczna faktura inspirowana zastygłą lawą."
-    },
+    },,
     {
       id: "long-piaskowe",
       name: "Long Piaskowe 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_5051_500_500/Plytki-ceglane-na-elewacje-dekoracja-long-piaskowe.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, utrzymana w ciepłej piaskowej tonacji inspirowanej złocistym pustynnym piaskiem, z naturalnym wyglądem starego lica ceglanego i subtelnym zróżnicowaniem odcieni",
-      textureDetails: "Powierzchnia matowa, wyraźnie nieregularna i reliefowa, inspirowana strukturą historycznej cegły rozbiórkowej. Widoczne są drobne zagłębienia, pory, ziarnistość, delikatne przetarcia i nierówności lica, które tworzą naturalną grę światła i cienia. Struktura nie jest idealnie jednolita ani gładka, a poszczególne fragmenty mogą różnić się intensywnością reliefu. Krawędzie są stosunkowo regularne, ale zachowują subtelne nierówności nadające płytkom autentyczny, surowy charakter.",
-      colorPalette: "Dominują ciepłe odcienie piaskowego beżu, złocistego piasku, jasnego karmelu i delikatnej ochry, z subtelnymi przejściami w kierunku cieplejszych złocisto-pomarańczowych tonów. Poszczególne płytki mogą różnić się nasyceniem, tworząc naturalną, wielotonową powierzchnię przypominającą pustynny piasek. Kolorystyka jest jasna, ciepła i słoneczna, bez dominujących chłodnych szarości czy głębokich ciemnych akcentów.",
-      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Piaskowe łączy wyjątkowo wydłużony format z fakturą inspirowaną historycznym licem cegły rozbiórkowej oraz ciepłą, piaskową kolorystyką. Barwienie w masie zapewnia trwałość koloru, a materiał jest odporny na promieniowanie UV i przeznaczony również do zastosowań zewnętrznych.",
-      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)",
+      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, utrzymana w ciepłej piaskowej tonacji inspirowanej złocistym pustynnym piaskiem, z naturalnym wyglądem starego lica ceglanego i subtelnym zróżnicowaniem odcieni"
+      textureDetails: "Powierzchnia matowa, wyraźnie nieregularna i reliefowa, inspirowana strukturą historycznej cegły rozbiórkowej. Widoczne są drobne zagłębienia, pory, ziarnistość, delikatne przetarcia i nierówności lica, które tworzą naturalną grę światła i cienia. Struktura nie jest idealnie jednolita ani gładka, a poszczególne fragmenty mogą różnić się intensywnością reliefu. Krawędzie są stosunkowo regularne, ale zachowują subtelne nierówności nadające płytkom autentyczny, surowy charakter."
+      colorPalette: "Dominują ciepłe odcienie piaskowego beżu, złocistego piasku, jasnego karmelu i delikatnej ochry, z subtelnymi przejściami w kierunku cieplejszych złocisto-pomarańczowych tonów. Poszczególne płytki mogą różnić się nasyceniem, tworząc naturalną, wielotonową powierzchnię przypominającą pustynny piasek. Kolorystyka jest jasna, ciepła i słoneczna, bez dominujących chłodnych szarości czy głębokich ciemnych akcentów."
+      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Piaskowe łączy wyjątkowo wydłużony format z fakturą inspirowaną historycznym licem cegły rozbiórkowej oraz ciepłą, piaskową kolorystyką. Barwienie w masie zapewnia trwałość koloru, a materiał jest odporny na promieniowanie UV i przeznaczony również do zastosowań zewnętrznych."
+      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)"
       aspectRatio: 8.8,
       shapeHint: "Każda płytka jest bardzo niska i wyjątkowo długa: format 44 × 5 cm daje smukłą proporcję ok. 8,8:1. W porównaniu ze standardową płytką 26 × 6,5 cm jest ok. 1,7 raza dłuższa i wyraźnie niższa, dlatego tworzy długie, wąskie, poziome pasy na ścianie. Charakterystyczna jest duża długość przy niewielkiej wysokości, dzięki czemu powierzchnia zyskuje nowoczesny, horyzontalny rytm."
-    },
+    },,
     {
       id: "long-toskanskie",
       name: "Long Toskańskie 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_5050_500_500/Plytki-ceglane-na-elewacje-long-toskanskie.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, inspirowana ciepłą kolorystyką słonecznej Toskanii, łącząca jasne pomarańcze, brzoskwiniowe tony i piaskowe akcenty w naturalną, wielotonową kompozycję",
-      textureDetails: "Powierzchnia matowa, wyraźnie nieregularna i reliefowa, z drobnymi zagłębieniami, porami, ziarnistością, przetarciami i subtelnymi nierównościami typowymi dla stylizowanego lica ceglanego. Struktura jest niejednorodna i organiczna, dzięki czemu poszczególne fragmenty powierzchni różnią się intensywnością faktury. Widoczna jest delikatna gra światła i cienia na wypukłościach oraz w zagłębieniach. Krawędzie są stosunkowo proste, ale zachowują niewielkie nieregularności nadające płytkom naturalny charakter.",
-      colorPalette: "Dominują jasne, ciepłe odcienie pomarańczowe, brzoskwiniowe i piaskowe, uzupełnione delikatnymi tonami jasnej terakoty, złocistego beżu i ciepłej ochry. Kolorystyka ma naturalne przejścia tonalne — od jasnych, rozbielonych fragmentów po bardziej nasycone pomarańczowe partie. Poszczególne płytki mogą różnić się intensywnością barwy, tworząc żywą, lecz harmonijną powierzchnię inspirowaną wypalaną cegłą i śródziemnomorskim światłem.",
-      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Toskańskie łączy wyjątkowo wydłużony format z ciepłą, śródziemnomorską kolorystyką inspirowaną tradycyjną wypalaną cegłą. Barwienie w masie zapewnia trwałość kolorystyki, a materiał jest odporny na mróz, deszcz i intensywne nasłonecznienie.",
-      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)",
+      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, inspirowana ciepłą kolorystyką słonecznej Toskanii, łącząca jasne pomarańcze, brzoskwiniowe tony i piaskowe akcenty w naturalną, wielotonową kompozycję"
+      textureDetails: "Powierzchnia matowa, wyraźnie nieregularna i reliefowa, z drobnymi zagłębieniami, porami, ziarnistością, przetarciami i subtelnymi nierównościami typowymi dla stylizowanego lica ceglanego. Struktura jest niejednorodna i organiczna, dzięki czemu poszczególne fragmenty powierzchni różnią się intensywnością faktury. Widoczna jest delikatna gra światła i cienia na wypukłościach oraz w zagłębieniach. Krawędzie są stosunkowo proste, ale zachowują niewielkie nieregularności nadające płytkom naturalny charakter."
+      colorPalette: "Dominują jasne, ciepłe odcienie pomarańczowe, brzoskwiniowe i piaskowe, uzupełnione delikatnymi tonami jasnej terakoty, złocistego beżu i ciepłej ochry. Kolorystyka ma naturalne przejścia tonalne — od jasnych, rozbielonych fragmentów po bardziej nasycone pomarańczowe partie. Poszczególne płytki mogą różnić się intensywnością barwy, tworząc żywą, lecz harmonijną powierzchnię inspirowaną wypalaną cegłą i śródziemnomorskim światłem."
+      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Toskańskie łączy wyjątkowo wydłużony format z ciepłą, śródziemnomorską kolorystyką inspirowaną tradycyjną wypalaną cegłą. Barwienie w masie zapewnia trwałość kolorystyki, a materiał jest odporny na mróz, deszcz i intensywne nasłonecznienie."
+      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)"
       aspectRatio: 8.8,
       shapeHint: "Każda płytka jest bardzo niska i wyjątkowo długa: format 44 × 5 cm daje smukłą proporcję ok. 8,8:1. W porównaniu ze standardową płytką 26 × 6,5 cm jest ok. 1,7 raza dłuższa i wyraźnie niższa, dlatego tworzy długie, wąskie, poziome pasy na ścianie. Wydłużony format nadaje powierzchni wyraźnie horyzontalny, nowoczesny rytm."
-    },
+    },,
     {
       id: "long-braz-bordo",
       name: "Long Brąz-Bordo 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_6547_500_500/nowoczesny-dom-jednorodzinny-z-elewacj-wykonan-z-plytek-ceglanych-braz-bordo-glowne.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, w głębokiej, szlachetnej tonacji łączącej ciemny brąz z dojrzałymi bordowo-wiśniowymi akcentami, o eleganckim i ponadczasowym charakterze",
-      textureDetails: "Powierzchnia matowa, wyraźnie strukturalna i nieregularna, z drobnymi zagłębieniami, porami, ziarnistością, przetarciami i naturalnymi nierównościami lica. Relief jest zróżnicowany, dzięki czemu powierzchnia tworzy subtelną grę światła i cienia. Poszczególne płytki mogą delikatnie różnić się intensywnością faktury oraz przebarwieniami, co ogranicza efekt powtarzalności. Krawędzie są długie i stosunkowo regularne, ale zachowują niewielkie nierówności podkreślające charakter stylizowanej cegły.",
-      colorPalette: "Dominują głębokie odcienie ciemnego brązu, czekoladowego brązu i brunatnych tonów, przełamane szlachetnymi odcieniami bordo, ciemnej czerwieni i dojrzałej wiśni. Widoczne są subtelne przejścia pomiędzy brązowymi i bordowymi fragmentami, dzięki czemu kolor nie jest jednolity. Paleta jest ciepła, głęboka i nasycona, z eleganckim, lekko winno-czerwonym charakterem.",
-      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Brąz-Bordo łączy wyjątkowo wydłużony format 44 cm z naturalną, strukturalną fakturą oraz głęboką kolorystyką ciemnego brązu i bordo. Barwienie w masie zapewnia trwałość kolorystyki, a materiał jest odporny na warunki atmosferyczne i uszkodzenia.",
-      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)",
+      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, w głębokiej, szlachetnej tonacji łączącej ciemny brąz z dojrzałymi bordowo-wiśniowymi akcentami, o eleganckim i ponadczasowym charakterze"
+      textureDetails: "Powierzchnia matowa, wyraźnie strukturalna i nieregularna, z drobnymi zagłębieniami, porami, ziarnistością, przetarciami i naturalnymi nierównościami lica. Relief jest zróżnicowany, dzięki czemu powierzchnia tworzy subtelną grę światła i cienia. Poszczególne płytki mogą delikatnie różnić się intensywnością faktury oraz przebarwieniami, co ogranicza efekt powtarzalności. Krawędzie są długie i stosunkowo regularne, ale zachowują niewielkie nierówności podkreślające charakter stylizowanej cegły."
+      colorPalette: "Dominują głębokie odcienie ciemnego brązu, czekoladowego brązu i brunatnych tonów, przełamane szlachetnymi odcieniami bordo, ciemnej czerwieni i dojrzałej wiśni. Widoczne są subtelne przejścia pomiędzy brązowymi i bordowymi fragmentami, dzięki czemu kolor nie jest jednolity. Paleta jest ciepła, głęboka i nasycona, z eleganckim, lekko winno-czerwonym charakterem."
+      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Brąz-Bordo łączy wyjątkowo wydłużony format 44 cm z naturalną, strukturalną fakturą oraz głęboką kolorystyką ciemnego brązu i bordo. Barwienie w masie zapewnia trwałość kolorystyki, a materiał jest odporny na warunki atmosferyczne i uszkodzenia."
+      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)"
       aspectRatio: 8.8,
       shapeHint: "Każda płytka jest bardzo niska i wyjątkowo długa: format 44 × 5 cm daje smukłą proporcję ok. 8,8:1. W porównaniu ze standardową płytką 26 × 6,5 cm jest ok. 1,7 raza dłuższa i wyraźnie niższa, dlatego tworzy długie, wąskie, poziome pasy na ścianie. Wydłużony format mocno podkreśla horyzontalny rytm, a ciemna kolorystyka dodatkowo wzmacnia elegancki i wyrazisty charakter powierzchni."
-    },
+    },,
     {
       id: "long-marron",
       name: "Long Marron 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_6071_500_500/Ceglane-plytki%2C-stara-cegla%2C-cegla-na-sciane%2C-cegla-na-elewacje---LONG-MARRON---44cm-dlugosci.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, w głębokiej kasztanowo-brązowej kolorystyce przełamanej chłodnymi szarościami, beżem i subtelnymi jasnymi nalotami, o naturalnym, ziemistym i eleganckim charakterze",
-      textureDetails: "Powierzchnia matowa, wyraźnie nieregularna i reliefowa, z licznymi drobnymi oraz średnimi zagłębieniami, porami, rysami, przetarciami i nierównościami. Lico ma surową, mineralną strukturę przypominającą postarzaną cegłę, z miejscami bardziej ziarnistymi i miejscami wygładzonymi. Widoczne są nieregularne przebarwienia, delikatne spękania oraz jasne naloty osadzone w zagłębieniach. Krawędzie są stosunkowo proste, ale nieidealnie równe, z subtelnymi nierównościami charakterystycznymi dla stylizowanego materiału. Długa, pozioma forma w połączeniu z mocno zróżnicowanym licem tworzy wyraźny efekt 3D.",
-      colorPalette: "Dominują głębokie odcienie kasztanowego brązu, ciepłego taupe i ciemnego brązu, przełamane chłodnymi szarościami oraz szarobeżowymi tonami. Na powierzchni występują nieregularne przejścia kolorystyczne — od cieplejszych, ziemistych fragmentów po chłodniejsze grafitowo-szare partie. Widoczne są również subtelne jasne, kremowo-szare naloty i rozjaśnienia, szczególnie na wypukłościach oraz w wybranych fragmentach lica. Kolorystyka jest wielotonowa, stonowana i naturalna, bez intensywnych czerwieni czy pomarańczy.",
-      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Marron łączy wyjątkowo wydłużony format 44 cm z surową, nieregularną fakturą stylizowaną na postarzaną cegłę. Ciemny kasztanowy kolor należy do palety barw ziemi, a barwienie w masie zapewnia trwałość kolorystyki również przy powierzchniowych uszkodzeniach. Materiał jest odporny na mróz i promieniowanie UV. ",
-      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)",
+      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, w głębokiej kasztanowo-brązowej kolorystyce przełamanej chłodnymi szarościami, beżem i subtelnymi jasnymi nalotami, o naturalnym, ziemistym i eleganckim charakterze"
+      textureDetails: "Powierzchnia matowa, wyraźnie nieregularna i reliefowa, z licznymi drobnymi oraz średnimi zagłębieniami, porami, rysami, przetarciami i nierównościami. Lico ma surową, mineralną strukturę przypominającą postarzaną cegłę, z miejscami bardziej ziarnistymi i miejscami wygładzonymi. Widoczne są nieregularne przebarwienia, delikatne spękania oraz jasne naloty osadzone w zagłębieniach. Krawędzie są stosunkowo proste, ale nieidealnie równe, z subtelnymi nierównościami charakterystycznymi dla stylizowanego materiału. Długa, pozioma forma w połączeniu z mocno zróżnicowanym licem tworzy wyraźny efekt 3D."
+      colorPalette: "Dominują głębokie odcienie kasztanowego brązu, ciepłego taupe i ciemnego brązu, przełamane chłodnymi szarościami oraz szarobeżowymi tonami. Na powierzchni występują nieregularne przejścia kolorystyczne — od cieplejszych, ziemistych fragmentów po chłodniejsze grafitowo-szare partie. Widoczne są również subtelne jasne, kremowo-szare naloty i rozjaśnienia, szczególnie na wypukłościach oraz w wybranych fragmentach lica. Kolorystyka jest wielotonowa, stonowana i naturalna, bez intensywnych czerwieni czy pomarańczy."
+      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Marron łączy wyjątkowo wydłużony format 44 cm z surową, nieregularną fakturą stylizowaną na postarzaną cegłę. Ciemny kasztanowy kolor należy do palety barw ziemi, a barwienie w masie zapewnia trwałość kolorystyki również przy powierzchniowych uszkodzeniach. Materiał jest odporny na mróz i promieniowanie UV. "
+      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)"
       aspectRatio: 8.8,
       shapeHint: "Każda płytka jest bardzo niska i wyjątkowo długa: format 44 × 5 cm daje smukłą proporcję ok. 8,8:1. W porównaniu ze standardową płytką 26 × 6,5 cm jest ok. 1,7 raza dłuższa i wyraźnie niższa, dlatego tworzy długie, wąskie, poziome pasy na ścianie. Pojedyncza płytka ma zdecydowanie bardziej wydłużony charakter niż klasyczna cegła."
-    },
+    },,
     {
       id: "long-moon",
       name: "Long Moon 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_5052_500_500/Plytki-ceglane-na-elewacje-dekoracja-long-moon.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, inspirowana surową, księżycową powierzchnią, bardzo jasna i neutralna kolorystycznie, z mineralną fakturą pełną nieregularnych zagłębień i subtelnych tonalnych przejść",
-      textureDetails: "Powierzchnia matowa, mocno nieregularna i wyraźnie reliefowa, przypominająca naturalną, porowatą powierzchnię kamienia lub księżycowego gruntu. Widoczne są liczne drobne i średnie zagłębienia, kawerny, pory, nierówności oraz nieregularne przebarwienia. Lico nie jest gładkie ani powtarzalne — jego struktura tworzy wyraźną grę światła i cienia. Krawędzie są stosunkowo proste, ale zachowują delikatne nieregularności wynikające z faktury. Charakterystyczna jest długa, pozioma forma połączona z mocno przestrzennym, organicznym licem.",
-      colorPalette: "Dominują bardzo jasne odcienie złamanej bieli, jasnego szarego beżu, chłodnego piasku i delikatnej szarości. Kolorystyka jest neutralna i stonowana, z subtelnymi przejściami tonalnymi pomiędzy jaśniejszymi wypukłościami a nieco ciemniejszymi zagłębieniami faktury. Poszczególne płytki mogą delikatnie różnić się nasyceniem, tworząc naturalny, niejednorodny efekt. Brak intensywnych czerwieni, brązów czy mocnych kontrastów — całość utrzymana jest w jasnej, mineralnej palecie.",
-      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Moon łączy nowoczesny, wydłużony format z fakturą inspirowaną powierzchnią Księżyca oraz autentycznością nieregularnego lica płytek rozbiórkowych. Materiał jest mrozoodporny i odporny na intensywne promieniowanie UV.",
-      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)",
+      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, inspirowana surową, księżycową powierzchnią, bardzo jasna i neutralna kolorystycznie, z mineralną fakturą pełną nieregularnych zagłębień i subtelnych tonalnych przejść"
+      textureDetails: "Powierzchnia matowa, mocno nieregularna i wyraźnie reliefowa, przypominająca naturalną, porowatą powierzchnię kamienia lub księżycowego gruntu. Widoczne są liczne drobne i średnie zagłębienia, kawerny, pory, nierówności oraz nieregularne przebarwienia. Lico nie jest gładkie ani powtarzalne — jego struktura tworzy wyraźną grę światła i cienia. Krawędzie są stosunkowo proste, ale zachowują delikatne nieregularności wynikające z faktury. Charakterystyczna jest długa, pozioma forma połączona z mocno przestrzennym, organicznym licem."
+      colorPalette: "Dominują bardzo jasne odcienie złamanej bieli, jasnego szarego beżu, chłodnego piasku i delikatnej szarości. Kolorystyka jest neutralna i stonowana, z subtelnymi przejściami tonalnymi pomiędzy jaśniejszymi wypukłościami a nieco ciemniejszymi zagłębieniami faktury. Poszczególne płytki mogą delikatnie różnić się nasyceniem, tworząc naturalny, niejednorodny efekt. Brak intensywnych czerwieni, brązów czy mocnych kontrastów — całość utrzymana jest w jasnej, mineralnej palecie."
+      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Moon łączy nowoczesny, wydłużony format z fakturą inspirowaną powierzchnią Księżyca oraz autentycznością nieregularnego lica płytek rozbiórkowych. Materiał jest mrozoodporny i odporny na intensywne promieniowanie UV."
+      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)"
       aspectRatio: 8,8:1,
       shapeHint: "Każda płytka jest bardzo niska i długa: na wysokości jednego zwykłego rzędu cegły powinny zmieścić się ok. 3 rzędy tej płytki (czyli dużo więcej wąskich, poziomych rzędów niż w typowym murze), a każda pojedyncza płytka w rzędzie jest ok. 2 razy dłuższa niż standardowa cegła."
-    },
+    },,
     {
       id: "long-grafitowe",
       name: "Long Grafitowe 44 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_4902_500_500/plytki-ceglane-rustic-long-grafitowe-antracytowe-dlugie-cegly-na-sciane-i-elewacje.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, utrzymana w głębokiej grafitowo-antracytowej kolorystyce, łącząca surowy charakter betonu z eleganckim, nowoczesnym wyglądem",
-      textureDetails: "Powierzchnia matowa, wyraźnie strukturalna i lekko nieregularna, z drobnymi porami, ziarnistością, subtelnymi zagłębieniami i nierównościami lica. Relief powierzchni tworzy delikatną grę światła i cienia, dzięki czemu ciemna płytka nie wygląda całkowicie jednolicie. Widoczne są naturalne tonalne różnice pomiędzy wypukłościami i zagłębieniami. Krawędzie są długie i stosunkowo regularne, z niewielkimi nieregularnościami podkreślającymi charakter płytki ceglanej.",
-      colorPalette: "Dominują głębokie odcienie grafitu, antracytu i ciemnej szarości. W zagłębieniach faktury kolor przechodzi w niemal czarne tony, natomiast wypukłości mogą być delikatnie jaśniejsze, grafitowe. Paleta jest chłodna, ciemna i elegancka, bez wyraźnych ciepłych czerwieni, brązów czy pomarańczy. Subtelne różnice tonalne nadają powierzchni głębię i zapobiegają efektowi płaskiej, jednolitej czerni.",
-      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Grafitowe łączy wyjątkowo wydłużony format 44 cm z głębokim grafitowo-antracytowym kolorem i surową, mineralną strukturą. Barwienie w masie zapewnia trwałość koloru, a materiał jest odporny na deszcz, mróz i promieniowanie UV.",
-      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)",
+      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie LONG, utrzymana w głębokiej grafitowo-antracytowej kolorystyce, łącząca surowy charakter betonu z eleganckim, nowoczesnym wyglądem"
+      textureDetails: "Powierzchnia matowa, wyraźnie strukturalna i lekko nieregularna, z drobnymi porami, ziarnistością, subtelnymi zagłębieniami i nierównościami lica. Relief powierzchni tworzy delikatną grę światła i cienia, dzięki czemu ciemna płytka nie wygląda całkowicie jednolicie. Widoczne są naturalne tonalne różnice pomiędzy wypukłościami i zagłębieniami. Krawędzie są długie i stosunkowo regularne, z niewielkimi nieregularnościami podkreślającymi charakter płytki ceglanej."
+      colorPalette: "Dominują głębokie odcienie grafitu, antracytu i ciemnej szarości. W zagłębieniach faktury kolor przechodzi w niemal czarne tony, natomiast wypukłości mogą być delikatnie jaśniejsze, grafitowe. Paleta jest chłodna, ciemna i elegancka, bez wyraźnych ciepłych czerwieni, brązów czy pomarańczy. Subtelne różnice tonalne nadają powierzchni głębię i zapobiegają efektowi płaskiej, jednolitej czerni."
+      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno we wnętrzach, jak i na elewacjach. Model Long Grafitowe łączy wyjątkowo wydłużony format 44 cm z głębokim grafitowo-antracytowym kolorem i surową, mineralną strukturą. Barwienie w masie zapewnia trwałość koloru, a materiał jest odporny na deszcz, mróz i promieniowanie UV."
+      dims: "ok. 44 cm długości x ok. 5 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 8,8:1)"
       aspectRatio: 8.8,
       shapeHint: "Każda płytka jest bardzo niska i wyjątkowo długa: format 44 × 5 cm daje smukłą proporcję ok. 8,8:1. W porównaniu ze standardową płytką 26 × 6,5 cm jest ok. 1,7 raza dłuższa i wyraźnie niższa, dlatego tworzy długie, wąskie, poziome pasy na ścianie. Wydłużony format mocno podkreśla horyzontalny rytm i nowoczesny, minimalistyczny charakter powierzchni."
-    },
+    },,
     {
       id: "slim-long-classic",
       name: "Slim Long Classic 52 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_5339_500_500/Plytki-ceglane-na-elewacje-long-slim-classic_MIN.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w ekstremalnie smukłym formacie SLIM LONG, łącząca ciepły melanż klasycznej czerwieni, ceglanego pomarańczu i terakoty z nowoczesną, surową fakturą betonu architektonicznego",
-      textureDetails: "Powierzchnia matowa, wyraźnie strukturalna i surowa, inspirowana betonem architektonicznym oraz postarzaną cegłą. Widoczna jest drobna ziarnistość, delikatne zagłębienia, nierówności i subtelne przetarcia, które nadają licu naturalną głębię. Faktura pozostaje bardziej uporządkowana niż w klasycznych płytkach rustykalnych, ale nie jest idealnie gładka. Długie, proste krawędzie mocno podkreślają nowoczesny charakter formatu.",
-      colorPalette: "Dominują ciepłe odcienie klasycznej czerwieni ceglanej, ceglanego pomarańczu, terakoty i ciepłego rudego brązu. Powierzchnia tworzy celowy melanż barw — poszczególne płytki mogą różnić się nasyceniem, od jaśniejszych pomarańczowo-ceglanych fragmentów po głębsze czerwienie i brunatne akcenty. Kolorystyka jest ciepła, żywa i inspirowana tradycyjną cegłą rozbiórkową, ale zestawiona z nowoczesną betonową fakturą.",
-      materialsInfo: "Beton architektoniczny wysokiej gęstości, przeznaczony do zastosowania na elewacjach oraz we wnętrzach. Model Slim Long Classic łączy ekstremalnie wydłużony format 52 cm z melanżem klasycznych czerwieni i pomarańczy oraz fakturą stylizowaną na surowy beton architektoniczny. Materiał jest mrozoodporny i przeznaczony do trwałych zastosowań zewnętrznych.",
-      dims: "ok. 52 cm długości x ok. 4 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 13:1)",
+      desc: "betonowa płytka elewacyjna w ekstremalnie smukłym formacie SLIM LONG, łącząca ciepły melanż klasycznej czerwieni, ceglanego pomarańczu i terakoty z nowoczesną, surową fakturą betonu architektonicznego"
+      textureDetails: "Powierzchnia matowa, wyraźnie strukturalna i surowa, inspirowana betonem architektonicznym oraz postarzaną cegłą. Widoczna jest drobna ziarnistość, delikatne zagłębienia, nierówności i subtelne przetarcia, które nadają licu naturalną głębię. Faktura pozostaje bardziej uporządkowana niż w klasycznych płytkach rustykalnych, ale nie jest idealnie gładka. Długie, proste krawędzie mocno podkreślają nowoczesny charakter formatu."
+      colorPalette: "Dominują ciepłe odcienie klasycznej czerwieni ceglanej, ceglanego pomarańczu, terakoty i ciepłego rudego brązu. Powierzchnia tworzy celowy melanż barw — poszczególne płytki mogą różnić się nasyceniem, od jaśniejszych pomarańczowo-ceglanych fragmentów po głębsze czerwienie i brunatne akcenty. Kolorystyka jest ciepła, żywa i inspirowana tradycyjną cegłą rozbiórkową, ale zestawiona z nowoczesną betonową fakturą."
+      materialsInfo: "Beton architektoniczny wysokiej gęstości, przeznaczony do zastosowania na elewacjach oraz we wnętrzach. Model Slim Long Classic łączy ekstremalnie wydłużony format 52 cm z melanżem klasycznych czerwieni i pomarańczy oraz fakturą stylizowaną na surowy beton architektoniczny. Materiał jest mrozoodporny i przeznaczony do trwałych zastosowań zewnętrznych."
+      dims: "ok. 52 cm długości x ok. 4 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 13:1)"
       aspectRatio: 13,
       shapeHint: "Każda płytka jest ekstremalnie długa i bardzo niska: format 52 × 4 cm daje wyjątkowo smukłą proporcję ok. 13:1. W porównaniu ze standardową płytką 26 × 6,5 cm jest dokładnie 2 razy dłuższa i ok. 1,6 raza niższa, dlatego tworzy bardzo długie, cienkie, poziome pasy. Proste, wydłużone krawędzie wzmacniają horyzontalny rytm elewacji, a ciepły melanż kolorystyczny nadaje jej bardziej tradycyjny charakter."
-    },
+    },,
     {
       id: "slim-long-moon",
       name: "Slim Long Moon 52 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_5063_500_500/plytki-ceglane-na-elewacje-na-sciane-long-slim-moon.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie SLIM LONG, utrzymana w jasnej, księżycowej tonacji szarości, o minimalistycznym wyglądzie i płaskiej, uporządkowanej powierzchni inspirowanej delikatnym betonem architektonicznym",
-      textureDetails: "Powierzchnia płaska, matowa i aksamitna w odbiorze, bez głębokich porów, kawern i mocnych nierówności typowych dla postarzanego lica ceglanego. Widoczna jest subtelna mineralna struktura betonu oraz delikatne tonalne przejścia, które zmieniają się w zależności od kąta padania światła. Lico jest bardzo uporządkowane i minimalistyczne, z lekką niejednorodnością charakterystyczną dla betonu architektonicznego. Krawędzie są długie, proste i wyraźne, co dodatkowo podkreśla nowoczesny charakter płytki.",
-      colorPalette: "Dominują jasne odcienie chłodnej szarości, jasnego popielu i delikatnego szarobeżu. Kolor jest tonalnie niejednorodny — miejscami pojawiają się nieco jaśniejsze, niemal srebrzyste partie, a w innych fragmentach subtelnie głębsza szarość. Paleta jest chłodna, neutralna i bardzo stonowana, inspirowana światłem księżyca. Brak ciepłych czerwieni, brązów czy pomarańczowych akcentów.",
-      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno na elewacjach, jak i we wnętrzach. Model Slim Long Moon wyróżnia się płaską fakturą, jasnoszarą, tonalną kolorystyką oraz wyjątkowo wydłużonym formatem 52 cm. Barwienie w masie zapewnia trwałość koloru, a materiał jest mrozoodporny i odporny na promieniowanie UV oraz trudne warunki pogodowe.",
-      dims: "ok. 52 cm długości x ok. 4 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 13:1)",
+      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie SLIM LONG, utrzymana w jasnej, księżycowej tonacji szarości, o minimalistycznym wyglądzie i płaskiej, uporządkowanej powierzchni inspirowanej delikatnym betonem architektonicznym"
+      textureDetails: "Powierzchnia płaska, matowa i aksamitna w odbiorze, bez głębokich porów, kawern i mocnych nierówności typowych dla postarzanego lica ceglanego. Widoczna jest subtelna mineralna struktura betonu oraz delikatne tonalne przejścia, które zmieniają się w zależności od kąta padania światła. Lico jest bardzo uporządkowane i minimalistyczne, z lekką niejednorodnością charakterystyczną dla betonu architektonicznego. Krawędzie są długie, proste i wyraźne, co dodatkowo podkreśla nowoczesny charakter płytki."
+      colorPalette: "Dominują jasne odcienie chłodnej szarości, jasnego popielu i delikatnego szarobeżu. Kolor jest tonalnie niejednorodny — miejscami pojawiają się nieco jaśniejsze, niemal srebrzyste partie, a w innych fragmentach subtelnie głębsza szarość. Paleta jest chłodna, neutralna i bardzo stonowana, inspirowana światłem księżyca. Brak ciepłych czerwieni, brązów czy pomarańczowych akcentów."
+      materialsInfo: "Wytrzymały beton architektoniczny barwiony w masie, przeznaczony do zastosowania zarówno na elewacjach, jak i we wnętrzach. Model Slim Long Moon wyróżnia się płaską fakturą, jasnoszarą, tonalną kolorystyką oraz wyjątkowo wydłużonym formatem 52 cm. Barwienie w masie zapewnia trwałość koloru, a materiał jest mrozoodporny i odporny na promieniowanie UV oraz trudne warunki pogodowe."
+      dims: "ok. 52 cm długości x ok. 4 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 13:1)"
       aspectRatio: 13,
       shapeHint: "Każda płytka jest ekstremalnie długa i bardzo niska: format 52 × 4 cm daje wyjątkowo smukłą proporcję ok. 13:1. W porównaniu ze standardową płytką 26 × 6,5 cm jest dokładnie 2 razy dłuższa i ok. 1,6 raza niższa, dlatego tworzy bardzo długie, cienkie, poziome pasy. Proste krawędzie i płaska powierzchnia dodatkowo wzmacniają minimalistyczny, horyzontalny charakter elewacji."
-    },
+    },,
     {
       id: "slim-long-concrete",
       name: "Slim Long Concrete 52 cm",
       sub: "seria long",
       img: "https://starecegly.com/environment/cache/images/productGfx_5660_500_500/plytki-ceglane-na-elewacje-na-sciane-long-slim-concrete-beton-na-sciane-zdjecie-glowne.webp?overlay=1",
-      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie SLIM LONG, inspirowana grafitowym betonem architektonicznym, o płaskiej, minimalistycznej powierzchni i głębokiej, chłodnej kolorystyce antracytowo-grafitowej",
-      textureDetails: "Powierzchnia płaska, matowa i gładka w dotyku, bez charakterystycznych kawern, głębokich zagłębień czy mocno postarzanego reliefu typowego dla klasycznych płytek ceglanych. Widoczna jest subtelna, naturalna struktura surowego betonu oraz delikatne tonalne różnice, które pod wpływem światła tworzą spokojną grę światłocieni. Lico jest jednolite i uporządkowane, a długie, proste krawędzie podkreślają nowoczesny charakter formatu.",
-      colorPalette: "Dominują chłodne, głębokie odcienie grafitu, antracytu i ciemnej szarości. Powierzchnia ma lekko zróżnicowaną tonację betonową — niektóre fragmenty są nieco jaśniejsze, popielato-grafitowe, podczas gdy inne przechodzą w głębszy antracyt. Kolorystyka jest surowa, neutralna i minimalistyczna, bez ciepłych brązów, czerwieni czy pomarańczy.",
-      materialsInfo: "Wysokogatunkowy beton architektoniczny barwiony w masie, przeznaczony do zastosowania na elewacjach oraz w nowoczesnych aranżacjach wnętrz. Model Slim Long Concrete wyróżnia się płaską powierzchnią inspirowaną grafitowym betonem architektonicznym oraz ekstremalnie wydłużonym formatem 52 cm. Materiał jest mrozoodporny, ognioodporny i odporny na promieniowanie UV.",
-      dims: "ok. 52 cm długości x ok. 4 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 13:1)",
+      desc: "betonowa płytka elewacyjna w wyjątkowo smukłym formacie SLIM LONG, inspirowana grafitowym betonem architektonicznym, o płaskiej, minimalistycznej powierzchni i głębokiej, chłodnej kolorystyce antracytowo-grafitowej"
+      textureDetails: "Powierzchnia płaska, matowa i gładka w dotyku, bez charakterystycznych kawern, głębokich zagłębień czy mocno postarzanego reliefu typowego dla klasycznych płytek ceglanych. Widoczna jest subtelna, naturalna struktura surowego betonu oraz delikatne tonalne różnice, które pod wpływem światła tworzą spokojną grę światłocieni. Lico jest jednolite i uporządkowane, a długie, proste krawędzie podkreślają nowoczesny charakter formatu."
+      colorPalette: "Dominują chłodne, głębokie odcienie grafitu, antracytu i ciemnej szarości. Powierzchnia ma lekko zróżnicowaną tonację betonową — niektóre fragmenty są nieco jaśniejsze, popielato-grafitowe, podczas gdy inne przechodzą w głębszy antracyt. Kolorystyka jest surowa, neutralna i minimalistyczna, bez ciepłych brązów, czerwieni czy pomarańczy."
+      materialsInfo: "Wysokogatunkowy beton architektoniczny barwiony w masie, przeznaczony do zastosowania na elewacjach oraz w nowoczesnych aranżacjach wnętrz. Model Slim Long Concrete wyróżnia się płaską powierzchnią inspirowaną grafitowym betonem architektonicznym oraz ekstremalnie wydłużonym formatem 52 cm. Materiał jest mrozoodporny, ognioodporny i odporny na promieniowanie UV."
+      dims: "ok. 52 cm długości x ok. 4 cm wysokości x ok. 1,3 cm grubości (proporcje ok. 13:1)"
       aspectRatio: 13,
       shapeHint: "Każda płytka jest ekstremalnie długa i bardzo niska: format 52 × 4 cm daje wyjątkowo smukłą proporcję ok. 13:1. W porównaniu ze standardową płytką 26 × 6,5 cm jest dokładnie 2 razy dłuższa i ok. 1,6 raza niższa, dlatego tworzy bardzo długie, cienkie, poziome pasy. Minimalna wysokość i proste krawędzie mocno wzmacniają horyzontalny, nowoczesny charakter elewacji."
     }
+  ]
   ];
 
   const state = {
@@ -1801,7 +1804,7 @@ Kolorystyka ciepła, ceglasto-rdzawa i mocno zróżnicowana — od jasnych cegla
 
   function labelFor(v){
     const map = {
-      "elewacja":"Elewacja", "sciana-wewnetrzna":"Ściana wewnętrzna", "inna":"Podłoga",
+      "elewacja":"Elewacja", "sciana-wewnetrzna":"Ściana wewnętrzna", "kominek":"Kominek / zabudowa", "inna":"Inna powierzchnia",
       "z-fuga":"Montaż z fugą", "bez-fugi":"Montaż bez fugi",
       "klasyczne-przesuniecie":"Klasyczny", "prosty":"Prosty", "pionowy":"Pionowy", "jodelka":"Jodełka"
     };
