@@ -178,13 +178,18 @@ module.exports = async (req, res) => {
       ? ""
       : `\n- KOLOR FUGI (bardzo ważne, zastosuj dokładnie): fuga musi mieć kolor ${mortarColorLabel}. To kluczowy parametr — nie zastępuj go domyślnym ani innym odcieniem.`;
 
+    const ratioMultiplier = (productAspectRatio && Number(productAspectRatio) > 0)
+      ? (Number(productAspectRatio) / 2).toFixed(1)
+      : null;
+
     const dimsLine = productDims
-      ? `\n- WYMIARY I PROPORCJE POJEDYNCZEJ PŁYTKI (krytycznie ważne, zastosuj dokładnie): ${productDims}. NIE renderuj standardowych proporcji cegły (ok. 2:1) — moduł MUSI być wyraźnie bardziej wydłużony i płaski, zgodnie z podanymi proporcjami. To najczęstszy błąd do uniknięcia: zbyt "kwadratowe" lub zbyt wysokie płytki są NIEPOPRAWNE dla tego produktu.`
+      ? `\n- WYMIARY I PROPORCJE POJEDYNCZEJ PŁYTKI (krytycznie ważne, zastosuj dokładnie): ${productDims}. NIE renderuj standardowych proporcji cegły (ok. 2:1) — moduł MUSI być wyraźnie bardziej wydłużony i płaski, zgodnie z podanymi proporcjami${ratioMultiplier ? ` (to ok. ${ratioMultiplier}× smuklejszy moduł niż zwykła cegła 2:1 — NIE o kilkanaście procent, tylko wielokrotnie bardziej wydłużony i wielokrotnie niższy)` : ""}. To najczęstszy błąd do uniknięcia: zbyt "kwadratowe" lub zbyt wysokie płytki są NIEPOPRAWNE dla tego produktu.`
       : "";
 
     const shapeAlert = productShapeHint
       ? `UWAGA — NIETYPOWY FORMAT PŁYTKI, PRZECZYTAJ PRZED WYKONANIEM ZADANIA:
-Ten produkt NIE ma proporcji zwykłej cegły. ${productShapeHint} Jeśli narysujesz moduły o standardowych proporcjach cegły (ok. 2:1), wynik będzie BŁĘDNY — musi być wyraźnie więcej wąskich, poziomych rzędów niż w typowym murze z cegły. Jeśli załączone zdjęcie referencyjne produktu nie pokazuje tego jednoznacznie (np. kadr jest zbyt przybliżony), kieruj się przede wszystkim tym opisem proporcji, a nie domysłem na podstawie samego kadru.
+Ten produkt NIE ma proporcji zwykłej cegły. ${productShapeHint}${ratioMultiplier ? ` Liczbowo: pojedynczy moduł jest ok. ${ratioMultiplier} razy bardziej wydłużony (proporcja długość:wysokość) niż standardowa cegła 2:1 — to znacząca, łatwo zauważalna różnica, nie subtelna korekta.` : ""} Jeśli narysujesz moduły o standardowych proporcjach cegły (ok. 2:1), wynik będzie BŁĘDNY — musi być wyraźnie więcej wąskich, poziomych rzędów niż w typowym murze z cegły.
+PRIORYTET ŹRÓDŁA PRAWDY O KSZTAŁCIE: opis proporcji podany wyżej jest NADRZĘDNY wobec załączonego zdjęcia referencyjnego produktu. Zdjęcie referencyjne służy WYŁĄCZNIE jako wzorzec koloru, faktury i charakteru materiału — CAŁKOWICIE ZIGNORUJ proporcje/kształt pojedynczej cegły widoczne na tym zdjęciu, nawet jeśli kadr sugeruje bardziej "zwykłe" proporcje (np. przez przybliżenie, kąt kadrowania lub obcięcie). Kształtem rządzi wyłącznie opis tekstowy powyżej.
 WAŻNE: mimo wydłużonego formatu, cała zaznaczona powierzchnia MA WYGLĄDAĆ JAK JEDNOLITA OKŁADZINA Z PŁYTEK — tak jak każda inna cegła na tej ścianie. NIE dodawaj żadnych ramek, obwódek, listew wykończeniowych, podziałów na panele/sekcje ani żadnych elementów, o które nie proszono. To ma być zwykła, ciągła okładzina ceglana, tylko z płytkami o innych proporcjach.
 
 `
@@ -255,7 +260,10 @@ ${productDims ? `9. Proporcje pojedynczej płytki: ${productDims}${productShapeH
     promptParts.push({ text: "Zdjęcie z podświetlonym obszarem do przemiany:" });
     promptParts.push({ inlineData: highlightedInline });
     if(productInline){
-      promptParts.push({ text: `Referencyjna tekstura produktu "${productName}":` });
+      const shapeReminder = productShapeHint
+        ? ` Przypomnienie: to zdjęcie pokazuje WYŁĄCZNIE kolor i fakturę — kształt/proporcje pojedynczej cegły bierz TYLKO z opisu tekstowego wyżej (${productDims || productShapeHint}), nie z tego kadru.`
+        : "";
+      promptParts.push({ text: `Referencyjna tekstura produktu "${productName}":${shapeReminder}` });
       promptParts.push({ inlineData: productInline });
     }
 
