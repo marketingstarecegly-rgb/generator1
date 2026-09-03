@@ -1297,64 +1297,6 @@ Vor dem Kauf empfehlen wir, die Produktfotos zu beachten und bei Unsicherheiten 
     return false;
   }
 
-  // ---- twarde ograniczenie wyniku do zaznaczonego obszaru ----
-  // Model AI dostaje tylko wizualną podpowiedź (podświetlenie) i może w praktyce
-  // zmienić fragmenty POZA zaznaczeniem. Żeby to fizycznie wykluczyć, po otrzymaniu
-  // wygenerowanego obrazu wycinamy z niego WYŁĄCZNIE zamalowany obszar (na podstawie
-  // maski pędzla) i nakładamy go na oryginalne, niezmienione zdjęcie. Wszystko poza
-  // zaznaczeniem wraca zawsze do 100% oryginału, niezależnie od tego, co wygenerował model.
-
-  // Maska pędzla jest rysowana z alfa 0.55 (dla czytelności podświetlenia na podglądzie),
-  // więc na potrzeby wycinania podbijamy przezroczystość do pełnej (z zachowaniem
-  // naturalnie miękkich, antyaliasowanych krawędzi pędzla, żeby uniknąć twardej,
-  // widocznej linii cięcia).
-  function buildClipMaskCanvas(){
-    const w = maskCanvas.width, h = maskCanvas.height;
-    const src = maskCtx.getImageData(0, 0, w, h);
-    const out = document.createElement("canvas");
-    out.width = w; out.height = h;
-    const octx = out.getContext("2d");
-    const dst = octx.createImageData(w, h);
-    for(let i = 0; i < src.data.length; i += 4){
-      const a = src.data[i + 3];
-      dst.data[i] = 255; dst.data[i + 1] = 255; dst.data[i + 2] = 255;
-      dst.data[i + 3] = a > 0 ? Math.min(255, Math.round(a / 0.55)) : 0;
-    }
-    octx.putImageData(dst, 0, 0);
-    return out;
-  }
-
-  function loadImageAsync(src){
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => resolve(img);
-      img.onerror = () => reject(new Error("Das Ergebnisbild konnte nicht geladen werden."));
-      img.src = src;
-    });
-  }
-
-  // Nakłada na oryginalne zdjęcie WYŁĄCZNIE fragment wygenerowanego obrazu
-  // znajdujący się pod zamalowanym obszarem (clipMaskCanvas). Reszta sceny
-  // (poza zaznaczeniem) jest gwarantowanym, niezmienionym oryginałem.
-  async function compositeResultToMaskedArea(generatedDataUrl, clipMaskCanvas, w, h){
-    const genImg = await loadImageAsync(generatedDataUrl);
-
-    const result = document.createElement("canvas");
-    result.width = w; result.height = h;
-    const rctx = result.getContext("2d");
-    rctx.drawImage(baseCanvas, 0, 0, w, h);
-
-    const genCanvas = document.createElement("canvas");
-    genCanvas.width = w; genCanvas.height = h;
-    const gctx = genCanvas.getContext("2d");
-    gctx.drawImage(genImg, 0, 0, w, h);
-    gctx.globalCompositeOperation = "destination-in";
-    gctx.drawImage(clipMaskCanvas, 0, 0);
-
-    rctx.drawImage(genCanvas, 0, 0);
-    return result.toDataURL("image/jpeg", 0.95);
-  }
-
   function updateGenerateState(){
     const hasImage = !!state.imageDataUrl;
     const hasProduct = !!state.productId;
@@ -1392,8 +1334,6 @@ Vor dem Kauf empfehlen wir, die Produktfotos zu beachten und bei Unsicherheiten 
       octx.drawImage(maskCanvas, 0, 0);
       const highlightedDataUrl = overlayCanvas.toDataURL("image/jpeg", 0.92);
       const originalDataUrl = baseCanvas.toDataURL("image/jpeg", 0.92);
-      const clipMaskCanvas = buildClipMaskCanvas();
-      const canvasW = baseCanvas.width, canvasH = baseCanvas.height;
 
       const payload = {
         originalImage: originalDataUrl,
@@ -1429,7 +1369,7 @@ Vor dem Kauf empfehlen wir, die Produktfotos zu beachten und bei Unsicherheiten 
           errorBox.classList.add("show");
           return;
         }
-        throw new Error(err.error || `Błąd serwera (${res.status})`);
+        throw new Error(err.error || `Serverfehler (${res.status})`);
       }
       const data = await res.json();
       if(!data.image){
@@ -1439,16 +1379,13 @@ Vor dem Kauf empfehlen wir, die Produktfotos zu beachten und bei Unsicherheiten 
         console.log("[visualizer] generiert mit Modell:", data.modelUsed);
       }
 
-      // Domykamy wynik do zamalowanego obszaru — reszta zdjęcia to gwarantowany oryginał.
-      const finalDataUrl = await compositeResultToMaskedArea(data.image, clipMaskCanvas, canvasW, canvasH);
-
       beforeImg.src = originalDataUrl;
-      afterImg.src = finalDataUrl;
+      afterImg.src = data.image;
       const remainingNote = (data.remaining !== null && data.remaining !== undefined)
-        ? ` · pozostało dziś: ${data.remaining}/${data.limit}`
+        ? ` · heute übrig: ${data.remaining}/${data.limit}`
         : "";
       resultMeta.textContent = `${product.name} · ${labelFor(state.surface)} · ${labelFor(state.mount)}${remainingNote}`;
-      downloadBtn.href = finalDataUrl;
+      downloadBtn.href = data.image;
       resultWrap.classList.add("show");
       resultWrap.scrollIntoView({behavior:"smooth", block:"start"});
     }catch(err){
