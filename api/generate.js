@@ -69,11 +69,10 @@ const SURFACE_LABELS = {
 };
 
 const LAYOUT_LABELS = {
-  "klasyczne-przesuniecie": "klasyczny układ z przesunięciem (running bond) — poziome rzędy cegieł, każdy kolejny rząd przesunięty względem poprzedniego o pół długości cegły, jak w tradycyjnym murowaniu",
-  "prosty": "prosty układ siatkowy (stack bond) — cegły ułożone dokładnie jedna nad drugą w idealnie pionowych i poziomych liniach, BEZ żadnego przesunięcia między rzędami",
-  "pionowy": "pionowy układ (vertical/stretcher bond) — cegły ułożone w pionie, gdzie dłuższy bok płytki jest ustawiony pionowo (nie poziomo). Cegły są ułożone w pionowych kolumnach, jedna obok drugiej, tworząc pionowe linie. Każda płytka stoi na swojej długości — to tworzy wydłużony, pionowy efekt wizualny zamiast tradycyjnych poziomych rzędów. To jest fundamentalnie inny układ niż domyślny — pamiętaj że cegły mają być PIONOWO ustawione, a nie jak zwykle poziomo.",
-  "mieszanka": "naturalną, nieregularną mieszankę formatów i odcieni — cegły o lekko różnych długościach i szerokościach, ułożone z nieregularnym, przypadkowym przesunięciem (nie idealnie powtarzalnym jak running bond), z widocznym zróżnicowaniem koloru między poszczególnymi sztukami",
-  "jodelka": "UKŁAD W JODEŁKĘ (herringbone) — cegły ułożone POD KĄTEM (zwykle 45° lub 90° względem siebie) w powtarzający się wzór przypominający litery V/zygzak lub szkielet ryby (jak parkiet w jodełkę). To NIE są poziome rzędy — każda cegła stoi ukośnie względem sąsiednich, tworząc charakterystyczny, geometryczny, ukośny wzór na całej powierzchni. Jeśli wynik pokazuje zwykłe poziome rzędy cegieł, to jest BŁĄD."
+  "klasyczne-przesuniecie": "klasyczny układ z przesunięciem (running bond) — Płytki ceglane ułożone poziomo w klasycznym, mijankowym układzie ceglanym. Każda płytka ma dłuższy bok ustawiony poziomo. Kolejne rzędy są przesunięte względem siebie o około połowę długości płytki, dzięki czemu pionowe spoiny nie znajdują się w jednej linii, lecz mijają się w każdym kolejnym rzędzie. Układ tworzy charakterystyczny rytm tradycyjnego muru ceglanego. Regularne poziome rzędy, równomierne spoiny i powtarzalny wzór bez przerw i przypadkowych przesunięć.",
+  "prosty": "prosty układ siatkowy (stack bond) — Płytki ceglane ułożone poziomo, w równoległych, regularnych rzędach. Wszystkie płytki mają dłuższy bok ustawiony poziomo. Pionowe spoiny przebiegają w jednej linii przez całą powierzchnię, tworząc regularną siatkę prostokątnych pól. Kolejne rzędy nie są przesunięte względem siebie. Układ jest całkowicie prosty i symetryczny, bez mijania się spoin pionowych. Płytki są oddzielone wyraźnymi, równymi spoinami poziomymi i pionowymi.",
+  "pionowy": "pionowy układ (vertical/stretcher bond) — Płytki ceglane ułożone pionowo, dłuższym bokiem w kierunku pionowym, w regularnych poziomych rzędach. Każdy rząd składa się z wąskich, wydłużonych prostokątnych płytek ustawionych jedna obok drugiej. Pionowe spoiny są przesunięte względem sąsiednich rzędów, tworząc naprzemienny układ. To jest fundamentalnie inny układ niż domyślny — pamiętaj że cegły mają być PIONOWO ustawione, a nie jak zwykle poziomo.",
+  "jodelka": "UKŁAD W JODEŁKĘ (herringbone) — Płytki ceglane ułożone w klasyczny wzór jodełki. Wąskie, wydłużone prostokątne płytki są układane naprzemiennie pod kątem 45° lub 90°, tak że krótszy bok jednej płytki styka się z dłuższym bokiem kolejnej. Płytki tworzą powtarzalny zygzakowaty wzór w kształcie litery V, biegnący przez całą powierzchnię. Zachowane regularne odstępy między płytkami i wyraźne spoiny. Każdy element jest precyzyjnie ustawiony względem poprzedniego, tworząc charakterystyczny rytm jodełki.. Jeśli wynik pokazuje zwykłe poziome rzędy cegieł, to jest BŁĄD."
 };
 
 const MORTAR_COLOR_LABELS = {
@@ -179,13 +178,48 @@ module.exports = async (req, res) => {
       ? ""
       : `\n- KOLOR FUGI (bardzo ważne, zastosuj dokładnie): fuga musi mieć kolor ${mortarColorLabel}. To kluczowy parametr — nie zastępuj go domyślnym ani innym odcieniem.`;
 
+    // Fallback: jeśli produkt nie ma ręcznie ustawionego aspectRatio/shapeHint,
+    // spróbuj wyliczyć proporcję wprost z tekstu productDims (np. "proporcje ok. 3,7:1"
+    // lub "proporcje ok. 8,3–9:1"). Dzięki temu każdy produkt o wyraźnie wydłużonym
+    // formacie dostaje pełny alert kształtu, nawet jeśli w katalogu zabrakło dla niego
+    // dedykowanych pól aspectRatio/shapeHint.
+    function extractRatioFromDims(dims){
+      if(!dims) return null;
+      const m = String(dims).match(/(?:proporcj[ea]|verh[äa]ltnis)\s*(?:ok\.?|ca\.?)?\s*([\d.,]+)(?:\s*[–-]\s*([\d.,]+))?\s*:\s*1/i);
+      if(!m) return null;
+      const a = parseFloat(m[1].replace(",", "."));
+      if(isNaN(a)) return null;
+      const b = m[2] ? parseFloat(m[2].replace(",", ".")) : a;
+      return isNaN(b) ? a : (a + b) / 2;
+    }
+
+    const SHAPE_ALERT_MIN_RATIO = 2.3; // wyraźnie powyżej standardowej cegły (~2:1)
+
+    const explicitAspectRatio = (productAspectRatio && Number(productAspectRatio) > 0)
+      ? Number(productAspectRatio)
+      : null;
+    const derivedAspectRatio = explicitAspectRatio || extractRatioFromDims(productDims);
+    const effectiveAspectRatio = derivedAspectRatio && derivedAspectRatio >= SHAPE_ALERT_MIN_RATIO
+      ? derivedAspectRatio
+      : null;
+
+    const ratioMultiplier = effectiveAspectRatio
+      ? (effectiveAspectRatio / 2).toFixed(1)
+      : null;
+
+    const effectiveShapeHint = productShapeHint
+      || (effectiveAspectRatio
+        ? `Format tej płytki wyraźnie odbiega od standardowej cegły: proporcja długość:wysokość to ok. ${effectiveAspectRatio.toFixed(1)}:1 (dla porównania zwykła cegła budowlana ma ok. 2:1), zgodnie z wymiarami: ${productDims}. Moduł jest więc wyraźnie bardziej wydłużony i płaski niż typowa cegła — na tej samej wysokości ściany zmieści się wyraźnie więcej wąskich, poziomych rzędów niż przy zwykłej cegle.`
+        : null);
+
     const dimsLine = productDims
-      ? `\n- WYMIARY I PROPORCJE POJEDYNCZEJ PŁYTKI (krytycznie ważne, zastosuj dokładnie): ${productDims}. NIE renderuj standardowych proporcji cegły (ok. 2:1) — moduł MUSI być wyraźnie bardziej wydłużony i płaski, zgodnie z podanymi proporcjami. To najczęstszy błąd do uniknięcia: zbyt "kwadratowe" lub zbyt wysokie płytki są NIEPOPRAWNE dla tego produktu.`
+      ? `\n- WYMIARY I PROPORCJE POJEDYNCZEJ PŁYTKI (krytycznie ważne, zastosuj dokładnie): ${productDims}. NIE renderuj standardowych proporcji cegły (ok. 2:1) — moduł MUSI być wyraźnie bardziej wydłużony i płaski, zgodnie z podanymi proporcjami${ratioMultiplier ? ` (to ok. ${ratioMultiplier}× smuklejszy moduł niż zwykła cegła 2:1 — NIE o kilkanaście procent, tylko wielokrotnie bardziej wydłużony i wielokrotnie niższy)` : ""}. To najczęstszy błąd do uniknięcia: zbyt "kwadratowe" lub zbyt wysokie płytki są NIEPOPRAWNE dla tego produktu.`
       : "";
 
-    const shapeAlert = productShapeHint
+    const shapeAlert = effectiveShapeHint
       ? `UWAGA — NIETYPOWY FORMAT PŁYTKI, PRZECZYTAJ PRZED WYKONANIEM ZADANIA:
-Ten produkt NIE ma proporcji zwykłej cegły. ${productShapeHint} Jeśli narysujesz moduły o standardowych proporcjach cegły (ok. 2:1), wynik będzie BŁĘDNY — musi być wyraźnie więcej wąskich, poziomych rzędów niż w typowym murze z cegły. Jeśli załączone zdjęcie referencyjne produktu nie pokazuje tego jednoznacznie (np. kadr jest zbyt przybliżony), kieruj się przede wszystkim tym opisem proporcji, a nie domysłem na podstawie samego kadru.
+Ten produkt NIE ma proporcji zwykłej cegły. ${effectiveShapeHint}${ratioMultiplier ? ` Liczbowo: pojedynczy moduł jest ok. ${ratioMultiplier} razy bardziej wydłużony (proporcja długość:wysokość) niż standardowa cegła 2:1 — to znacząca, łatwo zauważalna różnica, nie subtelna korekta.` : ""} Jeśli narysujesz moduły o standardowych proporcjach cegły (ok. 2:1), wynik będzie BŁĘDNY — musi być wyraźnie więcej wąskich, poziomych rzędów niż w typowym murze z cegły.
+PRIORYTET ŹRÓDŁA PRAWDY O KSZTAŁCIE: opis proporcji podany wyżej jest NADRZĘDNY wobec załączonego zdjęcia referencyjnego produktu. Zdjęcie referencyjne służy WYŁĄCZNIE jako wzorzec koloru, faktury i charakteru materiału — CAŁKOWICIE ZIGNORUJ proporcje/kształt pojedynczej cegły widoczne na tym zdjęciu, nawet jeśli kadr sugeruje bardziej "zwykłe" proporcje (np. przez przybliżenie, kąt kadrowania lub obcięcie). Kształtem rządzi wyłącznie opis tekstowy powyżej.
 WAŻNE: mimo wydłużonego formatu, cała zaznaczona powierzchnia MA WYGLĄDAĆ JAK JEDNOLITA OKŁADZINA Z PŁYTEK — tak jak każda inna cegła na tej ścianie. NIE dodawaj żadnych ramek, obwódek, listew wykończeniowych, podziałów na panele/sekcje ani żadnych elementów, o które nie proszono. To ma być zwykła, ciągła okładzina ceglana, tylko z płytkami o innych proporcjach.
 
 `
@@ -248,7 +282,7 @@ PODSUMOWANIE — sprawdź przed wygenerowaniem, że wynik spełnia WSZYSTKIE pon
 6. Brak białych/jasnych, niepomalowanych obwódek wokół okien, drzwi lub innych otworów w zaznaczonym obszarze — cegła sięga dokładnie do ich krawędzi.
 7. Rozmiary płytek są realistyczne i proporcjonalne do otoczenia.
 8. Tekstura na całej powierzchni jest spójna, ostra i czyszczna — bez rozmyć i artefaktów.
-${productDims ? `9. Proporcje pojedynczej płytki: ${productDims}${productShapeHint ? ` — ${productShapeHint}` : ""}.\n10. Jednolita okładzina bez dodatkowych ramek/podziałów.\n11. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian.` : "9. Jednolita okładzina bez dodatkowych ramek/podziałów.\n10. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian."}`
+${productDims ? `9. Proporcje pojedynczej płytki: ${productDims}${effectiveShapeHint ? ` — ${effectiveShapeHint}` : ""}.\n10. Jednolita okładzina bez dodatkowych ramek/podziałów.\n11. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian.` : "9. Jednolita okładzina bez dodatkowych ramek/podziałów.\n10. Reszta zdjęcia (poza zaznaczonym obszarem) bez zmian."}`
     });
 
     promptParts.push({ text: "Zdjęcie oryginalne:" });
@@ -256,7 +290,10 @@ ${productDims ? `9. Proporcje pojedynczej płytki: ${productDims}${productShapeH
     promptParts.push({ text: "Zdjęcie z podświetlonym obszarem do przemiany:" });
     promptParts.push({ inlineData: highlightedInline });
     if(productInline){
-      promptParts.push({ text: `Referencyjna tekstura produktu "${productName}":` });
+      const shapeReminder = effectiveShapeHint
+        ? ` Przypomnienie: to zdjęcie pokazuje WYŁĄCZNIE kolor i fakturę — kształt/proporcje pojedynczej cegły bierz TYLKO z opisu tekstowego wyżej (${productDims || effectiveShapeHint}), nie z tego kadru.`
+        : "";
+      promptParts.push({ text: `Referencyjna tekstura produktu "${productName}":${shapeReminder}` });
       promptParts.push({ inlineData: productInline });
     }
 
